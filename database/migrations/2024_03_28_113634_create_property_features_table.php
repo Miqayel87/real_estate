@@ -17,7 +17,6 @@ class CreatePropertyFeatureTable extends Migration
             $table->id();
             $table->unsignedBigInteger('property_id');
             $table->unsignedBigInteger('feature_id');
-            $table->boolean('has_value');
             $table->string('value')->nullable()->default(null);
             $table->timestamps();
 
