@@ -52,8 +52,8 @@
 
                         <!-- Login -->
                         <div class="tab-content" id="tab1" style="display: none;">
-                            <form method="post" class="login">
-
+                            <form method="post" class="login" action="{{route('login')}}">
+                                @csrf
                                 <p class="form-row form-row-wide">
                                     <label for="username">Username:
                                         <i class="im im-icon-Male"></i>
@@ -72,7 +72,7 @@
                                     <input type="submit" class="button border margin-top-10" name="login" value="Login" />
 
                                     <label for="rememberme" class="rememberme">
-                                        <input name="rememberme" type="checkbox" id="rememberme" value="forever" /> Remember Me</label>
+                                        <input name="remember" type="checkbox" id="rememberme" value="forever" /> Remember Me</label>
                                 </p>
 
                                 <p class="lost_password">
@@ -85,8 +85,8 @@
                         <!-- Register -->
                         <div class="tab-content" id="tab2" style="display: none;">
 
-                            <form method="post" class="register">
-
+                            <form method="post" class="register" action="{{route('sign-up')}}">
+                                @csrf
                                 <p class="form-row form-row-wide">
                                     <label for="username2">Username:
                                         <i class="im im-icon-Male"></i>

@@ -24,12 +24,10 @@ class CreatePropertiesTable extends Migration
             $table->decimal('price', 10, 2);
             $table->string('listing_type');
             $table->boolean('status');
-            $table->unsignedBigInteger('status_id');
             $table->unsignedBigInteger('type_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-            $table->foreign('status_id')->references('id')->on('property_status')->onDelete('cascade');
             $table->foreign('type_id')->references('id')->on('property_type')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

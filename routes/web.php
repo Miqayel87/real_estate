@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\RegistrationController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,3 +38,10 @@ Route::get('/my-profile', function () {
 Route::get('/submit-property', function () {
     return view('submit-property');
 });
+
+
+Auth::routes();
+
+Route::get('/registration', [RegistrationController::class, 'showRegistrationForm'])->name('showRegistrationForm');
+Route::post('/signUp', [RegistrationController::class, 'signUp'])->name('sign-up');
+
