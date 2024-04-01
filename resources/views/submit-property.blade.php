@@ -5,7 +5,7 @@
 @section('content')
 
     <!-- Titlebar
-================================================== -->
+    ================================================== -->
     <div id="titlebar" class="submit-page">
         <div class="container">
             <div class="row">
@@ -18,10 +18,10 @@
 
 
     <!-- Content
-    ================================================== -->
+        ================================================== -->
     <div class="container">
         <div class="row">
-            <form action="{{route('property.store')}}">
+            <form action="{{ route('property.store') }}">
                 @csrf
                 <!-- Submit Page -->
                 <div class="col-md-12">
@@ -39,9 +39,9 @@
                             <!-- Title -->
                             <div class="form">
                                 <h5>Property Title <i class="tip"
-                                                      data-tip-content="Type title that will also contains an unique feature of your property (e.g. renovated, air contidioned)"></i>
+                                        data-tip-content="Type title that will also contains an unique feature of your property (e.g. renovated, air contidioned)"></i>
                                 </h5>
-                                <input name="title" class="search-field" type="text" value=""/>
+                                <input name="title" class="search-field" type="text" value="" />
                             </div>
 
                             <!-- Row -->
@@ -80,7 +80,7 @@
                                 <!-- Price -->
                                 <div class="col-md-4">
                                     <h5>Price <i class="tip"
-                                                 data-tip-content="Type overall or monthly price if property is for rent"></i>
+                                            data-tip-content="Type overall or monthly price if property is for rent"></i>
                                     </h5>
                                     <div class="select-input disabled-first-option">
                                         <input name="price" type="text" data-unit="USD">
@@ -119,9 +119,7 @@
                         <!-- Section -->
                         <h3>Gallery</h3>
                         <div class="submit-section">
-                            <form action="/file-upload" class="dropzone">
-                                <input type="file" name="image">
-                            </form>
+                            <form action="/file-upload" class="dropzone"></form>
                         </div>
                         <!-- Section / End -->
 
@@ -171,8 +169,7 @@
                             <!-- Description -->
                             <div class="form">
                                 <h5>Description</h5>
-                                <textarea name="description" class="WYSIWYG" cols="40" rows="3" id="summary"
-                                          spellcheck="true"></textarea>
+                                <textarea name="description" class="WYSIWYG" cols="40" rows="3" id="summary" spellcheck="true"></textarea>
                             </div>
 
                             <!-- Row -->
@@ -287,11 +284,25 @@
 
 
                         <div class="divider"></div>
-                        <a href="#" class="button preview margin-top-5">Preview <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="#" class="button preview margin-top-5">Preview <i
+                                class="fa fa-arrow-circle-right"></i></a>
                         <button type="submit">Submit</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
+    <!-- DropZone | Documentation: http://dropzonejs.com -->
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="{{asset('scripts/dropzone.js')}}"></script>
+
+    <script>
+        $(".dropzone").dropzone({
+            dictDefaultMessage: "<i class='sl sl-icon-plus'></i> Click here or drop files to upload",
+        });
+    </script>
+
 @endsection

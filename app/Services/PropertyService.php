@@ -10,8 +10,8 @@ class PropertyService
     {
         $newProperty = new Property;
 
-        $newProperty->fill($request->all());
-
+        $newProperty->fill($request->except('_token'));
+        dd($newProperty);
         $newProperty->save();
 
 //        if (isset($request['check'])) {

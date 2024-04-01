@@ -8,10 +8,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title')</title>
+    
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/icons.css')}}">
     <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('css/color.css')}}">
-    <link rel="stylesheet" href="{{asset('css/icons.css')}}">
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
 </head>
 <body>

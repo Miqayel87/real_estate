@@ -49,6 +49,5 @@ Route::post('/signUp', [RegistrationController::class, 'signUp'])->name('sign-up
 
 
 Route::group(['prefix' => 'property', 'middleware' => 'auth'], function () {
-    // Routes for admin section
     Route::get('/create', [PropertyController::class, 'store'])->name('property.store');
 });

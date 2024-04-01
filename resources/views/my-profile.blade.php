@@ -64,25 +64,24 @@
             <div class="col-md-8">
                 <div class="row">
 
-
                     <div class="col-md-8 my-profile">
                         <h4 class="margin-top-0 margin-bottom-30">My Account</h4>
 
                         <label>Your Name</label>
-                        <input value="Jennie Wilson" type="text">
+                        <input value="{{Auth::user()->username}}" type="text">
 
                         <label>Your Title</label>
-                        <input value="Agent In New York" type="text">
+                        <input value="{{Auth::user()->title}}" type="text">
 
                         <label>Phone</label>
-                        <input value="(123) 123-456" type="text">
+                        <input value="{{Auth::user()->phone}}" type="text">
 
                         <label>Email</label>
-                        <input value="jennie@example.com" type="text">
+                        <input value="{{Auth::user()->email}}" type="text">
 
 
                         <h4 class="margin-top-50 margin-bottom-25">About Me</h4>
-                        <textarea name="about" id="about" cols="30" rows="10">Maecenas quis consequat libero, a feugiat eros. Nunc ut lacinia tortor morbi ultricies laoreet ullamcorper phasellus semper</textarea>
+                        <textarea name="about" id="about" cols="30" rows="10">{{Auth::user()->about}}</textarea>
 
 
                         <h4 class="margin-top-50 margin-bottom-0">Social</h4>

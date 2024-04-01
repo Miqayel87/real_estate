@@ -410,7 +410,8 @@
                                 <li><a href="my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
                                 <li><a href="my-bookmarks.html"><i class="sl sl-icon-star"></i> Bookmarks</a></li>
                                 <li><a href="my-properties.html"><i class="sl sl-icon-docs"></i> My Properties</a></li>
-                                <li id="logoutButton"><a href="#"><i class="sl sl-icon-power"></i> Log Out</a></li>
+                                <li id="logout"><a href="#"><i class="sl sl-icon-power"></i> Log Out</a></li>
+                                <form id="logoutForm" style="display: none" action="{{route('logout')}}" method="POST">@csrf</form>
                             </ul>
                         </div>
 
@@ -433,22 +434,8 @@
 
 <script>
 
-    document.getElementById('logoutButton').addEventListener('click', function (e) {
-        e.preventDefault();
+    document.getElementById('logout').addEventListener('click', ()=>{
+        document.getElementById('logoutForm').submit();
+    })
 
-        $.ajax({
-            url: '{{ route('logout') }}',
-            type: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-                // Handle success, maybe redirect to login page
-                // window.location.href = '{{ route("login") }}';
-            },
-            error: function (xhr, status, error) {
-                console.error('Error:', error);
-            }
-        });
-    });
 </script>

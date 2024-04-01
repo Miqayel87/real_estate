@@ -33,8 +33,7 @@ class LoginController extends Controller
 
     public function logout()
     {
-        dd(Auth::user());
         $this->loginService->logout();
-        return redirect()->intended('/aa');
+        return redirect()->back();
     }
 }
