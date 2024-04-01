@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegistrationController;
+use App\Http\Controllers\PropertyController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -44,4 +45,10 @@ Auth::routes();
 
 Route::get('/registration', [RegistrationController::class, 'showRegistrationForm'])->name('showRegistrationForm');
 Route::post('/signUp', [RegistrationController::class, 'signUp'])->name('sign-up');
+//Route::resource('property',PropertyController::class);
 
+
+Route::group(['prefix' => 'property', 'middleware' => 'auth'], function () {
+    // Routes for admin section
+    Route::get('/create', [PropertyController::class, 'store'])->name('property.store');
+});

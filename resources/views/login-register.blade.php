@@ -104,7 +104,7 @@
                                 <p class="form-row form-row-wide">
                                     <label for="password1">Password:
                                         <i class="im im-icon-Lock-2"></i>
-                                        <input class="input-text" type="password" name="password1" id="password1"/>
+                                        <input class="input-text" type="password" name="password" id="password1"/>
                                     </label>
                                 </p>
 

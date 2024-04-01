@@ -9,6 +9,27 @@ class Property extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        '_token', // Add _token to the fillable attributes
+        // Add other fillable attributes here
+        'title',
+        'status',
+        'type',
+        'price',
+        'area',
+        'rooms',
+        'image',
+        'address',
+        'city',
+        'state',
+        'zip_code',
+        'description',
+        'ages',
+        'bedrooms',
+        'bathrooms',
+        // Add other fillable attributes as needed
+    ];
+
     public function type()
     {
         return $this->belongsTo(PropertyType::class);

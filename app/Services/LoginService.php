@@ -16,10 +16,9 @@ class LoginService
      */
     public function login(Request $request): bool
     {
-        $user = User::where('username', $request->username)->first();
 
         $credentials = [
-            'email' => $user->email,
+            'username' => $request->username,
             'password' => $request->password
         ];
 
