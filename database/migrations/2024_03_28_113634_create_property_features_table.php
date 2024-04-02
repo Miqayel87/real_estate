@@ -13,7 +13,7 @@ class CreatePropertyFeaturesTable extends Migration
      */
     public function up()
     {
-        Schema::create('property_feature', function (Blueprint $table) {
+        Schema::create('feature_property', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('property_id');
             $table->unsignedBigInteger('feature_id');

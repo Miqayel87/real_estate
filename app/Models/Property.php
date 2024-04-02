@@ -27,6 +27,9 @@ class Property extends Model
         'ages',
         'bedrooms',
         'bathrooms',
+        'listing_type',
+        'type_id',
+        "user_id"
         // Add other fillable attributes as needed
     ];
 

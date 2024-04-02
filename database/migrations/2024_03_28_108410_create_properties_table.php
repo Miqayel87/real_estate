@@ -28,7 +28,7 @@ class CreatePropertiesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-            $table->foreign('type_id')->references('id')->on('property_type')->onDelete('cascade');
+            $table->foreign('type_id')->references('id')->on('property_types')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

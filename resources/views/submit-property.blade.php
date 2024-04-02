@@ -21,7 +21,7 @@
         ================================================== -->
     <div class="container">
         <div class="row">
-            <form action="{{ route('property.store') }}">
+            <form action="{{ route('property.store') }}" method="post">
                 @csrf
                 <!-- Submit Page -->
                 <div class="col-md-12">
@@ -39,9 +39,9 @@
                             <!-- Title -->
                             <div class="form">
                                 <h5>Property Title <i class="tip"
-                                        data-tip-content="Type title that will also contains an unique feature of your property (e.g. renovated, air contidioned)"></i>
+                                                      data-tip-content="Type title that will also contains an unique feature of your property (e.g. renovated, air contidioned)"></i>
                                 </h5>
-                                <input name="title" class="search-field" type="text" value="" />
+                                <input name="title" class="search-field" type="text" value=""/>
                             </div>
 
                             <!-- Row -->
@@ -50,10 +50,11 @@
                                 <!-- Status -->
                                 <div class="col-md-6">
                                     <h5>Status</h5>
-                                    <select name="status" class="chosen-select-no-single">
+                                    <select name="listing_type" class="chosen-select-no-single">
                                         <option label="blank"></option>
-                                        <option>For Sale</option>
-                                        <option>For Rent</option>
+                                        @foreach($listingTypes as $listingType)
+                                            <option value="{{$listingType}}">{{$listingType}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -62,11 +63,9 @@
                                     <h5>Type</h5>
                                     <select name="type" class="chosen-select-no-single">
                                         <option label="blank"></option>
-                                        <option>Apartment</option>
-                                        <option>House</option>
-                                        <option>Commercial</option>
-                                        <option>Garage</option>
-                                        <option>Lot</option>
+                                        @foreach($types as $type)
+                                            <option value="{{$type->id}}">{{$type->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
@@ -80,33 +79,11 @@
                                 <!-- Price -->
                                 <div class="col-md-4">
                                     <h5>Price <i class="tip"
-                                            data-tip-content="Type overall or monthly price if property is for rent"></i>
+                                                 data-tip-content="Type overall or monthly price if property is for rent"></i>
                                     </h5>
                                     <div class="select-input disabled-first-option">
                                         <input name="price" type="text" data-unit="USD">
                                     </div>
-                                </div>
-
-                                <!-- Area -->
-                                <div class="col-md-4">
-                                    <h5>Area</h5>
-                                    <div class="select-input disabled-first-option">
-                                        <input name="area" type="text" data-unit="Sq Ft">
-                                    </div>
-                                </div>
-
-                                <!-- Rooms -->
-                                <div class="col-md-4">
-                                    <h5>Rooms</h5>
-                                    <select name="rooms" class="chosen-select-no-single">
-                                        <option label="blank"></option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>More than 5</option>
-                                    </select>
                                 </div>
 
                             </div>
@@ -169,52 +146,32 @@
                             <!-- Description -->
                             <div class="form">
                                 <h5>Description</h5>
-                                <textarea name="description" class="WYSIWYG" cols="40" rows="3" id="summary" spellcheck="true"></textarea>
+                                <textarea name="description" class="WYSIWYG" cols="40" rows="3" id="summary"
+                                          spellcheck="true"></textarea>
                             </div>
 
                             <!-- Row -->
                             <div class="row with-forms">
-
-                                <!-- Age of Home -->
-                                <div class="col-md-4">
-                                    <h5>Building Age <span>(optional)</span></h5>
-                                    <select name="ages" class="chosen-select-no-single">
-                                        <option label="blank"></option>
-                                        <option>0 - 1 Years</option>
-                                        <option>0 - 5 Years</option>
-                                        <option>0 - 10 Years</option>
-                                        <option>0 - 20 Years</option>
-                                        <option>0 - 50 Years</option>
-                                        <option>50 + Years</option>
-                                    </select>
-                                </div>
-
-                                <!-- Beds -->
-                                <div class="col-md-4">
-                                    <h5>Bedrooms <span>(optional)</span></h5>
-                                    <select name="bedrooms" class="chosen-select-no-single">
-                                        <option label="blank"></option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                </div>
-
-                                <!-- Baths -->
-                                <div class="col-md-4">
-                                    <h5>Bathrooms <span>(optional)</span></h5>
-                                    <select name="bathrooms" class="chosen-select-no-single">
-                                        <option label="blank"></option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                </div>
-
+                                @foreach($hasValueFeatures['features'] as $feature)
+                                    @if(isset($hasValueFeatures['values'][$feature->name]))
+                                        <div class="col-md-4">
+                                            <h5>{{$feature->name}} <span>(optional)</span></h5>
+                                            <select name="features[{{$feature->id}}]" class="chosen-select-no-single">
+                                                <option label="blank"></option>
+                                                @foreach($hasValueFeatures['values'][$feature->name] as $value)
+                                                    <option value="{{$value}}">{{$value}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    @else
+                                        <div class="col-md-4">
+                                            <h5>{{$feature->name}}</h5>
+                                            <div class="select-input disabled-first-option">
+                                                <input name="features[{{$feature->id}}]" type="text" data-unit="Sq Ft">
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
                             </div>
                             <!-- Row / End -->
 
@@ -223,26 +180,11 @@
                             <h5 class="margin-top-30">Other Features <span>(optional)</span></h5>
                             <div class="checkboxes in-row margin-bottom-20">
 
-                                <input id="check-2" type="checkbox" value="Air Conditioning" name="check[]">
-                                <label for="check-2">Air Conditioning</label>
-
-                                <input id="check-3" type="checkbox" value="Swimming Pool" name="check[]">
-                                <label for="check-3">Swimming Pool</label>
-
-                                <input id="check-4" type="checkbox" value="Central Heating" name="check[]">
-                                <label for="check-4">Central Heating</label>
-
-                                <input id="check-5" type="checkbox" value="Laundry Room" name="check[]">
-                                <label for="check-5">Laundry Room</label>
-
-                                <input id="check-6" type="checkbox" value="Gym" name="check[]">
-                                <label for="check-6">Gym</label>
-
-                                <input id="check-7" type="checkbox" value="Alarm" name="check[]">
-                                <label for="check-7">Alarm</label>
-
-                                <input id="check-8" type="checkbox" value="Window Covering" name="check[]">
-                                <label for="check-8">Window Covering</label>
+                                @foreach($noValueFeatures as $index => $feature)
+                                    <input id="check-{{$index}}" type="checkbox" value="{{true}}"
+                                           name="features[{{$feature->id}}]">
+                                    <label for="check-{{$index}}">{{$feature->name}}</label>
+                                @endforeach
 
                             </div>
                             <!-- Checkboxes / End -->
@@ -295,7 +237,8 @@
 
     <!-- DropZone | Documentation: http://dropzonejs.com -->
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="{{asset('scripts/dropzone.js')}}"></script>
 

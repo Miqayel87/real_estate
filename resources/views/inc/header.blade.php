@@ -149,7 +149,7 @@
 
                             <li><a class="current" href="#">Home</a>
                                 <ul>
-                                    <li><a href="index.html">Home 1</a></li>
+                                    <li><a href="{{route('home')}}">Home 1</a></li>
                                     <li><a href="index-2.html">Home 2</a></li>
                                     <li><a href="index-3.html">Home 3</a></li>
                                     <li><a href="index-4.html">Home 4</a></li>
@@ -191,14 +191,14 @@
                                 <ul>
                                     <li><a href="#">Single Properties</a>
                                         <ul>
-                                            <li><a href="single-property-page-1.html">Property Style 1</a></li>
+                                            <li><a href="{{route('single-property')}}">Property Style 1</a></li>
                                             <li><a href="single-property-page-2.html">Property Style 2</a></li>
                                             <li><a href="single-property-page-3.html">Property Style 3</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="#">Search Styles</a>
                                         <ul>
-                                            <li><a href="index.html">Home Search 1</a></li>
+                                            <li><a href="{{route('home')}}">Home Search 1</a></li>
                                             <li><a href="index-2.html">Home Search 2</a></li>
                                             <li><a href="index-3.html">Home Search 3</a></li>
                                             <li><a href="listings-list-full-width.html">Advanced Style</a></li>
@@ -207,7 +207,7 @@
                                     </li>
                                     <li><a href="#">My Account</a>
                                         <ul>
-                                            <li><a href="my-profile.html">My Profile</a></li>
+                                            <li><a href="{{route('my-profile')}}">My Profile</a></li>
                                             <li><a href="my-bookmarks.html">Bookmarked Listings</a></li>
                                             <li><a href="my-properties.html">My Properties</a></li>
                                             <li><a href="change-password.html">Change Password</a></li>
@@ -223,7 +223,7 @@
                                     </li>
 
                                     <li><a href="compare-properties.html">Compare Properties</a></li>
-                                    <li><a href="submit-property.html">Submit Property</a></li>
+                                    <li><a href="{{route('submit-property')}}">Submit Property</a></li>
                                 </ul>
                             </li>
 
@@ -255,8 +255,8 @@
                 <div class="right-side">
                     <!-- Header Widget -->
                     <div class="header-widget">
-                        <a href="login-register.html" class="sign-in"><i class="fa fa-user"></i> Log In / Register</a>
-                        <a href="submit-property.html" class="button border">Submit Property</a>
+                        <a href="{{route('login')}}" class="sign-in"><i class="fa fa-user"></i> Log In / Register</a>
+                        <a href="{{route('submit-property')}}" class="button border">Submit Property</a>
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -274,7 +274,7 @@
 
                     <!-- Logo -->
                     <div id="logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""></a>
+                        <a href="{{route('home')}}"><img src="images/logo.png" alt=""></a>
                     </div>
 
 
@@ -294,7 +294,7 @@
 
                             <li><a href="#">Home</a>
                                 <ul>
-                                    <li><a href="index.html">Home 1</a></li>
+                                    <li><a href="{{route('home')}}">Home 1</a></li>
                                     <li><a href="index-2.html">Home 2</a></li>
                                     <li><a href="index-3.html">Home 3</a></li>
                                     <li><a href="index-4.html">Home 4</a></li>
@@ -343,7 +343,7 @@
                                     </li>
                                     <li><a href="#">Search Styles</a>
                                         <ul>
-                                            <li><a href="index.html">Home Search 1</a></li>
+                                            <li><a href="{{route('home')}}">Home Search 1</a></li>
                                             <li><a href="index-2.html">Home Search 2</a></li>
                                             <li><a href="index-3.html">Home Search 3</a></li>
                                             <li><a href="listings-list-full-width.html">Advanced Style</a></li>
@@ -352,7 +352,7 @@
                                     </li>
                                     <li><a href="#">My Account</a>
                                         <ul>
-                                            <li><a href="my-profile.html">My Profile</a></li>
+                                            <li><a href="{{route('my-profile')}}">My Profile</a></li>
                                             <li><a href="my-bookmarks.html">Bookmarked Listings</a></li>
                                             <li><a href="my-properties.html">My Properties</a></li>
                                             <li><a href="change-password.html">Change Password</a></li>
@@ -368,7 +368,7 @@
                                     </li>
 
                                     <li><a href="compare-properties.html">Compare Properties</a></li>
-                                    <li><a href="submit-property.html">Submit Property</a></li>
+                                    <li><a href="{{route('submit-property')}}">Submit Property</a></li>
                                 </ul>
                             </li>
 
@@ -403,19 +403,26 @@
 
                         <!-- User Menu -->
                         <div class="user-menu">
-                            <div class="user-name"><span><img src="images/agent-03.jpg"
-                                                              alt=""></span>Hi, {{Auth::user()->username}}!
+                            <div class="user-name"><span>
+                                @if(Auth::user()->image)
+                                        <img src="{{asset('storage/resized/'.Auth::user()->image->name)}}" alt="">
+                                    @else
+                                        <img src="{{asset('storage/resized/')}}" alt="">
+                                    @endif
+                                </span>Hi, {{Auth::user()->username}}!
                             </div>
                             <ul>
-                                <li><a href="my-profile.html"><i class="sl sl-icon-user"></i> My Profile</a></li>
+                                <li><a href="{{route('my-profile')}}"><i class="sl sl-icon-user"></i> My Profile</a>
+                                </li>
                                 <li><a href="my-bookmarks.html"><i class="sl sl-icon-star"></i> Bookmarks</a></li>
                                 <li><a href="my-properties.html"><i class="sl sl-icon-docs"></i> My Properties</a></li>
                                 <li id="logout"><a href="#"><i class="sl sl-icon-power"></i> Log Out</a></li>
-                                <form id="logoutForm" style="display: none" action="{{route('logout')}}" method="POST">@csrf</form>
+                                <form id="logoutForm" style="display: none" action="{{route('logout')}}"
+                                      method="POST">@csrf</form>
                             </ul>
                         </div>
 
-                        <a href="submit-property.html" class="button border">Submit Property</a>
+                        <a href="{{route('submit-property')}}" class="button border">Submit Property</a>
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -434,7 +441,7 @@
 
 <script>
 
-    document.getElementById('logout').addEventListener('click', ()=>{
+    document.getElementById('logout').addEventListener('click', () => {
         document.getElementById('logoutForm').submit();
     })
 
