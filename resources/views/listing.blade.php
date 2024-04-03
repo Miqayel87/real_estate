@@ -84,7 +84,7 @@
                     @foreach($properties as $property)
                         <div class="listing-item">
 
-                            <a href="single-property-page-1.html" class="listing-img-container">
+                            <a href="{{route('property.show', $property->id)}}" class="listing-img-container">
 
                                 <div class="listing-badges">
                                     <span class="featured">Featured</span>
@@ -92,15 +92,15 @@
                                 </div>
 
                                 <div class="listing-img-content">
-                                    <span class="listing-price">${{$property->price}} <i>${{10000/$property->price}} / sq ft</i></span>
+                                    <span class="listing-price">${{$property->price}} <i>${{number_format($property->price/array_search('Area', array_column($property->features->toArray(), 'name')), 2)}} / sq ft</i></span>
                                     <span class="like-icon with-tip" data-tip-content="Add to Bookmarks"></span>
                                     <span class="compare-button with-tip" data-tip-content="Add to Compare"></span>
                                 </div>
 
                                 <div class="listing-carousel">
-                                    <div><img src="images/listing-01.jpg" alt=""></div>
-                                    <div><img src="images/listing-01b.jpg" alt=""></div>
-                                    <div><img src="images/listing-01c.jpg" alt=""></div>
+                                   @foreach($property->images as $image)
+                                        <div><img src="{{asset('storage/resized/'.$image->name)}}" alt=""></div>
+                                    @endforeach
                                 </div>
                             </a>
 
@@ -117,14 +117,15 @@
                                 </div>
 
                                 <ul class="listing-details">
-                                    <li>530 sq ft</li>
-                                    <li>1 Bedroom</li>
-                                    <li>3 Rooms</li>
-                                    <li>1 Bathroom</li>
+                                    @foreach($property->features as $feature)
+                                        @if($feature->has_value)
+                                            <li>{{$feature->pivot->value}} {{$feature->name}} </li>
+                                        @endif
+                                    @endforeach
                                 </ul>
 
                                 <div class="listing-footer">
-                                    <a href="#"><i class="fa fa-user"></i> {{Auth::user()->username}}</a>
+                                    <a href="#"><i class="fa fa-user"></i> {{$property->user->username}}</a>
                                     <span><i class="fa fa-calendar-o"></i> {{\App\Helpers\DateTimeHelper::diff($property->created_at)}}</span>
                                 </div>
 
@@ -133,7 +134,7 @@
                         </div>
                     @endforeach
                     <!-- Listing Item / End -->
-
+                </div>
 
                 <!-- Pagination -->
                 <div class="pagination-container margin-top-20">

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Property;
+use App\Models\PropertyImage;
 use Illuminate\Support\Facades\Auth;
 
 class PropertyService
@@ -16,8 +17,11 @@ class PropertyService
         'For sale',
         'For rent'
     ];
-    public function __construct(){
+
+    public function __construct()
+    {
         $this->featureService = new FeatureService;
+        $this->imageUploadService = new ImageUploadService;
     }
 
     public function create($request)
@@ -40,13 +44,44 @@ class PropertyService
 
         $newProperty->save();
 
-        foreach ($request->features as $key => $value){
+        foreach ($request->features as $key => $value) {
             $this->featureService->create($key, $newProperty->id, $value);
         }
 
+        if ($request->file('images')) {
+            foreach ($request->file('images') as $image) {
+                $uploadedImage = $this->imageUploadService->uploadAndResize($image, '');
+
+                $propertyImage = new PropertyImage;
+                $propertyImage->image_id = $uploadedImage->id;
+                $propertyImage->property_id = $newProperty->id;
+                $propertyImage->save();
+            }
+        }
+
+
     }
 
-    public function getAll(){
-        return Property::orderBy('created_at','desc')->with('features')->get();
+    public function delete($id)
+    {
+        $propertyToDelete = Property::where('id', $id)->where('user_id', Auth::user()->id)->first();
+        $propertyToDelete->status = 0;
+        $propertyToDelete->save();
+        return $propertyToDelete;
+    }
+
+    public function getAll()
+    {
+        return Property::orderBy('created_at', 'desc')->with('features')->with('images')->where('status', 1)->get();
+    }
+
+    public function getById($id)
+    {
+        return Property::where('id', $id)->with('features')->with('images')->where('status', 1)->first();
+    }
+
+    public function getN($n)
+    {
+        return Property::with('features')->with('images')->where('status', 1)->limit($n)->get();
     }
 }

@@ -2,6 +2,7 @@
 
 @section('title', 'submit-property')
 
+
 @section('content')
 
     <!-- Titlebar
@@ -21,7 +22,7 @@
         ================================================== -->
     <div class="container">
         <div class="row">
-            <form action="{{ route('property.store') }}" method="post">
+            <form action="{{ route('property.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <!-- Submit Page -->
                 <div class="col-md-12">
@@ -97,9 +98,13 @@
                         <h3>Gallery</h3>
                         <div class="submit-section">
                             <form action="/file-upload" class="dropzone"></form>
+                            <input type="file" name="images[]" id="">
+                            <input type="file" name="images[]" id="">
+                            <input type="file" name="images[]" id="">
+                            <input type="file" name="images[]" id="">
+                            <input type="file" name="images[]" id="">
                         </div>
                         <!-- Section / End -->
-
 
                         <!-- Section -->
                         <h3>Location</h3>
@@ -235,17 +240,5 @@
         </div>
     </div>
 
-    <!-- DropZone | Documentation: http://dropzonejs.com -->
-
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-
-    <script type="text/javascript" src="{{asset('scripts/dropzone.js')}}"></script>
-
-    <script>
-        $(".dropzone").dropzone({
-            dictDefaultMessage: "<i class='sl sl-icon-plus'></i> Click here or drop files to upload",
-        });
-    </script>
 
 @endsection

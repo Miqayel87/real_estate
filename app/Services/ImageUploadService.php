@@ -22,19 +22,34 @@ class ImageUploadService
     {
         $filename = uniqid() . '.' . $file->getClientOriginalExtension();
 
-        $originalPath = $file->storeAs($directory, $filename);
-        $resizedImage = Image::make(asset('storage/'.$originalPath))
+        $file->storeAs('public'.$directory, $filename);
+
+        $originalImagePath = storage_path('app/public'.$directory.'/'.$filename);
+
+        $resizedImage = Image::make($originalImagePath)
             ->fit($width, $height)
             ->encode($file->getClientOriginalExtension(), $quality);
 
-        Storage::put($directory . 'public/resized/' . $filename, $resizedImage);
+        Storage::put('public'.'/resized/'.$filename, $resizedImage->stream());
 
         $image = new ImageModel();
-        $image->name = $originalPath;
+        $image->name = $filename;
         $image->save();
 
         return $image;
     }
 
-}
+    /**
+     * Delete image and its resized version.
+     *
+     * @param string $filename
+     * @param string $directory
+     * @return void
+     */
+    public function deleteImage($filename, $directory)
+    {
+        Storage::delete('public'.$directory.'/'.$filename);
 
+        Storage::delete('public'.'/resized/'.$filename);
+    }
+}

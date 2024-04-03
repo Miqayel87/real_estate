@@ -191,7 +191,7 @@
                                 <ul>
                                     <li><a href="#">Single Properties</a>
                                         <ul>
-                                            <li><a href="{{route('single-property')}}">Property Style 1</a></li>
+                                            <li><a href="single-property-page-1.html">Property Style 1</a></li>
                                             <li><a href="single-property-page-2.html">Property Style 2</a></li>
                                             <li><a href="single-property-page-3.html">Property Style 3</a></li>
                                         </ul>
@@ -223,7 +223,7 @@
                                     </li>
 
                                     <li><a href="compare-properties.html">Compare Properties</a></li>
-                                    <li><a href="{{route('submit-property')}}">Submit Property</a></li>
+                                    <li><a href="{{route('property.create')}}">Submit Property</a></li>
                                 </ul>
                             </li>
 
@@ -256,7 +256,7 @@
                     <!-- Header Widget -->
                     <div class="header-widget">
                         <a href="{{route('login')}}" class="sign-in"><i class="fa fa-user"></i> Log In / Register</a>
-                        <a href="{{route('submit-property')}}" class="button border">Submit Property</a>
+                        <a href="{{route('property.create')}}" class="button border">Submit Property</a>
                     </div>
                     <!-- Header Widget / End -->
                 </div>
@@ -292,7 +292,7 @@
                     <nav id="navigation" class="style-1">
                         <ul id="responsive">
 
-                            <li><a href="#">Home</a>
+                            <li><a href="{{route('home')}}">Home</a>
                                 <ul>
                                     <li><a href="{{route('home')}}">Home 1</a></li>
                                     <li><a href="index-2.html">Home 2</a></li>
@@ -301,7 +301,7 @@
                                 </ul>
                             </li>
 
-                            <li><a href="#">Listings</a>
+                            <li><a href="{{route('listing')}}">Listings</a>
                                 <ul>
                                     <li><a href="#">List Layout</a>
                                         <ul>
@@ -368,7 +368,7 @@
                                     </li>
 
                                     <li><a href="compare-properties.html">Compare Properties</a></li>
-                                    <li><a href="{{route('submit-property')}}">Submit Property</a></li>
+                                    <li><a href="{{route('property.create')}}">Submit Property</a></li>
                                 </ul>
                             </li>
 
@@ -407,7 +407,7 @@
                                 @if(Auth::user()->image)
                                         <img src="{{asset('storage/resized/'.Auth::user()->image->name)}}" alt="">
                                     @else
-                                        <img src="{{asset('storage/resized/')}}" alt="">
+                                        <img src="{{asset('images/default-profile-photo.jpg')}}" alt="">
                                     @endif
                                 </span>Hi, {{Auth::user()->username}}!
                             </div>
@@ -422,7 +422,7 @@
                             </ul>
                         </div>
 
-                        <a href="{{route('submit-property')}}" class="button border">Submit Property</a>
+                        <a href="{{route('property.create')}}" class="button border">Submit Property</a>
                     </div>
                     <!-- Header Widget / End -->
                 </div>

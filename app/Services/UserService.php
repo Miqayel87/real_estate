@@ -17,7 +17,7 @@ class UserService{
         $userToEdit->fill($request->all());
 
         if($request->hasFile('image')){
-            $image = $this->imageUploadService->uploadAndResize($request->file('image'), 'public');
+            $image = $this->imageUploadService->uploadAndResize($request->file('image'), '');
 
             $userToEdit->image_id = $image->id;
         }

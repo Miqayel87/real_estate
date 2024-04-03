@@ -8,37 +8,56 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title')</title>
-    
+
+    {{--    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">--}}
+    {{--    <link rel="stylesheet" href="{{asset('css/icons.css')}}">--}}
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
-    <link rel="stylesheet" href="{{asset('css/icons.css')}}">
-    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">
     <link rel="stylesheet" href="{{asset('css/color.css')}}">
 
 </head>
 <body>
-    <div class="wrapper">
-        @include('inc.header')
-        @yield('content')
-    </div>
+<div class="wrapper">
+    @include('inc.header')
+    @yield('content')
+</div>
 
 
+<!-- Scripts
+================================================== -->
+<script type="text/javascript" src="{{asset('scripts/jquery-3.4.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/jquery-migrate-3.1.0.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/chosen.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/magnific-popup.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/owl.carousel.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/rangeSlider.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/sticky-kit.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/slick.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/masonry.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/mmenu.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/tooltips.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/custom.js')}}"></script>
 
-    <!-- Scripts
-    ================================================== -->
-    <script type="text/javascript" src="{{asset('scripts/jquery-3.4.1.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('scripts/jquery-migrate-3.1.0.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('scripts/chosen.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('scripts/magnific-popup.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('scripts/owl.carousel.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('scripts/rangeSlider.js')}}"></script>
-    <script type="text/javascript" src="{{asset('scripts/sticky-kit.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('scripts/slick.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('scripts/masonry.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('scripts/mmenu.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('scripts/tooltips.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('scripts/custom.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<!-- Maps -->
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
+<script type="text/javascript" src="{{asset('scripts/infobox.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/markerclusterer.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/maps.js')}}"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+<!-- DropZone | Documentation: http://dropzonejs.com -->
+<script type="text/javascript" src="{{asset('scripts/dropzone.js')}}"></script>
+
+<script>
+    $(".dropzone").dropzone({
+        dictDefaultMessage: "<i class='sl sl-icon-plus'></i> Click here or drop files to upload",
+    });
+</script>
 
 </body>
 </html>
