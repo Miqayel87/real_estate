@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Services;
+
 use App\Models\Feature;
 use App\Models\PropertyFeature;
 
-class FeatureService{
-    const BUILDINGAGES  = [
+class FeatureService
+{
+    const BUILDINGAGES = [
         "0 - 1 Years",
         "0 - 5 Years",
         "0 - 10 Years",
@@ -14,7 +16,7 @@ class FeatureService{
         "50+ Years",
     ];
 
-    const BEDROOMS  = [
+    const BEDROOMS = [
         1,
         2,
         3,
@@ -22,7 +24,7 @@ class FeatureService{
         5
     ];
 
-    const BATHROOMS  = [
+    const BATHROOMS = [
         1,
         2,
         3,
@@ -30,7 +32,7 @@ class FeatureService{
         5
     ];
 
-    const ROOMS  = [
+    const ROOMS = [
         1,
         2,
         3,
@@ -39,29 +41,27 @@ class FeatureService{
         'More than 5'
     ];
 
-    public function create($featureId, $propertyId, $value){
-        $newPropertyFeature = new PropertyFeature;
+    public function createOrUpdate($featureId, $propertyId, $value)
+    {
+        $propertyFeature = PropertyFeature::updateOrCreate(
+            ['feature_id' => $featureId, 'property_id' => $propertyId],
+            ['value' => $value]
+        );
 
-        $newPropertyFeature->fill([
-            "property_id" => $propertyId,
-            "feature_id" => $featureId,
-            "value" => $value
-        ]);
-
-        $newPropertyFeature->save();
-
-        return $newPropertyFeature;
+        return $propertyFeature;
     }
 
-    public function getAll(){
+    public function getAll()
+    {
         return Feature::all();
     }
 
-    public function getFeaturesWithValue(){
+    public function getFeaturesWithValue()
+    {
         $features = Feature::where('has_value', true)->get();
         $values = [];
-        foreach ($features as $feature){
-            switch ($feature->name){
+        foreach ($features as $feature) {
+            switch ($feature->name) {
                 case 'Building Age':
                     $values[$feature->name] = self::BUILDINGAGES;
                     break;
@@ -83,8 +83,16 @@ class FeatureService{
         ];
     }
 
-    public function getFeaturesWithNoValue(){
+    public function getFeaturesWithNoValue()
+    {
         return Feature::where('has_value', false)->get();
+    }
+
+    public function deletePropertyFeatures($propertyId, $features)
+    {
+        $featuresToDelete = PropertyFeature::where('property_id', $propertyId)
+            ->whereNotIn('feature_id', $features)
+            ->delete();
     }
 
 }

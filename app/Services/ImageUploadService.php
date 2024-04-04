@@ -18,7 +18,7 @@ class ImageUploadService
      * @param int $quality
      * @return string|null
      */
-    public function uploadAndResize($file, $directory, $width = 100, $height = 100, $quality = 90)
+    public function uploadAndResize($file, $directory, $width = 800, $height = 800, $quality = 95)
     {
         $filename = uniqid() . '.' . $file->getClientOriginalExtension();
 

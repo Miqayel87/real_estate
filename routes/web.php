@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\UserController;
@@ -38,17 +39,8 @@ Auth::routes();
 
 Route::get('/registration', [RegistrationController::class, 'showRegistrationForm'])->name('showRegistrationForm');
 Route::post('/signUp', [RegistrationController::class, 'signUp'])->name('sign-up');
-//Route::resource('property',PropertyController::class);
-
-//Route::group(['prefix' => 'property', 'middleware' => 'auth'], function () {
-//    Route::get('/create', [PropertyController::class, 'create'])->name('submit-property');
-//    Route::post('/store', [PropertyController::class, 'store'])->name('property.store');
-//    Route::get('/{id}', [PropertyController::class, 'index'])->name('single-property');
-//});
 
 Route::resource('property', PropertyController::class);
-
-//Route::get('/property/{id}', [PropertyController::class, 'index'])->name('property.index');
 
 Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::get('/', [UserController::class, 'index'])->name('my-profile');
@@ -56,3 +48,7 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
 });
 
 Route::get('/listing', [ListingController::class, 'index'])->name('listing');
+
+Route::group(['prefix' => 'images', 'middleware' => 'auth'], function () {
+    Route::delete('/delete/{id}', [ImageController::class, 'delete'])->name('images.delete');
+});

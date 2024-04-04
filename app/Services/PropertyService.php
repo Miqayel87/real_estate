@@ -59,7 +59,46 @@ class PropertyService
             }
         }
 
+        return $newProperty;
+    }
 
+    public function update($request, $id){
+        $propertyToUpdate = $this->getById($id);
+
+        $propertyToUpdate->fill([
+            'title' => $request->title,
+            'address' => $request->address,
+            'city' => $request->city,
+            'state' => $request->state,
+            'zip_code' => $request->zip_code,
+            'description' => $request->description,
+            'price' => $request->price,
+            'listing_type' => $request->listing_type,
+            'status' => true,
+            'type_id' => $request->type,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        $propertyToUpdate->save();
+
+        $this->featureService->deletePropertyFeatures($id, array_keys($request->features));
+
+        foreach ($request->features as $key => $value) {
+            $this->featureService->createOrUpdate($key, $propertyToUpdate->id, $value);
+        }
+
+        if ($request->file('images')) {
+            foreach ($request->file('images') as $image) {
+                $uploadedImage = $this->imageUploadService->uploadAndResize($image, '');
+
+                $propertyImage = new PropertyImage;
+                $propertyImage->image_id = $uploadedImage->id;
+                $propertyImage->property_id = $propertyToUpdate->id;
+                $propertyImage->save();
+            }
+        }
+
+        return $propertyToUpdate;
     }
 
     public function delete($id)
@@ -77,7 +116,7 @@ class PropertyService
 
     public function getById($id)
     {
-        return Property::where('id', $id)->with('features')->with('images')->where('status', 1)->first();
+        return Property::where('id', $id)->with('features')->with('images')->with('type')->where('status', 1)->first();
     }
 
     public function getN($n)

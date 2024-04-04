@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreatePropertyRequest;
-use App\Models\Feature;
 use App\Models\PropertyType;
 use App\Services\FeatureService;
 use App\Services\LocationService;
@@ -45,18 +43,37 @@ class PropertyController extends Controller
 
     public function store(Request $request)
     {
-        $this->propertyService->create($request);
+        $newProperty = $this->propertyService->create($request);
+        return redirect()->route('property.show', $newProperty->id);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $this->propertyService->delete($id);
+        return back();
     }
 
-    public function update(){
-
+    public function update(Request $request, $id)
+    {
+        $this->propertyService->update($request, $id);
+        return back();
     }
 
-    public function edit(){
+    public function edit($id)
+    {
+        $propertyToEdit = $this->propertyService->getById($id);
 
+        $hasValueFeatures = $this->featureService->getFeaturesWithValue();
+        $noValueFeatures = $this->featureService->getFeaturesWithNoValue();
+
+        $types = PropertyType::all();
+
+        return view('edit-property', [
+            'property' => $propertyToEdit,
+            "hasValueFeatures" => $hasValueFeatures,
+            'noValueFeatures' => $noValueFeatures,
+            "listingTypes" => $this->propertyService::LISTING_TYPES,
+            "types" => $types
+        ]);
     }
 }

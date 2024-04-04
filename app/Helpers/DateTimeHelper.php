@@ -10,7 +10,6 @@ class DateTimeHelper
     {
         $date1 = Carbon::parse($date);
         $date2 = Carbon::now();
-
         $diff = $date1->diff($date2);
 
         $years = $diff->y;
@@ -18,19 +17,17 @@ class DateTimeHelper
         $hours = $diff->h;
         $minutes = $diff->i;
 
-        if ($minutes > 60) {
-            if ($hours > 24) {
-                if ($days > 365) {
-                    return $years.' years ago';
-                } else {
-                    return $days.' days ago';
-                }
-            } else {
-                return $hours.' hours ago';
-            }
-        } else {
-            return $minutes.' min ago';
+        if($years){
+            return $years.' y ago';
         }
-
+        else if($days){
+            return $days.' d ago';
+        }
+        else if($hours){
+            return $hours.' h ago';
+        }
+        else {
+            return $minutes.' m ago';
+        }
     }
 }
