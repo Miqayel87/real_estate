@@ -129,7 +129,7 @@
 
                     <!-- Logo -->
                     <div id="logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""></a>
+                        <a href="{{route('home')}}"><img src="{{asset('images/logo.png')}}" alt=""></a>
                     </div>
 
 
@@ -156,7 +156,7 @@
                                 </ul>
                             </li>
 
-                            <li><a href="#">Listings</a>
+                            <li><a href="{{route('listing')}}">Listings</a>
                                 <ul>
                                     <li><a href="#">List Layout</a>
                                         <ul>

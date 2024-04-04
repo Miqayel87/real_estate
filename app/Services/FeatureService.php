@@ -95,4 +95,9 @@ class FeatureService
             ->delete();
     }
 
+    public function getByName($name)
+    {
+        return Feature::where('name', $name)->first();
+    }
+
 }

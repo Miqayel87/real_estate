@@ -44,7 +44,8 @@
 
                 <!-- Main Search Input -->
                 <div class="main-search-input margin-bottom-35">
-                    <input type="text" class="ico-01" placeholder="Enter address e.g. street, city and state or zip" value=""/>
+                    <input type="text" class="ico-01" placeholder="Enter address e.g. street, city and state or zip"
+                           value=""/>
                     <button class="button">Search</button>
                 </div>
 
@@ -57,7 +58,7 @@
                             <label>Sort by:</label>
 
                             <div class="sort-by-select">
-                                <select data-placeholder="Default order" class="chosen-select-no-single" >
+                                <select data-placeholder="Default order" class="chosen-select-no-single">
                                     <option>Default Order</option>
                                     <option>Price Low to High</option>
                                     <option>Price High to Low</option>
@@ -98,7 +99,7 @@
                                 </div>
 
                                 <div class="listing-carousel">
-                                   @foreach($property->images as $image)
+                                    @foreach($property->images as $image)
                                         <div><img src="{{asset('storage/resized/'.$image->name)}}" alt=""></div>
                                     @endforeach
                                 </div>
@@ -108,9 +109,11 @@
 
                                 <div class="listing-title">
                                     <h4><a href="#">{{$property->title}}</a></h4>
-                                    <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom" class="listing-address popup-gmaps">
+                                    <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom"
+                                       class="listing-address popup-gmaps">
                                         <i class="fa fa-map-marker"></i>
-                                        {{$property->zip_code}} {{$property->address}} {{$property->city}}, {{$property->state}}
+                                        {{$property->zip_code}} {{$property->address}} {{$property->city}}
+                                        , {{$property->state}}
                                     </a>
 
                                     <a href="single-property-page-1.html" class="details button border">Details</a>
@@ -118,7 +121,7 @@
 
                                 <ul class="listing-details">
                                     @foreach($property->features as $feature)
-                                        @if($feature->has_value)
+                                        @if($feature->has_value && $feature->pivot->value)
                                             <li>{{$feature->pivot->value}} {{$feature->name}} </li>
                                         @endif
                                     @endforeach
@@ -130,7 +133,6 @@
                                 </div>
 
                             </div>
-
                         </div>
                     @endforeach
                     <!-- Listing Item / End -->
@@ -173,7 +175,7 @@
                         <div class="row with-forms">
                             <!-- Status -->
                             <div class="col-md-12">
-                                <select data-placeholder="Any Status" class="chosen-select-no-single" >
+                                <select data-placeholder="Any Status" class="chosen-select-no-single">
                                     <option>Any Status</option>
                                     <option>For Sale</option>
                                     <option>For Rent</option>
@@ -187,7 +189,7 @@
                         <div class="row with-forms">
                             <!-- Type -->
                             <div class="col-md-12">
-                                <select data-placeholder="Any Type" class="chosen-select-no-single" >
+                                <select data-placeholder="Any Type" class="chosen-select-no-single">
                                     <option>Any Type</option>
                                     <option>Apartments</option>
                                     <option>Houses</option>
@@ -204,7 +206,7 @@
                         <div class="row with-forms">
                             <!-- States -->
                             <div class="col-md-12">
-                                <select data-placeholder="All States" class="chosen-select" >
+                                <select data-placeholder="All States" class="chosen-select">
                                     <option>All States</option>
                                     <option>Alabama</option>
                                     <option>Alaska</option>
@@ -266,7 +268,7 @@
                         <div class="row with-forms">
                             <!-- Cities -->
                             <div class="col-md-12">
-                                <select data-placeholder="All Cities" class="chosen-select" >
+                                <select data-placeholder="All Cities" class="chosen-select">
                                     <option>All Cities</option>
                                     <option>New York</option>
                                     <option>Los Angeles</option>
@@ -293,7 +295,7 @@
 
                             <!-- Min Area -->
                             <div class="col-md-6">
-                                <select data-placeholder="Beds" class="chosen-select-no-single" >
+                                <select data-placeholder="Beds" class="chosen-select-no-single">
                                     <option label="blank"></option>
                                     <option>Beds (Any)</option>
                                     <option>1</option>
@@ -306,7 +308,7 @@
 
                             <!-- Max Area -->
                             <div class="col-md-6">
-                                <select data-placeholder="Baths" class="chosen-select-no-single" >
+                                <select data-placeholder="Baths" class="chosen-select-no-single">
                                     <option label="blank"></option>
                                     <option>Baths (Any)</option>
                                     <option>1</option>
@@ -339,9 +341,9 @@
                         </div>
 
 
-
                         <!-- More Search Options -->
-                        <a href="#" class="more-search-options-trigger margin-bottom-10 margin-top-30" data-open-title="Additional Features" data-close-title="Additional Features"></a>
+                        <a href="#" class="more-search-options-trigger margin-bottom-10 margin-top-30"
+                           data-open-title="Additional Features" data-close-title="Additional Features"></a>
 
                         <div class="more-search-options relative">
 
@@ -354,7 +356,7 @@
                                 <input id="check-3" type="checkbox" name="check">
                                 <label for="check-3">Swimming Pool</label>
 
-                                <input id="check-4" type="checkbox" name="check" >
+                                <input id="check-4" type="checkbox" name="check">
                                 <label for="check-4">Central Heating</label>
 
                                 <input id="check-5" type="checkbox" name="check">

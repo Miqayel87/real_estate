@@ -45,7 +45,7 @@ class PropertyService
         $newProperty->save();
 
         foreach ($request->features as $key => $value) {
-            $this->featureService->create($key, $newProperty->id, $value);
+            $this->featureService->createOrUpdate($key, $newProperty->id, $value);
         }
 
         if ($request->file('images')) {

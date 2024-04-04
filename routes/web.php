@@ -8,6 +8,7 @@ use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,27 +21,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/login-register', function () {
-    return view('login-register');
-})->name('login');
-
-Route::get('/listing', function () {
-    return view('listing');
-})->name('listing');
-
-Route::get('/my-profile', function () {
-    return view('my-profile');
-})->name('my-profile');
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Auth::routes();
-
-Route::get('/registration', [RegistrationController::class, 'showRegistrationForm'])->name('showRegistrationForm');
-Route::post('/signUp', [RegistrationController::class, 'signUp'])->name('sign-up');
-
 Route::resource('property', PropertyController::class);
+//Route::resource('property', PropertyController::class)->only([
+//    'create',
+//    'update',
+//    'edit',
+//    'destroy'
+//])->middleware('auth');
 
 Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::get('/', [UserController::class, 'index'])->name('my-profile');
@@ -52,3 +42,10 @@ Route::get('/listing', [ListingController::class, 'index'])->name('listing');
 Route::group(['prefix' => 'images', 'middleware' => 'auth'], function () {
     Route::delete('/delete/{id}', [ImageController::class, 'delete'])->name('images.delete');
 });
+
+Route::get('/registration', [RegistrationController::class, 'showRegistrationForm'])->name('showRegistrationForm');
+Route::post('/signUp', [RegistrationController::class, 'signUp'])->name('sign-up');
+//
+//Route::post('/signUp', function(Request $request){
+//    dd($request);
+//})->name('sign-up');

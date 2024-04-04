@@ -30,6 +30,7 @@ class RegistrationService
      */
     public function signUp(Request $request): User
     {
+        dd($request);
         $newUser = new User;
 
         $newUser->fill([

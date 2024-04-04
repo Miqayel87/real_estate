@@ -35,6 +35,16 @@
                                 details section. A password will be automatically emailed to you.</p>
                         </div>
 
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li style="color: red">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <!-- Section -->
                         <h3>Basic Information</h3>
                         <div class="submit-section">
