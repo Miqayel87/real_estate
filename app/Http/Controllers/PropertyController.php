@@ -14,7 +14,6 @@ use App\Services\PropertyService;
 
 class PropertyController extends Controller
 {
-
     public function __construct()
     {
         $this->propertyService = new PropertyService;
@@ -62,7 +61,7 @@ class PropertyController extends Controller
     public function update(PropertyRequest $request, $id)
     {
         $this->propertyService->update($request, $id);
-        return back();
+        return redirect()->route('property.show', $id);
     }
 
     public function edit($id)
@@ -83,5 +82,12 @@ class PropertyController extends Controller
             "listingTypes" => $this->propertyService::LISTING_TYPES,
             "types" => $types
         ]);
+    }
+
+    public function activate($id)
+    {
+        $this->authorize('activate', $this->propertyService->getById($id));
+        $this->propertyService->activate($id);
+        return back();
     }
 }

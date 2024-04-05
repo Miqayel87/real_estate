@@ -1348,7 +1348,7 @@ $(document).ready(function(){
 
 		    var cardQty = document.querySelector(".qtyTotal");
 		    cardQty.innerHTML = tot;
-		} 
+		}
 		qtySum();
 
 		$(function() {

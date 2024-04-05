@@ -18,13 +18,13 @@
                             <h2>Find Your Dream Home</h2>
 
                             <!-- Main Search -->
-                            <form class="main-search-form">
+                            <form method="get" action="{{route('listing.search')}}" class="main-search-form">
 
                                 <!-- Type -->
                                 <div class="search-type">
                                     <label class="active"><input class="first-tab" name="tab" checked="checked" type="radio">Any Status</label>
-                                    <label><input name="tab" type="radio">For Sale</label>
-                                    <label><input name="tab" type="radio">For Rent</label>
+                                    <label><input name="listing_type" type="radio">For Sale</label>
+                                    <label><input name="listing_type" type="radio">For Rent</label>
                                     <div class="search-type-arrow"></div>
                                 </div>
 
@@ -34,7 +34,7 @@
 
                                     <!-- Main Search Input -->
                                     <div class="main-search-input larger-input">
-                                        <input type="text" class="ico-01" id="autocomplete-input" placeholder="Enter address e.g. street, city and state or zip" value=""/>
+                                        <input name="keyword" type="text" class="ico-01" id="autocomplete-input" placeholder="Enter address e.g. street, city and state or zip" value=""/>
                                         <button class="button">Search</button>
                                     </div>
 
@@ -43,13 +43,10 @@
 
                                         <!-- Property Type -->
                                         <div class="col-md-4">
-                                            <select data-placeholder="Any Type" class="chosen-select-no-single" >
-                                                <option>Any Type</option>
-                                                <option>Apartments</option>
-                                                <option>Houses</option>
-                                                <option>Commercial</option>
-                                                <option>Garages</option>
-                                                <option>Lots</option>
+                                            <select name="type" data-placeholder="Any Type" class="chosen-select-no-single" >
+                                                @foreach($types as $type)
+                                                    <option value="{{$type->id}}">{{$type->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
 
@@ -59,7 +56,7 @@
 
                                             <!-- Select Input -->
                                             <div class="select-input">
-                                                <input type="text" placeholder="Min Price" data-unit="USD">
+                                                <input name="minPrice" type="text" placeholder="Min Price" data-unit="USD">
                                             </div>
                                             <!-- Select Input / End -->
 
@@ -71,7 +68,7 @@
 
                                             <!-- Select Input -->
                                             <div class="select-input">
-                                                <input type="text" placeholder="Max Price" data-unit="USD">
+                                                <input name="maxPrice" type="text" placeholder="Max Price" data-unit="USD">
                                             </div>
                                             <!-- Select Input / End -->
 
@@ -95,7 +92,7 @@
 
                                                     <!-- Select Input -->
                                                     <div class="select-input">
-                                                        <input type="text" placeholder="Min Area" data-unit="Sq Ft">
+                                                        <input name="minArea" type="text" placeholder="Min Area" data-unit="Sq Ft">
                                                     </div>
                                                     <!-- Select Input / End -->
 
@@ -106,7 +103,7 @@
 
                                                     <!-- Select Input -->
                                                     <div class="select-input">
-                                                        <input type="text" placeholder="Max Area" data-unit="Sq Ft">
+                                                        <input name="maxPrice" type="text" placeholder="Max Area" data-unit="Sq Ft">
                                                     </div>
                                                     <!-- Select Input / End -->
 
@@ -121,27 +118,27 @@
 
                                                 <!-- Min Area -->
                                                 <div class="col-md-6">
-                                                    <select data-placeholder="Beds" class="chosen-select-no-single" >
+                                                    <select name="bedrooms" data-placeholder="Beds" class="chosen-select-no-single" >
                                                         <option label="blank"></option>
                                                         <option>Beds (Any)</option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
                                                     </select>
                                                 </div>
 
                                                 <!-- Max Area -->
                                                 <div class="col-md-6">
-                                                    <select data-placeholder="Baths" class="chosen-select-no-single" >
+                                                    <select name="bathrooms" data-placeholder="Baths" class="chosen-select-no-single" >
                                                         <option label="blank"></option>
                                                         <option>Baths (Any)</option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                        <option>5</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
                                                     </select>
                                                 </div>
 
@@ -151,29 +148,10 @@
 
                                             <!-- Checkboxes -->
                                             <div class="checkboxes in-row">
-
-                                                <input id="check-2" type="checkbox" name="check">
-                                                <label for="check-2">Air Conditioning</label>
-
-                                                <input id="check-3" type="checkbox" name="check">
-                                                <label for="check-3">Swimming Pool</label>
-
-                                                <input id="check-4" type="checkbox" name="check" >
-                                                <label for="check-4">Central Heating</label>
-
-                                                <input id="check-5" type="checkbox" name="check">
-                                                <label for="check-5">Laundry Room</label>
-
-
-                                                <input id="check-6" type="checkbox" name="check">
-                                                <label for="check-6">Gym</label>
-
-                                                <input id="check-7" type="checkbox" name="check">
-                                                <label for="check-7">Alarm</label>
-
-                                                <input id="check-8" type="checkbox" name="check">
-                                                <label for="check-8">Window Covering</label>
-
+                                                @foreach($features as $feature)
+                                                    <input value="{{$feature->id}}" id="{{$feature->id}}" type="checkbox" name="features[]">
+                                                    <label for="{{$feature->id}}">{{$feature->name}}</label>
+                                                @endforeach
                                             </div>
                                             <!-- Checkboxes / End -->
 
@@ -213,58 +191,7 @@
                 <div class="carousel">
 
                    @foreach($properties as $property)
-                        <!-- Listing Item -->
-                        <div class="listing-item">
-
-                            <a href="{{route('property.show', $property->id)}}" class="listing-img-container">
-
-                                <div class="listing-badges">
-                                    <span class="featured">Featured</span>
-                                    <span>{{$property->listing_type}}</span>
-                                </div>
-
-                                <div class="listing-img-content">
-                                    <span class="listing-price">${{$property->price}} <i>${{number_format($property->price/array_search('Area', array_column($property->features->toArray(), 'name')), 2)}} / sq ft</i></span>
-                                    <span class="like-icon with-tip" data-tip-content="Add to Bookmarks"></span>
-                                    <span class="compare-button with-tip" data-tip-content="Add to Compare"></span>
-                                </div>
-
-                                <div class="listing-carousel">
-                                    @foreach($property->images as $image)
-                                        <div><img src="{{asset('storage/resized/'.$image->name)}}" alt=""></div>
-                                    @endforeach
-                                </div>
-                            </a>
-
-                            <div class="listing-content">
-
-                                <div class="listing-title">
-                                    <h4><a href="#">{{$property->title}}</a></h4>
-                                    <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom" class="listing-address popup-gmaps">
-                                        <i class="fa fa-map-marker"></i>
-                                        {{$property->zip_code}} {{$property->address}} {{$property->city}}, {{$property->state}}
-                                    </a>
-
-                                    <a href="single-property-page-1.html" class="details button border">Details</a>
-                                </div>
-
-                                <ul class="listing-details">
-                                    @foreach($property->features as $feature)
-                                        @if($feature->has_value)
-                                            <li>{{$feature->pivot->value}} {{$feature->name}} </li>
-                                        @endif
-                                    @endforeach
-                                </ul>
-
-                                <div class="listing-footer">
-                                    <a href="#"><i class="fa fa-user"></i> {{$property->user->username}}</a>
-                                    <span><i class="fa fa-calendar-o"></i> {{\App\Helpers\DateTimeHelper::diff($property->created_at)}}</span>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        <!-- Listing Item / End -->
+                        <x-property :property="$property"></x-property>
                    @endforeach
 
                 </div>

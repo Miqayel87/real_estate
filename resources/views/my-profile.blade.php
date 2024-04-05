@@ -62,7 +62,15 @@
 
                 </div>
             </div>
-
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li style="color: red">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="col-md-8">
                 <div class="row">
                     <form action="{{route('user.update')}}" method="post" enctype="multipart/form-data">
@@ -121,107 +129,80 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-
                     </form>
                 </div>
 
-            </div>
-            <div>
-                <h3> Submitted Properties</h3>
 
-                <div class="listings-container grid-layout">
-                    <!-- Listing Item -->
-                    @foreach($user->properties as $property)
-                        @if($property->status)
-                            <div class="listing-item">
-                                <div>
-                                    <form action="{{route('property.destroy', $property->id)}}"
-                                          method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="delete bg-danger">Delete</button>
-                                    </form>
-                                    <form action="{{route('property.edit', $property->id)}}"
-                                          method="get">
-                                        @csrf
-                                        <button class="edit bg-success">Edit</button>
-                                    </form>
-                                </div>
-                                @else
-                                    <div class="listing-item" style="opacity: 0.5">
-                                        <div>
-                                            <form action="{{route('property.update', $property->id)}}"
-                                                  method="post">
-                                                @csrf
-                                                @method('PUT')
-                                                <button class="edit bg-success">Activate</button>
-                                            </form>
-                                        </div>
-                                        @endif
+                <div>
+                    <h3> Submitted Properties</h3>
 
-                                        <a href="{{route('property.show', $property->id)}}"
-                                           class="listing-img-container">
+                    <div class="listings-container grid-layout">
+                        <!-- Listing Item -->
+                        @foreach($user->properties as $property)
+                            <div style="display: flex; flex-direction: column; margin-bottom: 50px">
+                                <x-property :property="$property"></x-property>
 
-                                            <div class="listing-badges">
-                                                <span class="featured">Featured</span>
-                                                <span>{{$property->listing_type}}</span>
-                                            </div>
-
-                                            <div class="listing-img-content">
-                                                <span class="listing-price">${{$property->price}} <i>${{number_format($property->price/array_search('Area', array_column($property->features->toArray(), 'name')), 2)}} / sq ft</i></span>
-                                                <span class="like-icon with-tip"
-                                                      data-tip-content="Add to Bookmarks"></span>
-                                                <span class="compare-button with-tip"
-                                                      data-tip-content="Add to Compare"></span>
-                                            </div>
-
-                                            <div class="listing-carousel">
-                                                @foreach($property->images as $image)
-                                                    <div><img src="{{asset('storage/resized/'.$image->name)}}"
-                                                              alt=""></div>
-                                                @endforeach
-                                            </div>
-                                        </a>
-
-                                        <div class="listing-content">
-
-                                            <div class="listing-title">
-                                                <h4><a href="#">{{$property->title}}</a></h4>
-                                                <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom"
-                                                   class="listing-address popup-gmaps">
-                                                    <i class="fa fa-map-marker"></i>
-                                                    {{$property->zip_code}} {{$property->address}} {{$property->city}}
-                                                    , {{$property->state}}
-                                                </a>
-
-                                                <a href="single-property-page-1.html" class="details button border">Details</a>
-                                            </div>
-
-                                            <ul class="listing-details">
-                                                @foreach($property->features as $feature)
-                                                    @if($feature->has_value)
-                                                        <li>{{$feature->pivot->value}} {{$feature->name}} </li>
-                                                    @endif
-                                                @endforeach
-                                            </ul>
-
-                                            <div class="listing-footer">
-                                                <a href="#"><i class="fa fa-user"></i> {{$property->user->username}}
-                                                </a>
-                                                <span><i class="fa fa-calendar-o"></i> {{\App\Helpers\DateTimeHelper::diff($property->created_at)}}</span>
-                                            </div>
-                                        </div>
-
+                                @if($property->status)
+                                    <div class="action_container">
+                                        <form action="{{route('property.destroy', $property->id)}}"
+                                              method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="action_button action_delete">Delete</button>
+                                        </form>
+                                        <form action="{{route('property.edit', $property->id)}}"
+                                              method="get">
+                                            @csrf
+                                            <button class="action_button action_edit">Edit</button>
+                                        </form>
                                     </div>
-                                    @endforeach
-                                    <!-- Listing Item / End -->
+                                @else
+                                    <div class="action_container">
+                                        <form action="{{route('property.activate', $property->id)}}"
+                                              method="post">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button class="action_button action_activate">Activate</button>
+                                        </form>
+                                    </div>
+                                @endif
                             </div>
+                        @endforeach
+                        <!-- Listing Item / End -->
+                    </div>
+            </div>
 
-                </div>
 
             </div>
 
         </div>
+
+        <style>
+            .action_container {
+                display: flex;
+                padding: 0 15px;
+                gap: 20px;
+            }
+
+            .action_button{
+                font-size: 15px;
+                color: #FFFFFF;
+                border-radius: 10px;
+                border: none;
+                padding: 5px 10px ;
+            }
+
+            .action_delete{
+                background-color: #bf2f29;
+            }
+
+            .action_edit{
+                background-color: #0b7bb5;
+            }
+
+            .action_activate{
+                background-color: #79ba38;
+            }
+        </style>
 @endsection

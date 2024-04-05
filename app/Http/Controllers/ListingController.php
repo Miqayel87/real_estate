@@ -15,7 +15,13 @@ class ListingController extends Controller
 
     public function index()
     {
-        $properties = $this->propertyService->getAll();
+        $properties = $this->propertyService->getAllWithPagination();
+        return view('listing', ['properties' => $properties]);
+    }
+
+    public function search(Request $request)
+    {
+        $properties = $this->propertyService->search($request);
         return view('listing', ['properties' => $properties]);
     }
 }

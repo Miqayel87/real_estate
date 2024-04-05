@@ -35,4 +35,9 @@ class PropertyPolicy
         return $user->id === $property->user_id;
     }
 
+    public function activate(User $user, Property $property)
+    {
+        return $user->id === $property->user_id;
+    }
+
 }

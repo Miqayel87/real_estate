@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'registration')
+@section('title', 'login-register')
 
 @section('content')
 
@@ -47,48 +47,51 @@
                 <div class="my-account style-1 margin-top-5 margin-bottom-40">
 
                     <ul class="tabs-nav">
-                        <li class=""><a href="{{route('login')}}">Log In</a></li>
                         <li><a href="{{route('registration')}}">Register</a></li>
+                        <li class=""><a href="{{route('login')}}">Log In</a></li>
                     </ul>
 
                     <div class="tabs-container alt">
+                        <!-- Register -->
+                        <div class="tab-content" id="tab2" style="display: none;">
 
-                        <!-- Login -->
-                        <div class="tab-content" id="tab1" style="display: none;">
-                            <form method="post" class="login" action="{{route('login')}}">
+                            <form method="POST" class="register" action="{{route('sign-up')}}">
                                 @csrf
                                 <p class="form-row form-row-wide">
-                                    <label for="username">Username:
+                                    <label for="username2">Username:
                                         <i class="im im-icon-Male"></i>
-                                        <input type="text" class="input-text" name="username" id="username" value=""/>
+                                        <input type="text" class="input-text" name="username" id="username2" value=""/>
                                     </label>
                                 </p>
 
                                 <p class="form-row form-row-wide">
-                                    <label for="password">Password:
+                                    <label for="email2">Email Address:
+                                        <i class="im im-icon-Mail"></i>
+                                        <input type="text" class="input-text" name="email" id="email2" value=""/>
+                                    </label>
+                                </p>
+
+                                <p class="form-row form-row-wide">
+                                    <label for="password1">Password:
                                         <i class="im im-icon-Lock-2"></i>
-                                        <input class="input-text" type="password" name="password" id="password"/>
+                                        <input class="input-text" type="password" name="password" id="password1"/>
+                                    </label>
+                                </p>
+
+                                <p class="form-row form-row-wide">
+                                    <label for="password2">Repeat Password:
+                                        <i class="im im-icon-Lock-2"></i>
+                                        <input class="input-text" type="password" name="password_confirmation"
+                                               id="password2"/>
                                     </label>
                                 </p>
 
                                 <p class="form-row">
-                                    <input type="submit" class="button border margin-top-10" name="login"
-                                           value="Login"/>
-
-                                    <label for="rememberme" class="rememberme">
-                                        <input name="remember" type="checkbox" id="rememberme" value="forever"/>
-                                        Remember Me</label>
-                                </p>
-
-                                <p class="lost_password">
-                                    <a href="#">Lost Your Password?</a>
+                                    <input type="submit" class="button border fw margin-top-10" name="register"
+                                           value="Register"/>
                                 </p>
 
                             </form>
-                        </div>
-
-
-
                         </div>
 
                         @if ($errors->any())

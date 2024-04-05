@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
+use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -17,7 +19,7 @@ class UserController extends Controller
         return view("my-profile", ['user' => $user]);
     }
 
-    public function update(Request $request){
+    public function update(UserRequest $request){
         $this->userService->update($request);
 
         return back();

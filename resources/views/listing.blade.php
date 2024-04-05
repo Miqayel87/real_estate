@@ -83,79 +83,51 @@
                 <div class="listings-container grid-layout">
                     <!-- Listing Item -->
                     @foreach($properties as $property)
-                        <div class="listing-item">
-
-                            <a href="{{route('property.show', $property->id)}}" class="listing-img-container">
-
-                                <div class="listing-badges">
-                                    <span class="featured">Featured</span>
-                                    <span>{{$property->listing_type}}</span>
-                                </div>
-
-                                <div class="listing-img-content">
-                                    <span class="listing-price">${{$property->price}} <i>${{number_format($property->price/array_search('Area', array_column($property->features->toArray(), 'name')), 2)}} / sq ft</i></span>
-                                    <span class="like-icon with-tip" data-tip-content="Add to Bookmarks"></span>
-                                    <span class="compare-button with-tip" data-tip-content="Add to Compare"></span>
-                                </div>
-
-                                <div class="listing-carousel">
-                                    @foreach($property->images as $image)
-                                        <div><img src="{{asset('storage/resized/'.$image->name)}}" alt=""></div>
-                                    @endforeach
-                                </div>
-                            </a>
-
-                            <div class="listing-content">
-
-                                <div class="listing-title">
-                                    <h4><a href="#">{{$property->title}}</a></h4>
-                                    <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom"
-                                       class="listing-address popup-gmaps">
-                                        <i class="fa fa-map-marker"></i>
-                                        {{$property->zip_code}} {{$property->address}} {{$property->city}}
-                                        , {{$property->state}}
-                                    </a>
-
-                                    <a href="single-property-page-1.html" class="details button border">Details</a>
-                                </div>
-
-                                <ul class="listing-details">
-                                    @foreach($property->features as $feature)
-                                        @if($feature->has_value && $feature->pivot->value)
-                                            <li>{{$feature->pivot->value}} {{$feature->name}} </li>
-                                        @endif
-                                    @endforeach
-                                </ul>
-
-                                <div class="listing-footer">
-                                    <a href="#"><i class="fa fa-user"></i> {{$property->user->username}}</a>
-                                    <span><i class="fa fa-calendar-o"></i> {{\App\Helpers\DateTimeHelper::diff($property->created_at)}}</span>
-                                </div>
-
-                            </div>
-                        </div>
+                       <x-property :property="$property"></x-property>
                     @endforeach
                     <!-- Listing Item / End -->
                 </div>
 
+{{--                <!-- Pagination -->--}}
+{{--                <div class="pagination-container margin-top-20">--}}
+{{--                    <nav class="pagination">--}}
+{{--                        <ul>--}}
+{{--                            <li><a href="#" class="current-page">1</a></li>--}}
+{{--                            <li><a href="#">2</a></li>--}}
+{{--                            <li><a href="#">3</a></li>--}}
+{{--                            <li class="blank">...</li>--}}
+{{--                            <li><a href="#">22</a></li>--}}
+{{--                        </ul>--}}
+{{--                    </nav>--}}
+
+{{--                    <nav class="pagination-next-prev">--}}
+{{--                        <ul>--}}
+{{--                            <li><a href="#" class="prev">Previous</a></li>--}}
+{{--                            <li><a href="#" class="next">Next</a></li>--}}
+{{--                        </ul>--}}
+{{--                    </nav>--}}
+{{--                </div>--}}
                 <!-- Pagination -->
+
                 <div class="pagination-container margin-top-20">
                     <nav class="pagination">
                         <ul>
-                            <li><a href="#" class="current-page">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li class="blank">...</li>
-                            <li><a href="#">22</a></li>
+                            <!-- Display pagination links dynamically -->
+                           {{$properties->links('pagination::bootstrap-4')}}
                         </ul>
                     </nav>
 
-                    <nav class="pagination-next-prev">
-                        <ul>
-                            <li><a href="#" class="prev">Previous</a></li>
-                            <li><a href="#" class="next">Next</a></li>
-                        </ul>
-                    </nav>
+{{--                    <!-- Optionally, you can include previous and next buttons -->--}}
+{{--                    <nav class="pagination-next-prev">--}}
+{{--                        <ul>--}}
+{{--                            <li class="{{ ($properties->currentPage() == 1) ? 'disabled' : '' }}">--}}
+{{--                                <a href="{{ $properties->previousPageUrl() }}" class="prev">Previous</a>--}}
+{{--                            </li>--}}
+{{--                            <li class="{{ ($properties->currentPage() == $properties->lastPage()) ? 'disabled' : '' }}">--}}
+{{--                                <a href="{{ $properties->nextPageUrl() }}" class="next">Next</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </nav>--}}
                 </div>
                 <!-- Pagination / End -->
 
