@@ -2,13 +2,13 @@
 
 namespace App\Helpers;
 
-use Illuminate\Contracts\Validation\Rule;
-
-class SanitizeInput implements Rule
+class SanitizeInput
 {
-    public function passes($attribute, $value)
+    public function passes($value)
     {
-        $sanitizedValue = strip_tags($value);
+        $sanitizedValue = $value;
+
+        $sanitizedValue = strip_tags($sanitizedValue);
 
         $sanitizedValue = $this->removeJavascript($sanitizedValue);
 

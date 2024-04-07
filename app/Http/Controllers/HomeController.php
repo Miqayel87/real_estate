@@ -24,7 +24,8 @@ class HomeController extends Controller
         return view('index', [
             'properties' => $properties,
             'features' => $features,
-            'types' => $types
+            'types' => $types,
+            'listingTypes' => $this->propertyService::LISTING_TYPES
         ]);
     }
 }

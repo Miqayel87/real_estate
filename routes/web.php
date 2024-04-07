@@ -21,31 +21,33 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => 'sanitize'], function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+    Auth::routes();
 
-Route::get('listing/search', [ListingController::class, 'search'])->name('listing.search');
-Route::resource('property', PropertyController::class);
-Route::resource('property', PropertyController::class)->only([
-    'create',
-    'update',
-    'destroy'
-])->middleware('auth');
-Route::patch('property/{id}/activate', [PropertyController::class, 'activate'])->middleware('auth')->name('property.activate');
+    Route::get('listing/search', [ListingController::class, 'search'])->name('listing.search');
+    Route::resource('property', PropertyController::class);
+    Route::resource('property', PropertyController::class)->only([
+        'create',
+        'update',
+        'destroy'
+    ])->middleware('auth');
+    Route::patch('property/{id}/activate', [PropertyController::class, 'activate'])->middleware('auth')->name('property.activate');
 
 
-Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
-    Route::get('/', [UserController::class, 'index'])->name('my-profile');
-    Route::put('/update', [UserController::class, 'update'])->name('user.update');
+    Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
+        Route::get('/', [UserController::class, 'index'])->name('my-profile');
+        Route::put('/update', [UserController::class, 'update'])->name('user.update');
+    });
+
+    Route::get('/listing', [ListingController::class, 'index'])->name('listing');
+
+    Route::group(['prefix' => 'images', 'middleware' => 'auth'], function () {
+        Route::delete('/delete/{id}', [ImageController::class, 'delete'])->name('images.delete');
+    });
+
+    Route::get('/registration', [RegistrationController::class, 'showRegistrationForm'])->name('registration');
+    Route::post('/signUp', [RegistrationController::class, 'signUp'])->name('sign-up');
+
 });
-
-Route::get('/listing', [ListingController::class, 'index'])->name('listing');
-
-Route::group(['prefix' => 'images', 'middleware' => 'auth'], function () {
-    Route::delete('/delete/{id}', [ImageController::class, 'delete'])->name('images.delete');
-});
-
-Route::get('/registration', [RegistrationController::class, 'showRegistrationForm'])->name('registration');
-Route::post('/signUp', [RegistrationController::class, 'signUp'])->name('sign-up');
-

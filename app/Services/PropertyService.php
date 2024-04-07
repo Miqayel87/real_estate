@@ -132,16 +132,22 @@ class PropertyService
             $result->where('type_id', $request->type);
         }
 
+        if ($request->listing_type) {
+            $result->where('listing_type', $request->listing_type);
+        }
+
         if ($request->minPrice) {
             $result->where('price', '>=', $request->minPrice);
         }
 
         if ($request->maxPrice) {
-            $result->where('price', '>=', $request->maxPrice);
+            $result->where('price', '<=', $request->maxPrice);
         }
 
         if ($request->minArea) {
-            $result->where('area', '>=', $request->minArea);
+            $result->whereHas('features', function ($query) use ($request) {
+                $query->where('name', 'Area')->where('value', '>=', ((int)$request->minArea));
+            });
         }
 
         if ($request->maxArea) {
@@ -150,20 +156,20 @@ class PropertyService
 
         if ($request->bedrooms) {
             $result->whereHas('features', function ($query) use ($request) {
-                $query->where('name', 'Bedrooms');
+                $query->where('name', 'Bedrooms')->where('value', ((int)$request->minArea));
             });
         }
 
         if ($request->bathrooms) {
             $result->whereHas('features', function ($query) use ($request) {
-                $query->where('name', 'Bathrooms');
+                $query->where('name', 'Bathrooms')->where('value', ((int)$request->minArea));
             });
         }
 
         if ($request->features) {
             $result->whereHas('features', function ($query) use ($request) {
-                $query->whereIn('features.id', $request->features);
-            });
+                $query->whereIn('features.id', array_map('intval', $request->features));
+            }); 
         }
 
         return $result->paginate(10);
