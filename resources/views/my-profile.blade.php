@@ -134,43 +134,7 @@
                 </div>
 
 
-                <div>
-                    <h3> Submitted Properties</h3>
 
-                    <div class="listings-container grid-layout">
-                        <!-- Listing Item -->
-                        @foreach($user->properties as $property)
-                            <div style="display: flex; flex-direction: column; margin-bottom: 50px">
-                                <x-property :property="$property"></x-property>
-
-                                @if($property->status)
-                                    <div class="action_container">
-                                        <form action="{{route('property.destroy', $property->id)}}"
-                                              method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="action_button action_delete">Delete</button>
-                                        </form>
-                                        <form action="{{route('property.edit', $property->id)}}"
-                                              method="get">
-                                            @csrf
-                                            <button class="action_button action_edit">Edit</button>
-                                        </form>
-                                    </div>
-                                @else
-                                    <div class="action_container">
-                                        <form action="{{route('property.activate', $property->id)}}"
-                                              method="post">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button class="action_button action_activate">Activate</button>
-                                        </form>
-                                    </div>
-                                @endif
-                            </div>
-                        @endforeach
-                        <!-- Listing Item / End -->
-                    </div>
             </div>
 
 

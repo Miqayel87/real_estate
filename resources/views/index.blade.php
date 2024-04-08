@@ -104,7 +104,7 @@
 
                                                     <!-- Select Input -->
                                                     <div class="select-input">
-                                                        <input name="maxPrice" type="text" placeholder="Max Area" data-unit="Sq Ft">
+                                                        <input name="maxArea" type="text" placeholder="Max Area" data-unit="Sq Ft">
                                                     </div>
                                                     <!-- Select Input / End -->
 

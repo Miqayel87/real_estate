@@ -31,7 +31,7 @@ class UserRequest extends FormRequest
                 'string',
                 'max:255',
                 Rule::unique('users', 'username')->ignore(Auth::user()->id),
-            ],            'name' => 'nullable|string|max:255',
+            ], 'name' => 'nullable|string|max:255',
             'title' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
             'email' => [

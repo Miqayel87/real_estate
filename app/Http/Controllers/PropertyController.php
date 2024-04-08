@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreatePropertyRequest;
 use App\Http\Requests\PropertyRequest;
-use App\Models\Feature;
-use App\Models\Property;
 use App\Models\PropertyType;
 use App\Services\FeatureService;
 use App\Services\LocationService;
-use Illuminate\Http\Request;
 use App\Services\PropertyService;
 
 class PropertyController extends Controller
@@ -52,7 +48,7 @@ class PropertyController extends Controller
 
     public function destroy($id)
     {
-        $this->authorize('update', $this->propertyService->getById($id));
+        $this->authorize('delete', $this->propertyService->getById($id));
 
         $this->propertyService->delete($id);
         return back();
@@ -82,6 +78,13 @@ class PropertyController extends Controller
             "listingTypes" => $this->propertyService::LISTING_TYPES,
             "types" => $types
         ]);
+    }
+
+    public function hide($id)
+    {
+        $this->authorize('hide', $this->propertyService->getById($id));
+        $this->propertyService->hide($id);
+        return back();
     }
 
     public function activate($id)

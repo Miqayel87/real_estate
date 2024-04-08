@@ -414,8 +414,8 @@
                             <ul>
                                 <li><a href="{{route('my-profile')}}"><i class="sl sl-icon-user"></i> My Profile</a>
                                 </li>
-                                <li><a href="my-bookmarks.html"><i class="sl sl-icon-star"></i> Bookmarks</a></li>
-                                <li><a href="my-properties.html"><i class="sl sl-icon-docs"></i> My Properties</a></li>
+                                <li><a href="{{route('bookmark.index')}}"><i class="sl sl-icon-star"></i> Bookmarks</a></li>
+                                <li><a href="{{route('my-properties')}}"><i class="sl sl-icon-docs"></i> My Properties</a></li>
                                 <li id="logout"><a href="#"><i class="sl sl-icon-power"></i> Log Out</a></li>
                                 <form id="logoutForm" style="display: none" action="{{route('logout')}}"
                                       method="POST">@csrf</form>

@@ -2,9 +2,13 @@
 
 namespace App\Services;
 
+use App\Http\Requests\PropertyRequest;
 use App\Models\Property;
 use App\Models\PropertyImage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class PropertyService
 {
@@ -24,7 +28,14 @@ class PropertyService
         $this->imageUploadService = new ImageUploadService;
     }
 
-    public function create($request)
+
+    /**
+     * Create a new property.
+     *
+     * @param PropertyRequest $request The request data containing property details.
+     * @return Property The created property.
+     */
+    public function create(PropertyRequest $request): Property
     {
         $newProperty = new Property;
 
@@ -62,7 +73,14 @@ class PropertyService
         return $newProperty;
     }
 
-    public function update($request, $id)
+    /**
+     * Update an existing property.
+     *
+     * @param PropertyRequest $request The request data containing updated property details.
+     * @param int $id The ID of the property to update.
+     * @return Property The updated property.
+     */
+    public function update(PropertyRequest $request, int $id): Property
     {
         $propertyToUpdate = $this->getById($id);
 
@@ -102,25 +120,53 @@ class PropertyService
         return $propertyToUpdate;
     }
 
-    public function delete($id)
+    /**
+     * Delete a property.
+     *
+     * @param int $id The ID of the property to delete.
+     * @return bool Whether the property was successfully deleted.
+     */
+    public function delete(int $id): bool
     {
         $propertyToDelete = $this->getById($id);
-        $propertyToDelete->status = 0;
-        $propertyToDelete->save();
-
-        return $propertyToDelete;
+        return $propertyToDelete->delete();
     }
 
-    public function activate($id)
+    /**
+     * Hide a property.
+     *
+     * @param int $id The ID of the property to hide.
+     * @return Property The hidden property.
+     */
+    public function hide(int $id): Property
+    {
+        $propertyToHide = $this->getById($id);
+        $propertyToHide->status = 0;
+        $propertyToHide->save();
+        return $propertyToHide;
+    }
+
+    /**
+     * Activate a hidden property.
+     *
+     * @param int $id The ID of the property to activate.
+     * @return Property The activated property.
+     */
+    public function activate(int $id): Property
     {
         $propertyToActivate = $this->getById($id);
         $propertyToActivate->status = 1;
         $propertyToActivate->save();
-
         return $propertyToActivate;
     }
 
-    public function search($request)
+    /**
+     * Search properties based on given criteria.
+     *
+     * @param Request $request The request data containing search criteria.
+     * @return LengthAwarePaginator The paginated search results.
+     */
+    public function search(Request $request): LengthAwarePaginator
     {
         $result = Property::query()->where('status', 1)->with('features');
 
@@ -134,6 +180,14 @@ class PropertyService
 
         if ($request->listing_type) {
             $result->where('listing_type', $request->listing_type);
+        }
+
+        if ($request->state) {
+            $result->where('state', $request->state);
+        }
+
+        if ($request->city) {
+            $result->where('city', $request->city);
         }
 
         if ($request->minPrice) {
@@ -151,7 +205,9 @@ class PropertyService
         }
 
         if ($request->maxArea) {
-            $result->where('area', '>=', $request->maxArea);
+            $result->whereHas('features', function ($query) use ($request) {
+                $query->where('name', 'Area')->where('value', '<=', ((int)$request->maxArea));
+            });
         }
 
         if ($request->bedrooms) {
@@ -169,29 +225,68 @@ class PropertyService
         if ($request->features) {
             $result->whereHas('features', function ($query) use ($request) {
                 $query->whereIn('features.id', array_map('intval', $request->features));
-            }); 
+            });
+        }
+
+        if ($request->sorting) {
+            switch ($request->sorting) {
+                case 'asc':
+                    $result->orderBy('created_at', 'asc');
+                    break;
+                case 'desc':
+                    $result->orderBy('created_at', 'desc');
+                    break;
+                case 'asc-price':
+                    $result->orderBy('price', 'asc');
+                    break;
+                case 'desc-price':
+                    $result->orderBy('price', 'desc');
+                    break;
+            }
         }
 
         return $result->paginate(10);
     }
 
-    public function getAll()
+    /**
+     * Get all properties.
+     *
+     * @return Collection The collection of properties.
+     */
+    public function getAll(): Collection
     {
         return Property::orderBy('created_at', 'desc')->with('features')->with('images')->where('status', 1)->get();
     }
 
-    public function getAllWithPagination()
+    /**
+     * Get all properties with pagination.
+     *
+     * @return LengthAwarePaginator The paginated collection of properties.
+     */
+    public function getAllWithPagination(): LengthAwarePaginator
     {
         return Property::orderBy('created_at', 'desc')->with('features')->with('images')->where('status', 1)->paginate(10);
     }
 
-    public function getById($id)
+    /**
+     * Get a property by its ID.
+     *
+     * @param int $id The ID of the property.
+     * @return Property|null The property, or null if not found.
+     */
+    public function getById(int $id): ?Property
     {
         return Property::where('id', $id)->with('features')->with('images')->with('type')->first();
     }
 
-    public function getN($n)
+    /**
+     * Get N number of properties.
+     *
+     * @param int $n The number of properties to retrieve.
+     * @return Collection The collection of properties.
+     */
+    public function getN(int $n): Collection
     {
-        return Property::with('features')->with('images')->where('status', 1)->limit($n)->get();
+        return Property::with('features')->with('images')->where('status', 1)->orderBy('created_at', 'desc')->limit($n)->get();
     }
 }

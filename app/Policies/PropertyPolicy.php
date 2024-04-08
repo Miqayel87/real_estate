@@ -14,8 +14,8 @@ class PropertyPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Property  $property
+     * @param \App\Models\User $user
+     * @param \App\Models\Property $property
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function update(User $user, Property $property)
@@ -26,8 +26,8 @@ class PropertyPolicy
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Property  $property
+     * @param \App\Models\User $user
+     * @param \App\Models\Property $property
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(User $user, Property $property)
@@ -39,5 +39,11 @@ class PropertyPolicy
     {
         return $user->id === $property->user_id;
     }
+
+    public function hide(User $user, Property $property)
+    {
+        return $user->id === $property->user_id;
+    }
+
 
 }

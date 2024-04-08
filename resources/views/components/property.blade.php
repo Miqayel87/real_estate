@@ -8,10 +8,17 @@
             <span class="featured">Featured</span>
             <span>{{$property->listing_type}}</span>
         </div>
-
         <div class="listing-img-content">
             <span class="listing-price">${{$property->price}} <i>${{number_format($property->price/array_search('Area', array_column($property->features->toArray(), 'name')), 2)}} / sq ft</i></span>
-            <span class="like-icon with-tip" data-tip-content="Add to Bookmarks"></span>
+            @if(Auth::user())
+                @if(array_search($property->id, array_column(Auth::user()->bookmarks->toArray(), 'property_id')) !== false)
+                    <span data-id="{{$property->id}}" class="bookmark-liked like-icon with-tip liked"
+                          data-tip-content="Add to Bookmarks"></span>
+                @else
+                    <span data-id="{{$property->id}}" class="bookmark-empty like-icon with-tip"
+                          data-tip-content="Add to Bookmarks"></span>
+                @endif
+            @endif
             <span class="compare-button with-tip" data-tip-content="Add to Compare"></span>
         </div>
 
@@ -51,3 +58,8 @@
 
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
+
+

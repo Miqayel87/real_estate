@@ -10,8 +10,7 @@ class Property extends Model
     use HasFactory;
 
     protected $fillable = [
-        '_token', // Add _token to the fillable attributes
-        // Add other fillable attributes here
+        '_token',
         'title',
         'status',
         'type',
@@ -30,7 +29,6 @@ class Property extends Model
         'listing_type',
         'type_id',
         "user_id"
-        // Add other fillable attributes as needed
     ];
 
     public function type()
@@ -51,5 +49,10 @@ class Property extends Model
     public function features()
     {
         return $this->belongsToMany(Feature::class)->withPivot('value');
+    }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
     }
 }

@@ -11,8 +11,8 @@ class SanitizeMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse) $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
@@ -29,7 +29,7 @@ class SanitizeMiddleware
     private function sanitizeArrayRecursive($data, $sanitizer)
     {
         foreach ($data as $key => $value) {
-            if (is_array($value)) {
+            if (!is_null($value) && is_array($value)) {
                 $data[$key] = $this->sanitizeArrayRecursive($value, $sanitizer);
             } else {
                 $data[$key] = $sanitizer->passes($value);

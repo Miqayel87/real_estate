@@ -4,7 +4,13 @@ namespace App\Services;
 
 class LocationService
 {
-    function getLatLong($address)
+    /**
+     * Get latitude and longitude coordinates for a given address.
+     *
+     * @param string $address The address to get coordinates for.
+     * @return array|null An array containing latitude and longitude coordinates, or null if coordinates couldn't be retrieved.
+     */
+    public function getLatLong(string $address): ?array
     {
         $formattedAddress = urlencode($address);
         $opts = [

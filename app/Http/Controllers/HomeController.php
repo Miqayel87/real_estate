@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\PropertyType;
 use App\Services\FeatureService;
 use App\Services\PropertyService;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -17,7 +16,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $properties = $this->propertyService->getN(3);
+        $properties = $this->propertyService->getN(5);
         $features = $this->featureService->getFeaturesWithNoValue();
         $types = PropertyType::all();
 

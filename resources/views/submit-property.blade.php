@@ -241,9 +241,7 @@
 
 
                         <div class="divider"></div>
-                        <a href="#" class="button preview margin-top-5">Preview <i
-                                class="fa fa-arrow-circle-right"></i></a>
-                        <button type="submit">Submit</button>
+                        <button  class="button preview margin-top-5" type="submit">Submit</button>
                     </div>
                 </div>
             </form>

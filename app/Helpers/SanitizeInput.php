@@ -4,7 +4,12 @@ namespace App\Helpers;
 
 class SanitizeInput
 {
-    public function passes($value)
+    /**
+     * Sanitize the input value.
+     *
+     * @return string The sanitized value.
+     */
+    public function passes($value): string
     {
         $sanitizedValue = $value;
 
@@ -19,7 +24,13 @@ class SanitizeInput
         return $sanitizedValue;
     }
 
-    protected function removeJavascript($value)
+    /**
+     * Remove JavaScript tags from the input value.
+     *
+     * @param string $value The value to remove JavaScript tags from.
+     * @return string The value with JavaScript tags removed.
+     */
+    protected function removeJavascript(string $value): string
     {
         $pattern = '/<script\b[^>]*>(.*?)<\/script>/is';
         $sanitizedValue = preg_replace($pattern, '', $value);
@@ -27,7 +38,13 @@ class SanitizeInput
         return $sanitizedValue;
     }
 
-    protected function removeSqlInjection($value)
+    /**
+     * Remove SQL injection keywords and characters from the input value.
+     *
+     * @param string $value The value to remove SQL injection keywords from.
+     * @return string The value with SQL injection keywords removed.
+     */
+    protected function removeSqlInjection(string $value): string
     {
         $sqlKeywords = [
             'SELECT', 'INSERT', 'UPDATE', 'DELETE', 'DROP', 'UNION', 'ALTER', 'TRUNCATE', 'CREATE'
@@ -42,7 +59,12 @@ class SanitizeInput
         return $value;
     }
 
-    public function message()
+    /**
+     * Get the message for validation failure.
+     *
+     * @return string The validation failure message.
+     */
+    public function message(): string
     {
         return 'The :attribute is not properly sanitized.';
     }
