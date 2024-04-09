@@ -12,11 +12,6 @@ use Illuminate\Support\Collection;
 
 class PropertyService
 {
-    const STATUS = [
-        'active',
-        'inactive'
-    ];
-
     const LISTING_TYPES = [
         'For sale',
         'For rent'

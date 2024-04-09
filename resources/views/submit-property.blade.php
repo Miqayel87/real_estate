@@ -208,38 +208,6 @@
                         <!-- Section / End -->
 
 
-                        <!-- Section -->
-                        <h3>Contact Details</h3>
-                        <div class="submit-section">
-
-                            <!-- Row -->
-                            <div class="row with-forms">
-
-                                <!-- Name -->
-                                <div class="col-md-4">
-                                    <h5>Name</h5>
-                                    <input name="name" type="text">
-                                </div>
-
-                                <!-- Email -->
-                                <div class="col-md-4">
-                                    <h5>E-Mail</h5>
-                                    <input name="email" type="text">
-                                </div>
-
-                                <!-- Name -->
-                                <div class="col-md-4">
-                                    <h5>Phone <span>(optional)</span></h5>
-                                    <input name="phone" type="text">
-                                </div>
-
-                            </div>
-                            <!-- Row / End -->
-
-                        </div>
-                        <!-- Section / End -->
-
-
                         <div class="divider"></div>
                         <button  class="button preview margin-top-5" type="submit">Submit</button>
                     </div>
