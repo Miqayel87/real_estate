@@ -27,23 +27,6 @@
                 <!-- Submit Page -->
                 <div class="col-md-12">
                     <div class="submit-page">
-
-                        <div class="notification notice large margin-bottom-55">
-                            <h4>Don't Have an Account?</h4>
-                            <p>If you don't have an account you can create one by entering your email address in contact
-                                details section. A password will be automatically emailed to you.</p>
-                        </div>
-
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li style="color: red">{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
                         <!-- Section -->
                         <h3>Basic Information</h3>
                         <div class="submit-section">
@@ -52,9 +35,13 @@
                                 <h5>Property Title <i class="tip"
                                                       data-tip-content="Type title that will also contains an unique feature of your property (e.g. renovated, air contidioned)"></i>
                                 </h5>
-                                <input name="title" class="search-field" type="text" value=""/>
+                                <input name="title" class="search-field" type="text" value="{{old('title')}}"/>
+                                @if ($errors->any())
+                                    <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                        {{ $errors->first('title') }}
+                                    </div>
+                                @endif
                             </div>
-
                             <!-- Row -->
                             <div class="row with-forms">
 
@@ -93,7 +80,12 @@
                                                  data-tip-content="Type overall or monthly price if property is for rent"></i>
                                     </h5>
                                     <div class="select-input disabled-first-option">
-                                        <input name="price" type="text" data-unit="USD">
+                                        <input name="price" type="text" data-unit="USD" value="{{old('price')}}">
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                                {{ $errors->first('price') }}
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -105,6 +97,13 @@
 
 
                         <!-- Section -->
+                        <!-- Section -->
+                        <h3>Gallery</h3>
+                        <div class="submit-section">
+                            <form action="/file-upload" class="dropzone" ></form>
+                        </div>
+                        <!-- Section / End -->
+
                         <h3>Gallery</h3>
                         <div class="submit-section">
                             <form action="/file-upload" class="dropzone"></form>
@@ -126,25 +125,45 @@
                                 <!-- Address -->
                                 <div class="col-md-6">
                                     <h5>Address</h5>
-                                    <input name="address" type="text">
+                                    <input name="address" type="text" value="{{old('address')}}">
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                            {{ $errors->first('address') }}
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <!-- City -->
                                 <div class="col-md-6">
                                     <h5>City</h5>
-                                    <input name="city" type="text">
+                                    <input name="city" type="text" value="{{old('city')}}">
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                            {{ $errors->first('city') }}
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <!-- City -->
                                 <div class="col-md-6">
                                     <h5>State</h5>
-                                    <input name="state" type="text">
+                                    <input name="state" type="text" value="{{old('state')}}">
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                            {{ $errors->first('state') }}
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <!-- Zip-Code -->
                                 <div class="col-md-6">
                                     <h5>Zip-Code</h5>
-                                    <input name="zip_code" type="text">
+                                    <input name="zip_code" type="text" value="{{old('zip_code')}}">
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                            {{ $errors->first('zip_code') }}
+                                        </div>
+                                    @endif
                                 </div>
 
                             </div>
@@ -152,8 +171,6 @@
 
                         </div>
                         <!-- Section / End -->
-
-
                         <!-- Section -->
                         <h3>Detailed Information</h3>
                         <div class="submit-section">
@@ -162,7 +179,12 @@
                             <div class="form">
                                 <h5>Description</h5>
                                 <textarea name="description" class="WYSIWYG" cols="40" rows="3" id="summary"
-                                          spellcheck="true"></textarea>
+                                          spellcheck="true">{{old('description')}}</textarea>
+                                @if ($errors->any())
+                                    <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                        {{ $errors->first('description') }}
+                                    </div>
+                                @endif
                             </div>
 
                             <!-- Row -->
@@ -174,16 +196,27 @@
                                             <select name="features[{{$feature->id}}]" class="chosen-select-no-single">
                                                 <option label="blank"></option>
                                                 @foreach($hasValueFeatures['values'][$feature->name] as $value)
-                                                    <option value="{{$value}}">{{$value}}</option>
+                                                    <option {{ old('features.'.$feature->id) == $value ? 'selected' : '' }} value="{{$value}}">{{$value}}</option>
                                                 @endforeach
                                             </select>
+                                            @if ($errors->any())
+                                                <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                                    {{ $errors->first('features.'.$feature->id) }}
+                                                </div>
+                                            @endif
                                         </div>
                                     @else
                                         <div class="col-md-4">
                                             <h5>{{$feature->name}}</h5>
                                             <div class="select-input disabled-first-option">
-                                                <input name="features[{{$feature->id}}]" type="text" data-unit="Sq Ft">
+                                                <input value="{{old('features.'.$feature->id)}}"
+                                                       name="features[{{$feature->id}}]" type="text" data-unit="Sq Ft">
                                             </div>
+                                            @if ($errors->any())
+                                                <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                                    {{ $errors->first('features.'.$feature->id) }}
+                                                </div>
+                                            @endif
                                         </div>
                                     @endif
                                 @endforeach
@@ -196,9 +229,15 @@
                             <div class="checkboxes in-row margin-bottom-20">
 
                                 @foreach($noValueFeatures as $index => $feature)
-                                    <input id="check-{{$index}}" type="checkbox" value="{{true}}"
+                                    <input {{old('features.'.$feature->id)?'checked':''}} id="check-{{$index}}"
+                                           type="checkbox" value="{{true}}"
                                            name="features[{{$feature->id}}]">
                                     <label for="check-{{$index}}">{{$feature->name}}</label>
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                            {{ $errors->first('features.'.$feature->id) }}
+                                        </div>
+                                    @endif
                                 @endforeach
 
                             </div>
@@ -209,7 +248,7 @@
 
 
                         <div class="divider"></div>
-                        <button  class="button preview margin-top-5" type="submit">Submit</button>
+                        <button class="button preview margin-top-5" type="submit">Submit</button>
                     </div>
                 </div>
             </form>

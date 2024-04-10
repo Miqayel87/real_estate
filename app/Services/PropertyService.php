@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class PropertyService
 {
@@ -283,5 +284,21 @@ class PropertyService
     public function getN(int $n): Collection
     {
         return Property::with('features')->with('images')->where('status', 1)->orderBy('created_at', 'desc')->limit($n)->get();
+    }
+
+    public function getPopularPlaces()
+    {
+        return Property::select('city', DB::raw('COUNT(*) as count'))
+            ->groupBy('city')
+            ->get();
+    }
+
+    public function getSimilarProperties()
+    {
+        return Property::with('images')
+            ->with('features')
+            ->inRandomOrder()
+            ->limit(3)
+            ->get();
     }
 }

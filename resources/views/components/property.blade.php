@@ -9,7 +9,7 @@
             <span>{{$property->listing_type}}</span>
         </div>
         <div class="listing-img-content">
-            <span class="listing-price">${{$property->price}} <i>${{number_format($property->price/array_search('Area', array_column($property->features->toArray(), 'name')), 2)}} / sq ft</i></span>
+            <span class="listing-price">${{$property->price}} <i>${{number_format($property->price/$property->features[array_search('Area', array_column($property->features->toArray(), 'name'))]->pivot->value, 2)}} / sq ft</i></span>
             @if(Auth::user())
                 @if(array_search($property->id, array_column(Auth::user()->bookmarks->toArray(), 'property_id')) !== false)
                     <span data-id="{{$property->id}}" class="bookmark-liked like-icon with-tip liked"
@@ -30,7 +30,6 @@
     </a>
 
     <div class="listing-content">
-
         <div class="listing-title">
             <h4><a href="#">{{$property->title}}</a></h4>
             <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom"

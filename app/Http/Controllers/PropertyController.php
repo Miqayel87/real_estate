@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PropertyRequest;
-use App\Models\PropertyType;
+use App\Models\Type;
 use App\Services\FeatureService;
 use App\Services\LocationService;
 use App\Services\PropertyService;
+use Illuminate\Http\Request;
 
 class PropertyController extends Controller
 {
@@ -21,8 +22,13 @@ class PropertyController extends Controller
     {
         $property = $this->propertyService->getById($id);
         $location = $this->loacationService->getLatLong("$property->zip_code $property->address, $property->city , $property->state");
+        $similarProperties = $this->propertyService->getSimilarProperties();
 
-        return view('single-property', ['property' => $property, 'location' => $location]);
+        return view('single-property', [
+            'property' => $property,
+            'location' => $location,
+            'similarProperties' => $similarProperties
+        ]);
     }
 
     public function create()
@@ -30,7 +36,7 @@ class PropertyController extends Controller
         $hasValueFeatures = $this->featureService->getFeaturesWithValue();
         $noValueFeatures = $this->featureService->getFeaturesWithNoValue();
 
-        $types = PropertyType::all();
+        $types = Type::all();
 
         return view('submit-property', [
             "hasValueFeatures" => $hasValueFeatures,
@@ -40,8 +46,10 @@ class PropertyController extends Controller
         ]);
     }
 
-    public function store(PropertyRequest $request)
+    public function store(Request $request)
     {
+        dd($request);
+
         $newProperty = $this->propertyService->create($request);
         return redirect()->route('property.show', $newProperty->id);
     }
@@ -69,7 +77,7 @@ class PropertyController extends Controller
         $hasValueFeatures = $this->featureService->getFeaturesWithValue();
         $noValueFeatures = $this->featureService->getFeaturesWithNoValue();
 
-        $types = PropertyType::all();
+        $types = Type::all();
 
         return view('edit-property', [
             'property' => $propertyToEdit,

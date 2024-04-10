@@ -33,7 +33,7 @@ class Property extends Model
 
     public function type()
     {
-        return $this->belongsTo(PropertyType::class);
+        return $this->belongsTo(Type::class);
     }
 
     public function user()

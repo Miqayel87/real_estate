@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PropertyType;
+use App\Models\Type;
 use App\Services\PropertyService;
 use App\Services\FeatureService;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class ListingController extends Controller
     {
         $properties = $this->propertyService->getAllWithPagination();
         $features = $this->featureService->getFeaturesWithNoValue();
-        $types = PropertyType::all();
+        $types = Type::all();
 
         return view('listing', [
             'properties' => $properties,
@@ -33,7 +33,7 @@ class ListingController extends Controller
     {
         $properties = $this->propertyService->search($request);
         $features = $this->featureService->getFeaturesWithNoValue();
-        $types = PropertyType::all();
+        $types = Type::all();
         return view('listing', [
             'properties' => $properties,
             'features' => $features,

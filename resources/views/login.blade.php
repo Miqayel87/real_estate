@@ -60,7 +60,7 @@
                                 <p class="form-row form-row-wide">
                                     <label for="username">Username:
                                         <i class="im im-icon-Male"></i>
-                                        <input type="text" class="input-text" name="username" id="username" value=""/>
+                                        <input type="text" class="input-text" name="username" id="username" value="{{old('username')}}"/>
                                     </label>
                                 </p>
 
@@ -70,6 +70,14 @@
                                         <input class="input-text" type="password" name="password" id="password"/>
                                     </label>
                                 </p>
+
+                                @if ($errors->any())
+                                    <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                            @foreach ($errors->all() as $error)
+                                                {{ $error }}
+                                            @endforeach
+                                    </div>
+                                @endif
 
                                 <p class="form-row">
                                     <input type="submit" class="button border margin-top-10" name="login"
@@ -91,15 +99,7 @@
 
                         </div>
 
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li style="color: red">{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+
 
                     </div>
                 </div>
