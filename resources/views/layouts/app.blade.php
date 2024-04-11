@@ -24,6 +24,11 @@
 
 <!-- Scripts
 ================================================== -->
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
+
 <script type="text/javascript" src="{{asset('scripts/jquery-3.4.1.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('scripts/jquery-migrate-3.1.0.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('scripts/chosen.min.js')}}"></script>
@@ -38,19 +43,6 @@
 <script type="text/javascript" src="{{asset('scripts/custom.js')}}"></script>
 <script type="text/javascript" src="{{asset('scripts/bookmarks-script.js')}}"></script>
 
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous"></script>
-
-<!-- Maps -->
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
-<script type="text/javascript" src="{{asset('scripts/infobox.min.js')}}"></script>
-<script type="text/javascript" src="{{asset('scripts/markerclusterer.js')}}"></script>
-<script type="text/javascript" src="{{asset('scripts/maps.js')}}"></script>
-
-
-<script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-
 <!-- DropZone | Documentation: http://dropzonejs.com -->
 <script type="text/javascript" src="{{asset('scripts/dropzone.js')}}"></script>
 
@@ -58,7 +50,40 @@
     $(".dropzone").dropzone({
         dictDefaultMessage: "<i class='sl sl-icon-plus'></i> Click here or drop files to upload",
     });
+
+    Dropzone.autoDiscover = false;
+    $(document).ready(function () {
+        var myDropzone = new Dropzone("#my-dropzone", {
+            url: "{{ route('file-upload') }}",
+            paramName: "file",
+            maxFilesize: 100,
+            acceptedFiles: ".jpg, .jpeg, .png, .gif",
+            addRemoveLinks: true,
+            headers: {
+                'X-CSRF-Token': "{{ csrf_token() }}"
+            },
+            success: function (file, response) {
+                console.log(response);
+            },
+            error: function (file, response) {
+                console.log(response);
+            }
+        });
+    });
+
+    $('.logout').toArray().forEach((button) => {
+        console.log(button);
+        $(button).click(() => {
+            $('#logoutForm').submit();
+        })
+    })
 </script>
+
+<!-- Maps -->
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
+<script type="text/javascript" src="{{asset('scripts/infobox.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/markerclusterer.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/maps.js')}}"></script>
 
 
 </body>

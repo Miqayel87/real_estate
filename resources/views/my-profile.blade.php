@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'my-profile')
+@section('title', 'My profile')
 
 @section('content')
 
@@ -41,36 +41,26 @@
 
                         <ul class="my-account-nav">
                             <li class="sub-nav-title">Manage Account</li>
-                            <li><a href="my-profile.html" class="current"><i class="sl sl-icon-user"></i> My Profile</a>
+                            <li><a href="{{route('my-profile')}}" class="current"><i class="sl sl-icon-user"></i> My Profile</a>
                             </li>
-                            <li><a href="my-bookmarks.html"><i class="sl sl-icon-star"></i> Bookmarked Listings</a></li>
+                            <li><a href="{{route('bookmark.index')}}"><i class="sl sl-icon-star"></i> Bookmarked Listings</a></li>
                         </ul>
 
                         <ul class="my-account-nav">
                             <li class="sub-nav-title">Manage Listings</li>
-                            <li><a href="my-properties.html"><i class="sl sl-icon-docs"></i> My Properties</a></li>
-                            <li><a href="submit-property.html"><i class="sl sl-icon-action-redo"></i> Submit New
+                            <li><a href="{{route('my-properties')}}"><i class="sl sl-icon-docs"></i> My Properties</a></li>
+                            <li><a href="{{route('property.create')}}"><i class="sl sl-icon-action-redo"></i> Submit New
                                     Property</a></li>
                         </ul>
 
                         <ul class="my-account-nav">
-                            <li><a href="change-password.html"><i class="sl sl-icon-lock"></i> Change Password</a></li>
-                            <li><a href="#"><i class="sl sl-icon-power"></i> Log Out</a></li>
+                            <li><a class="logout"><i class="sl sl-icon-power"></i> Log Out</a></li>
                         </ul>
 
                     </div>
 
                 </div>
             </div>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li style="color: red">{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
             <div class="col-md-8">
                 <div class="row">
                     <form action="{{route('user.update')}}" method="post" enctype="multipart/form-data">

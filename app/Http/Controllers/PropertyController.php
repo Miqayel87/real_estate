@@ -46,10 +46,8 @@ class PropertyController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(PropertyRequest $request)
     {
-        dd($request);
-
         $newProperty = $this->propertyService->create($request);
         return redirect()->route('property.show', $newProperty->id);
     }
@@ -100,5 +98,9 @@ class PropertyController extends Controller
         $this->authorize('activate', $this->propertyService->getById($id));
         $this->propertyService->activate($id);
         return back();
+    }
+
+    public function image(Request $request){
+        dd($request);
     }
 }

@@ -195,7 +195,7 @@
                                 </li>
                                 <li><a href="{{route('my-properties')}}"><i class="sl sl-icon-docs"></i> My
                                         Properties</a></li>
-                                <li id="logout"><a href="#"><i class="sl sl-icon-power"></i> Log Out</a></li>
+                                <li class="logout"><a href="#"><i class="sl sl-icon-power"></i> Log Out</a></li>
                                 <form id="logoutForm" style="display: none" action="{{route('logout')}}"
                                       method="POST">@csrf</form>
                             </ul>
@@ -215,8 +215,4 @@
 <div class="clearfix"></div>
 <!-- Header Container / End -->
 
-<script>
-    document.getElementById('logout').addEventListener('click', () => {
-        document.getElementById('logoutForm').submit();
-    })
-</script>
+

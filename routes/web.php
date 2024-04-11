@@ -35,6 +35,7 @@ Route::group(['middleware' => 'sanitize'], function () {
         'edit',
         'store'
     ])->middleware('auth');
+
     Route::resource('property', PropertyController::class)->only('show');
 
     Route::patch('property/{id}/hide', [PropertyController::class, 'hide'])->middleware('auth')->name('property.hide');
@@ -49,7 +50,7 @@ Route::group(['middleware' => 'sanitize'], function () {
 
     Route::get('/my-properties', function () {
         return view('my-properties');
-    })->name('my-properties');
+    })->name('my-properties')->middleware('auth');
 
     Route::group(['prefix' => 'images', 'middleware' => 'auth'], function () {
         Route::delete('/delete/{id}', [ImageController::class, 'delete'])->name('images.delete');
@@ -63,4 +64,6 @@ Route::group(['middleware' => 'sanitize'], function () {
 
     Route::get('/registration', [RegistrationController::class, 'showRegistrationForm'])->name('registration');
     Route::post('/signUp', [RegistrationController::class, 'signUp'])->name('sign-up');
+
+    Route::post('/file-upload', [PropertyController::class, 'image'])->name('file-upload');
 });

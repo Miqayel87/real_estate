@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'submit-property')
+@section('title', 'Submit property')
 
 
 @section('content')
@@ -98,20 +98,21 @@
 
                         <!-- Section -->
                         <!-- Section -->
-                        <h3>Gallery</h3>
-                        <div class="submit-section">
-                            <form action="/file-upload" class="dropzone" ></form>
+                        <div>
+                            <div class="submit-section">
+                                <form action="/file-upload" class="dropzone" enctype="multipart/form-data">
+                                    @csrf
+                                </form>
+                            </div>
                         </div>
                         <!-- Section / End -->
 
                         <h3>Gallery</h3>
                         <div class="submit-section">
-                            <form action="/file-upload" class="dropzone"></form>
-                            <input type="file" name="images[]" id="">
-                            <input type="file" name="images[]" id="">
-                            <input type="file" name="images[]" id="">
-                            <input type="file" name="images[]" id="">
-                            <input type="file" name="images[]" id="">
+                            <form action="{{route('file-upload')}}" class="dropzone">
+                                @csrf
+                            </form>
+{{--                            <input style="display: none" type="file" name="images[]" id="">--}}
                         </div>
                         <!-- Section / End -->
 
@@ -245,7 +246,6 @@
 
                         </div>
                         <!-- Section / End -->
-
 
                         <div class="divider"></div>
                         <button class="button preview margin-top-5" type="submit">Submit</button>

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Listing')
+
 @section('content')
     <!-- Titlebar
                             ================================================== -->
@@ -149,13 +151,14 @@
                                         class="chosen-select-no-single">
                                     <option value="">Any Status</option>
                                     @foreach ($listingTypes as $listingType)
-                                        <option value="{{ $listingType }}">{{ $listingType }}</option>
+                                        <option
+                                            {{isset($searchOptions['listing_type']) && ($searchOptions['listing_type'] == $listingType) ? 'selected':''}}
+                                            value="{{ $listingType }}">{{ $listingType }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <!-- Row / End -->
-
 
                         <!-- Row -->
                         <div class="row with-forms">
@@ -164,13 +167,13 @@
                                 <select name="type" data-placeholder="Any Type" class="chosen-select-no-single">
                                     <option value="">Any Type</option>
                                     @foreach ($types as $type)
-                                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                        <option
+                                            {{isset($searchOptions['type']) && ($searchOptions['type'] == $type->id) ? 'selected':''}} value="{{ $type->id }}">{{ $type->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                         <!-- Row / End -->
-
 
                         <!-- Row -->
                         <div class="row with-forms">
@@ -178,61 +181,15 @@
                             <div class="col-md-12">
                                 <select name="state" data-placeholder="All States" class="chosen-select">
                                     <option value="">All States</option>
-                                    <option>Alabama</option>
-                                    <option>Alaska</option>
-                                    <option>Arizona</option>
-                                    <option>Arkansas</option>
-                                    <option>California</option>
-                                    <option>Colorado</option>
-                                    <option>Connecticut</option>
-                                    <option>Delaware</option>
-                                    <option>Florida</option>
-                                    <option>Georgia</option>
-                                    <option>Hawaii</option>
-                                    <option>Idaho</option>
-                                    <option>Illinois</option>
-                                    <option>Indiana</option>
-                                    <option>Iowa</option>
-                                    <option>Kansas</option>
-                                    <option>Kentucky</option>
-                                    <option>Louisiana</option>
-                                    <option>Maine</option>
-                                    <option>Maryland</option>
-                                    <option>Massachusetts</option>
-                                    <option>Michigan</option>
-                                    <option>Minnesota</option>
-                                    <option>Mississippi</option>
-                                    <option>Missouri</option>
-                                    <option>Montana</option>
-                                    <option>Nebraska</option>
-                                    <option>Nevada</option>
-                                    <option>New Hampshire</option>
-                                    <option>New Jersey</option>
-                                    <option>New Mexico</option>
-                                    <option>New York</option>
-                                    <option>North Carolina</option>
-                                    <option>North Dakota</option>
-                                    <option>Ohio</option>
-                                    <option>Oklahoma</option>
-                                    <option>Oregon</option>
-                                    <option>Pennsylvania</option>
-                                    <option>Rhode Island</option>
-                                    <option>South Carolina</option>
-                                    <option>South Dakota</option>
-                                    <option>Tennessee</option>
-                                    <option>Texas</option>
-                                    <option>Utah</option>
-                                    <option>Vermont</option>
-                                    <option>Virginia</option>
-                                    <option>Washington</option>
-                                    <option>West Virginia</option>
-                                    <option>Wisconsin</option>
-                                    <option>Wyoming</option>
+
+                                    @foreach($searchOptions['states'] as $stateOption)
+                                        <option
+                                            {{isset($searchOptions['state']) && ($searchOptions['state'] == $stateOption) ? 'selected':''}}  value="{{$stateOption}}">{{$stateOption}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <!-- Row / End -->
-
 
                         <!-- Row -->
                         <div class="row with-forms">
@@ -240,20 +197,11 @@
                             <div class="col-md-12">
                                 <select name="city" data-placeholder="All Cities" class="chosen-select">
                                     <option value="">All Cities</option>
-                                    <option>New York</option>
-                                    <option>Los Angeles</option>
-                                    <option>Chicago</option>
-                                    <option>Brooklyn</option>
-                                    <option>Queens</option>
-                                    <option>Houston</option>
-                                    <option>Manhattan</option>
-                                    <option>Philadelphia</option>
-                                    <option>Phoenix</option>
-                                    <option>San Antonio</option>
-                                    <option>Bronx</option>
-                                    <option>San Diego</option>
-                                    <option>Dallas</option>
-                                    <option>San Jose</option>
+
+                                    @foreach($searchOptions['cities'] as $cityOption)
+                                        <option
+                                            {{isset($searchOptions['city']) && ($searchOptions['city'] == $cityOption) ? 'selected':''}} value="{{$cityOption}}">{{$cityOption}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -268,11 +216,11 @@
                                 <select name="bedrooms" data-placeholder="Beds" class="chosen-select-no-single">
                                     <option label="blank"></option>
                                     <option value="">Beds (Any)</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
+
+                                    @foreach($searchOptions['bedroomOptions'] as $bedroomOption)
+                                        <option
+                                            {{isset($searchOptions['bedrooms']) && ($searchOptions['bedrooms'] == $bedroomOption) ? 'selected':''}} value="{{$bedroomOption}}">{{$bedroomOption}}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -281,14 +229,13 @@
                                 <select name="bathrooms" data-placeholder="Baths" class="chosen-select-no-single">
                                     <option label="blank"></option>
                                     <option value="">Baths (Any)</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
+
+                                    @foreach($searchOptions['bathroomOptions'] as $bathroomOption)
+                                        <option
+                                            {{isset($searchOptions['bathrooms']) && ($searchOptions['bathrooms'] == $bathroomOption) ? 'selected':''}} value="{{$bathroomOption}}">{{$bathroomOption}}</option>
+                                    @endforeach
                                 </select>
                             </div>
-
                         </div>
                         <!-- Row / End -->
 
@@ -320,18 +267,18 @@
                             <div class="clearfix"></div>
                         </div>
 
-
                         <!-- More Search Options -->
                         <a href="#" class="more-search-options-trigger margin-bottom-10 margin-top-30"
                            data-open-title="Additional Features" data-close-title="Additional Features"></a>
-
                         <div class="more-search-options relative">
-
                             <!-- Checkboxes -->
                             <div class="checkboxes one-in-row margin-bottom-10">
                                 @foreach ($features as $feature)
-                                    <input value="{{ $feature->id }}" id="{{ $feature->id }}" type="checkbox"
-                                           name="features[]">
+                                    <input
+                                        {{ isset($searchOptions['features']) && array_search($feature->id, $searchOptions['features']) !== false ? 'checked' : '' }}
+                                            value="{{$feature->id}}"
+                                        id="{{ $feature->id }}" type="checkbox"
+                                        name="features[]">
                                     <label for="{{ $feature->id }}">{{ $feature->name }}</label>
                                 @endforeach
                             </div>
@@ -339,12 +286,9 @@
 
                         </div>
                         <!-- More Search Options / End -->
-
                         <button class="search button fullwidth margin-top-30">Search</button>
-
                     </div>
                     <!-- Widget / End -->
-                    <
                 </div>
             </div>
             <!-- Sidebar / End -->

@@ -9,6 +9,92 @@ use Illuminate\Http\Request;
 
 class ListingController extends Controller
 {
+    const CITIES = [
+        "New York",
+        "Los Angeles",
+        "Chicago",
+        "Brooklyn",
+        "Queens",
+        "Houston",
+        "Manhattan",
+        "Philadelphia",
+        "Phoenix",
+        "San Antonio",
+        "Bronx",
+        "San Diego",
+        "Dallas",
+        "San Jose"
+    ];
+
+    const STATES = [
+        'Alabama',
+        'Alaska',
+        'Arizona',
+        'Arkansas',
+        'California',
+        'Colorado',
+        'Connecticut',
+        'Delaware',
+        'Florida',
+        'Georgia',
+        'Hawaii',
+        'Idaho',
+        'Illinois',
+        'Indiana',
+        'Iowa',
+        'Kansas',
+        'Kentucky',
+        'Louisiana',
+        'Maine',
+        'Maryland',
+        'Massachusetts',
+        'Michigan',
+        'Minnesota',
+        'Mississippi',
+        'Missouri',
+        'Montana',
+        'Nebraska',
+        'Nevada',
+        'New Hampshire',
+        'New Jersey',
+        'New Mexico',
+        'New York',
+        'North Carolina',
+        'North Dakota',
+        'Ohio',
+        'Oklahoma',
+        'Oregon',
+        'Pennsylvania',
+        'Rhode Island',
+        'South Carolina',
+        'South Dakota',
+        'Tennessee',
+        'Texas',
+        'Utah',
+        'Vermont',
+        'Virginia',
+        'Washington',
+        'West Virginia',
+        'Wisconsin',
+        'Wyoming',
+    ];
+
+    const BEDROOMS = [
+        1,
+        2,
+        3,
+        4,
+        5
+    ];
+
+    const BATHROOMS = [
+        1,
+        2,
+        3,
+        4,
+        5
+    ];
+
     public function __construct()
     {
         $this->propertyService = new PropertyService;
@@ -25,7 +111,13 @@ class ListingController extends Controller
             'properties' => $properties,
             'features' => $features,
             'types' => $types,
-            'listingTypes' => $this->propertyService::LISTING_TYPES
+            'listingTypes' => $this->propertyService::LISTING_TYPES,
+            'searchOptions' => [
+                'states' => self::STATES,
+                'cities' => self::CITIES,
+                'bedroomOptions' => self::BEDROOMS,
+                'bathroomOptions' => self::BATHROOMS
+            ]
         ]);
     }
 
@@ -34,12 +126,19 @@ class ListingController extends Controller
         $properties = $this->propertyService->search($request);
         $features = $this->featureService->getFeaturesWithNoValue();
         $types = Type::all();
+        $searchOptions = $request->all();
+
         return view('listing', [
             'properties' => $properties,
             'features' => $features,
             'types' => $types,
             'listingTypes' => $this->propertyService::LISTING_TYPES,
-            'inputValues' => $request->all()
+            'searchOptions' => array_merge([
+                'states' => self::STATES,
+                'cities' => self::CITIES,
+                'bedroomOptions' => self::BEDROOMS,
+                'bathroomOptions' => self::BATHROOMS
+            ], $searchOptions)
         ]);
     }
 }
