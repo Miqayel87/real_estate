@@ -42,6 +42,7 @@
 <script type="text/javascript" src="{{asset('scripts/tooltips.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('scripts/custom.js')}}"></script>
 <script type="text/javascript" src="{{asset('scripts/bookmarks-script.js')}}"></script>
+<script type="text/javascript" src="{{asset('scripts/bookmarks-script.js')}}"></script>
 
 <!-- DropZone | Documentation: http://dropzonejs.com -->
 <script type="text/javascript" src="{{asset('scripts/dropzone.js')}}"></script>
@@ -51,25 +52,6 @@
         dictDefaultMessage: "<i class='sl sl-icon-plus'></i> Click here or drop files to upload",
     });
 
-    Dropzone.autoDiscover = false;
-    $(document).ready(function () {
-        var myDropzone = new Dropzone("#my-dropzone", {
-            url: "{{ route('file-upload') }}",
-            paramName: "file",
-            maxFilesize: 100,
-            acceptedFiles: ".jpg, .jpeg, .png, .gif",
-            addRemoveLinks: true,
-            headers: {
-                'X-CSRF-Token': "{{ csrf_token() }}"
-            },
-            success: function (file, response) {
-                console.log(response);
-            },
-            error: function (file, response) {
-                console.log(response);
-            }
-        });
-    });
 
     $('.logout').toArray().forEach((button) => {
         console.log(button);
@@ -80,6 +62,7 @@
 </script>
 
 <!-- Maps -->
+
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&amp;language=en"></script>
 <script type="text/javascript" src="{{asset('scripts/infobox.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('scripts/markerclusterer.js')}}"></script>

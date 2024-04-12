@@ -39,7 +39,7 @@ class PropertyRequest extends FormRequest
             'features' => 'required|array',
             'features.' . $featureService->getByName('Area')->id => 'required|numeric|min:0',
             'features.' . $featureService->getByName('Rooms')->id => 'required|string|min:0',
-            'images' => $this->isMethod('POST') ? 'required|array' : ''
+            'imageIds' => $this->isMethod('POST') ? 'required|array' : ''
         ];
 
         return $rules;
@@ -89,7 +89,7 @@ class PropertyRequest extends FormRequest
             'features.' . $featureService->getByName('Rooms')->id . '.required' => 'The rooms feature is required.',
             'features.' . $featureService->getByName('Rooms')->id . '.string' => 'The rooms feature must be a string.',
             'features.' . $featureService->getByName('Rooms')->id . '.min' => 'The rooms feature value must be at least :min.',
-            'images.required' => 'The images field is required for creating a new property.',
+            'imageIds.required' => 'The images field is required for creating a new property.',
         ];
     }
 

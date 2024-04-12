@@ -100,7 +100,10 @@ class PropertyController extends Controller
         return back();
     }
 
-    public function image(Request $request){
-        dd($request);
+    public function image(Request $request)
+    {
+
+
+        return response()->json(['data'=>'uploaded']);
     }
 }

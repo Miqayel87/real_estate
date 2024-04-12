@@ -19,7 +19,7 @@ class ImageUploadService
      * @param int $quality The quality of the resized image (default: 95).
      * @return ImageModel|null The uploaded image model instance, or null on failure.
      */
-    public function uploadAndResize(UploadedFile $file, string $directory, int $width = 800, int $height = 800, int $quality = 95): ?ImageModel
+    public function uploadAndResize(UploadedFile $file, string $directory, int $width = 800, int $height = 800, int $quality = 95): string
     {
         $filename = uniqid() . '.' . $file->getClientOriginalExtension();
 
@@ -33,11 +33,7 @@ class ImageUploadService
 
         Storage::put('public' . '/resized/' . $filename, $resizedImage->stream());
 
-        $image = new ImageModel();
-        $image->name = $filename;
-        $image->save();
-
-        return $image;
+        return $filename;
     }
 
     /**

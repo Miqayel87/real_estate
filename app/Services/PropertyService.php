@@ -55,12 +55,10 @@ class PropertyService
             $this->featureService->createOrUpdate($key, $newProperty->id, $value);
         }
 
-        if ($request->file('images')) {
-            foreach ($request->file('images') as $image) {
-                $uploadedImage = $this->imageUploadService->uploadAndResize($image, '');
-
+        if ($request->imageIds) {
+            foreach ($request->imageIds as $imageId) {
                 $propertyImage = new PropertyImage;
-                $propertyImage->image_id = $uploadedImage->id;
+                $propertyImage->image_id = $imageId;
                 $propertyImage->property_id = $newProperty->id;
                 $propertyImage->save();
             }
