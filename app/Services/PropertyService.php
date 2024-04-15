@@ -100,12 +100,10 @@ class PropertyService
             $this->featureService->createOrUpdate($key, $propertyToUpdate->id, $value);
         }
 
-        if ($request->file('images')) {
-            foreach ($request->file('images') as $image) {
-                $uploadedImage = $this->imageUploadService->uploadAndResize($image, '');
-
+        if ($request->imageIds) {
+            foreach ($request->imageIds as $imageId) {
                 $propertyImage = new PropertyImage;
-                $propertyImage->image_id = $uploadedImage->id;
+                $propertyImage->image_id = $imageId;
                 $propertyImage->property_id = $propertyToUpdate->id;
                 $propertyImage->save();
             }
@@ -284,14 +282,24 @@ class PropertyService
         return Property::with('features')->with('images')->where('status', 1)->orderBy('created_at', 'desc')->limit($n)->get();
     }
 
-    public function getPopularPlaces()
+    /**
+     * Get popular places.
+     *
+     * @return Collection The collection of popular places.
+     */
+    public function getPopularPlaces(): Collection
     {
         return Property::select('city', DB::raw('COUNT(*) as count'))
             ->groupBy('city')
             ->get();
     }
 
-    public function getSimilarProperties()
+    /**
+     * Get similar properties.
+     *
+     * @return Collection The collection of similar properties.
+     */
+    public function getSimilarProperties(): Collection
     {
         return Property::with('images')
             ->with('features')

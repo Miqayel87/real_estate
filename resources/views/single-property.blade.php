@@ -139,9 +139,13 @@
 
                     <!-- Widget -->
                     <div class="widget margin-bottom-30">
-                        <button class="widget-button with-tip" data-tip-content="Print"><i class="sl sl-icon-printer"></i></button>
-                        <button class="widget-button with-tip" data-tip-content="Add to Bookmarks"><i class="fa fa-star-o"></i></button>
-                        <button class="widget-button with-tip compare-widget-button" data-tip-content="Add to Compare"><i class="icon-compare"></i></button>
+                        @if(Auth::user())
+                            @if(array_search($property->id, array_column(Auth::user()->bookmarks->toArray(), 'property_id')) !== false)
+                                <button data-id="{{$property->id}}" class="bookmark-liked widget-button with-tip liked" data-tip-content="Add to Bookmarks"><i class="fa fa-star-o"></i></button>
+                            @else
+                                <button data-id="{{$property->id}}" class="bookmark-empty widget-button with-tip" data-tip-content="Add to Bookmarks"><i class="fa fa-star-o"></i></button>
+                            @endif
+                        @endif
                         <div class="clearfix"></div>
                     </div>
                     <!-- Widget / End -->

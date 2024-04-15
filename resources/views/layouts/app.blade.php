@@ -48,10 +48,6 @@
 <script type="text/javascript" src="{{asset('scripts/dropzone.js')}}"></script>
 
 <script>
-    $(".dropzone").dropzone({
-        dictDefaultMessage: "<i class='sl sl-icon-plus'></i> Click here or drop files to upload",
-    });
-
 
     $('.logout').toArray().forEach((button) => {
         console.log(button);

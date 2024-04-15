@@ -85,22 +85,6 @@
                             <h4 class="margin-top-50 margin-bottom-25">About Me</h4>
                             <textarea name="about" id="about" cols="30" rows="10">{{$user->about}}</textarea>
 
-
-                            <h4 class="margin-top-50 margin-bottom-0">Social</h4>
-
-                            <label><i class="fa fa-twitter"></i> Twitter</label>
-                            <input value="https://www.twitter.com/" type="text">
-
-                            <label><i class="fa fa-facebook-square"></i> Facebook</label>
-                            <input value="https://www.facebook.com/" type="text">
-
-                            <label><i class="fa fa-google-plus"></i> Google+</label>
-                            <input value="https://www.google.com/" type="text">
-
-                            <label><i class="fa fa-linkedin"></i> Linkedin</label>
-                            <input value="https://www.linkedin.com/" type="text">
-
-
                             <button class="button margin-top-20 margin-bottom-20">Save Changes</button>
                         </div>
 

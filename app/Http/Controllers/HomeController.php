@@ -22,7 +22,7 @@ class HomeController extends Controller
         $properties = $this->propertyService->getN(5);
         $popularPlaces = $this->propertyService->getPopularPlaces();
         $features = $this->featureService->getFeaturesWithNoValue();
-        $types = Type::all();
+        $types = Type::limit(4)->get();
         $articles = $this->articleService->getAll();
 
         return view('index', [

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\UserRequest;
+use App\Models\Image;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,7 @@ class UserService
     /**
      * Update the currently logged-in user.
      *
-     * @param Request $request The request data containing user details.
+     * @param UserRequest $request The request data containing user details.
      * @return void
      */
     public function update(UserRequest $request): void
@@ -27,7 +28,9 @@ class UserService
         $userToEdit->fill($request->all());
 
         if ($request->hasFile('image')) {
-            $image = $this->imageUploadService->uploadAndResize($request->file('image'), '');
+            $image = new Image;
+            $image->name = $this->imageUploadService->uploadAndResize($request->file('image'), '');
+            $image->save();
 
             $userToEdit->image_id = $image->id;
         }

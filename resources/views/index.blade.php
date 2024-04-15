@@ -2,6 +2,10 @@
 
 @section('title', 'Home')
 
+@section('listing', '')
+@section('home', 'current')
+
+
 @section('content')
 
     <!-- Banner
@@ -332,7 +336,7 @@
     <!-- Fullwidth Section / End -->
 
     <!-- Flip banner -->
-    <a href="listings-half-map-grid-standard.html" class="flip-banner parallax"
+    <a href="#" class="flip-banner parallax"
        data-background="{{asset('images/flip-banner-bg.jpg')}}" data-color="#274abb" data-color-opacity="0.9"
        data-img-width="2500" data-img-height="1600">
         <div class="flip-banner-content">

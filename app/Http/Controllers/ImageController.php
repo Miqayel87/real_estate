@@ -32,6 +32,6 @@ class ImageController extends Controller
 
         $imageToDelete->delete();
 
-        return back();
+        return response()->json(['id' => $imageToDelete->id]);
     }
 }

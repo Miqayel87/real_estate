@@ -22,19 +22,13 @@
         ================================================== -->
     <div class="container">
         <div class="row">
-            <form action="{{ route('property.update', $property->id) }}" method="post" enctype="multipart/form-data">
+            <form id="editForm" action="{{ route('property.update', $property->id) }}" method="post"
+                  enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <!-- Submit Page -->
                 <div class="col-md-12">
                     <div class="submit-page">
-
-                        <div class="notification notice large margin-bottom-55">
-                            <h4>Don't Have an Account?</h4>
-                            <p>If you don't have an account you can create one by entering your email address in contact
-                                details section. A password will be automatically emailed to you.</p>
-                        </div>
-
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -112,25 +106,33 @@
                         <!-- Section / End -->
 
 
-                        <!-- Section -->
+                        <form action="{{route('file-upload')}}" enctype="multipart/form-data"
+                              class="dropzone" id="">
+                            @csrf
+                        </form>
+
                         <h3>Gallery</h3>
+                        <div class="edit-images-container">
+                            @foreach($property->images as $image)
+                                <div id="image{{$image->id}}" style="display: flex">
+                                    <img src="{{asset('storage/resized/'.$image->name)}}" alt="">
+                                    <button data-id="{{$image->id}}" type="button" onclick="deleteImage(this)"
+                                            style="background-color: red; border: none; color: #FFFFFF">x
+                                    </button>
+                                </div>
+                            @endforeach
+                        </div>
                         <div class="submit-section">
-                            <form action="/file-upload" class="dropzone"></form>
-                            <div class="edit-images-container">
-                                @foreach($property->images as $image)
-                                    <img src="{{asset('storage/'.$image->name)}}" alt="">
-                                    <form action="{{route('images.delete', $image->id)}}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button style="background-color: red; border: none; color: #FFFFFF">x</button>
-                                    </form>
-                                @endforeach
-                            </div>
-                            <input type="file" name="images[]" id="">
-                            <input type="file" name="images[]" id="">
-                            <input type="file" name="images[]" id="">
-                            <input type="file" name="images[]" id="">
-                            <input type="file" name="images[]" id="">
+                            <form action="{{route('file-upload')}}" enctype="multipart/form-data"
+                                  class="dropzone" id="editDropzone">
+                                @csrf
+                            </form>
+                            @if ($errors->any())
+                                <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                    {{ $errors->first('imageIds') }}
+                                </div>
+                            @endif
+                            {{--<input style="display: none" type="file" name="images[]" id="">--}}
                         </div>
                         <!-- Section / End -->
 
@@ -179,7 +181,8 @@
                             <!-- Description -->
                             <div class="form">
                                 <h5>Description</h5>
-                                <textarea name="description" class="WYSIWYG" cols="40" rows="3" id="summary" spellcheck="true">{{$property->description}}
+                                <textarea name="description" class="WYSIWYG" cols="40" rows="3" id="summary"
+                                          spellcheck="true">{{$property->description}}
                                 </textarea>
                             </div>
 
@@ -204,7 +207,9 @@
                                         <div class="col-md-4">
                                             <h5>{{$feature->name}}</h5>
                                             <div class="select-input disabled-first-option">
-                                                <input value="{{$property->features[array_search($feature->name, array_column($property->features->toArray(), 'name'))]->pivot->value}}" name="features[{{$feature->id}}]" type="text" data-unit="Sq Ft">
+                                                <input
+                                                    value="{{$property->features[array_search($feature->name, array_column($property->features->toArray(), 'name'))]->pivot->value}}"
+                                                    name="features[{{$feature->id}}]" type="text" data-unit="Sq Ft">
                                             </div>
                                         </div>
                                     @endif
@@ -236,7 +241,7 @@
                         <!-- Section / End -->
 
                         <div class="divider"></div>
-                        <button  class="button preview margin-top-5" type="submit">Submit</button>
+                        <button class="button preview margin-top-5" type="submit">Submit</button>
 
                     </div>
                 </div>
@@ -245,7 +250,7 @@
     </div>
 
     <style>
-        .edit-images-container{
+        .edit-images-container {
             width: 100%;
             display: flex;
             height: 100px;
@@ -253,5 +258,55 @@
             margin-bottom: 20px;
         }
     </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+            integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- DropZone | Documentation: http://dropzonejs.com -->
+    <script type="text/javascript" src="{{asset('scripts/dropzone.js')}}"></script>
+
+    <script>
+        $('#btn').on('click', () => {
+            if (Dropzone.forElement("#dropzone")) {
+                Dropzone.forElement("#dropzone").files.forEach(function (file, index) {
+                    $('#editForm').elements['files'] = file;
+                });
+            }
+        });
+
+        Dropzone.options.editDropzone = {
+            paramName: 'file',
+            maxFilesize: 100,
+            acceptedFiles: '.jpg, .jpeg, .png',
+            init: function () {
+                this.on('success', function (file, response) {
+                    console.log('File ID:', response.id);
+                    $('#editForm').append(`<input hidden name='imageIds[]' value='${response.id}'></input>`)
+                });
+            }
+        };
+
+        function deleteImage(e) {
+            const id = $(e).data('id');
+            const csrfToken = $('meta[name="csrf-token"]').attr('content');
+            console.log(id)
+            fetch('/images/delete/'+id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                },
+            })
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res)
+                    $('#image'+id).slideToggle();
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+
+    </script>
 
 @endsection

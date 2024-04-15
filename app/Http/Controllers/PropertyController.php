@@ -104,6 +104,6 @@ class PropertyController extends Controller
     {
 
 
-        return response()->json(['data'=>'uploaded']);
+        return response()->json(['data' => 'uploaded']);
     }
 }

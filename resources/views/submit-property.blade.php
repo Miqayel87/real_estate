@@ -261,7 +261,6 @@
     <script type="text/javascript" src="{{asset('scripts/dropzone.js')}}"></script>
 
     <script>
-        console.log($('#submitForm'))
         $('#btn').on('click', () => {
             if (Dropzone.forElement("#dropzone")) {
                 Dropzone.forElement("#dropzone").files.forEach(function (file, index) {

@@ -66,5 +66,4 @@ Route::group(['middleware' => 'sanitize'], function () {
     Route::post('/signUp', [RegistrationController::class, 'signUp'])->name('sign-up');
 
     Route::post('/file-upload', [ImageController::class, 'upload'])->name('file-upload');
-
 });

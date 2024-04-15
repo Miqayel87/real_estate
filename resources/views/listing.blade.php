@@ -2,6 +2,9 @@
 
 @section('title', 'Listing')
 
+@section('listing', 'current')
+@section('home', '')
+
 @section('content')
     <!-- Titlebar
                             ================================================== -->
@@ -61,10 +64,10 @@
                                 <select name="sorting" data-placeholder="Default order"
                                         class="chosen-select-no-single">
                                     <option value="">Default Order</option>
-                                    <option value="asc-price">Price Low to High</option>
-                                    <option value="desc-price">Price High to Low</option>
-                                    <option value="desc">Newest Properties</option>
-                                    <option value="asc">Oldest Properties</option>
+                                    <option {{isset($searchOptions['sorting']) && ($searchOptions['sorting'] == 'asc-price') ? 'selected':''}} value="asc-price">Price Low to High</option>
+                                    <option {{isset($searchOptions['sorting']) && ($searchOptions['sorting'] == 'desc-price') ? 'selected':''}} value="desc-price">Price High to Low</option>
+                                    <option {{isset($searchOptions['sorting']) && ($searchOptions['sorting'] == 'desc') ? 'selected':''}} value="desc">Newest Properties</option>
+                                    <option {{isset($searchOptions['sorting']) && ($searchOptions['sorting'] == 'asc') ? 'selected':''}} value="asc">Oldest Properties</option>
                                 </select>
                             </div>
                         </div>

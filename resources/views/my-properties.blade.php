@@ -69,7 +69,7 @@
 
                     <tr>
                         <th><i class="fa fa-file-text"></i> Property</th>
-                        <th class="expire-date"><i class="fa fa-calendar"></i> Expiration Date</th>
+                        <th class="expire-date"><i class="fa fa-calendar"></i> </th>
                         <th></th>
                     </tr>
 
