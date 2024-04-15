@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'single-property')
-
+@section('title', $property->title)
 
 @section('content')
-
 
     <!-- Titlebar
 ================================================== -->
@@ -25,8 +23,11 @@
                     </div>
 
                     <div class="property-pricing">
-                        <div class="property-price">${{$property->price}} </div>
-                        <div class="sub-price">${{number_format($property->price/$property->features[array_search('Area', array_column($property->features->toArray(), 'name'))]->pivot->value, 2)}} / sq ft</div>
+                        <div class="property-price">${{number_format($property->price)}} </div>
+                        <div class="sub-price">
+                            ${{number_format($property->price/$property->features[array_search('Area', array_column($property->features->toArray(), 'name'))]->pivot->value, 2)}}
+                            / sq ft
+                        </div>
                     </div>
 
 
@@ -45,7 +46,8 @@
                 <!-- Slider -->
                 <div class="property-slider default">
                     @foreach($property->images as $image)
-                        <a href="{{asset('storage/'.$image->name)}}" data-background-image="{{asset('storage/'.$image->name)}}" class="item mfp-gallery"></a>
+                        <a href="{{asset('storage/'.$image->name)}}"
+                           data-background-image="{{asset('storage/'.$image->name)}}" class="item mfp-gallery"></a>
                     @endforeach
                 </div>
 
@@ -85,13 +87,13 @@
                             {{$property->description}}
                         </p>
 
-{{--                        <p>--}}
-{{--                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra a. Aliquam pellentesque nibh et nibh feugiat gravida. Maecenas ultricies, diam vitae semper placerat, velit risus accumsan nisl, eget tempor lacus est vel nunc. Proin accumsan elit sed neque euismod fringilla. Curabitur lobortis nunc velit, et fermentum urna dapibus non. Vivamus magna lorem, elementum id gravida ac, laoreet tristique augue. Maecenas dictum lacus eu nunc porttitor, ut hendrerit arcu efficitur.--}}
-{{--                        </p>--}}
+                        {{--                        <p>--}}
+                        {{--                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra a. Aliquam pellentesque nibh et nibh feugiat gravida. Maecenas ultricies, diam vitae semper placerat, velit risus accumsan nisl, eget tempor lacus est vel nunc. Proin accumsan elit sed neque euismod fringilla. Curabitur lobortis nunc velit, et fermentum urna dapibus non. Vivamus magna lorem, elementum id gravida ac, laoreet tristique augue. Maecenas dictum lacus eu nunc porttitor, ut hendrerit arcu efficitur.--}}
+                        {{--                        </p>--}}
 
-{{--                        <p>--}}
-{{--                            Nam mattis lobortis felis eu blandit. Morbi tellus ligula, interdum sit amet ipsum et, viverra hendrerit lectus. Nunc efficitur sem vel est laoreet, sed bibendum eros viverra. Vestibulum finibus, ligula sed euismod tincidunt, lacus libero lobortis ligula, sit amet molestie ipsum purus ut tortor. Nunc varius, dui et sollicitudin facilisis, erat felis imperdiet felis, et iaculis dui magna vitae diam. Donec mattis diam nisl, quis ullamcorper enim malesuada non. Curabitur lobortis eu mauris nec vestibulum. Nam efficitur, ex ac semper malesuada, nisi odio consequat dui, hendrerit vulputate odio dui vitae massa. Aliquam tortor urna, tincidunt ut euismod quis, semper vel ipsum. Ut non vestibulum mauris. Morbi euismod, felis non hendrerit viverra, nunc sapien bibendum ligula, eget vehicula nunc dolor eu ex. Quisque in semper odio. Donec auctor blandit ligula. Integer id lectus non nibh vulputate efficitur quis at arcu.--}}
-{{--                        </p>--}}
+                        {{--                        <p>--}}
+                        {{--                            Nam mattis lobortis felis eu blandit. Morbi tellus ligula, interdum sit amet ipsum et, viverra hendrerit lectus. Nunc efficitur sem vel est laoreet, sed bibendum eros viverra. Vestibulum finibus, ligula sed euismod tincidunt, lacus libero lobortis ligula, sit amet molestie ipsum purus ut tortor. Nunc varius, dui et sollicitudin facilisis, erat felis imperdiet felis, et iaculis dui magna vitae diam. Donec mattis diam nisl, quis ullamcorper enim malesuada non. Curabitur lobortis eu mauris nec vestibulum. Nam efficitur, ex ac semper malesuada, nisi odio consequat dui, hendrerit vulputate odio dui vitae massa. Aliquam tortor urna, tincidunt ut euismod quis, semper vel ipsum. Ut non vestibulum mauris. Morbi euismod, felis non hendrerit viverra, nunc sapien bibendum ligula, eget vehicula nunc dolor eu ex. Quisque in semper odio. Donec auctor blandit ligula. Integer id lectus non nibh vulputate efficitur quis at arcu.--}}
+                        {{--                        </p>--}}
 
                         <a href="#" class="show-more-button">Show More <i class="fa fa-angle-down"></i></a>
                     </div>
@@ -107,12 +109,13 @@
                     </ul>
 
                     @if($location)
-                    <!-- Location -->
-                    <h3 class="desc-headline no-border" id="location">Location</h3>
-                    <div id="propertyMap-container">
-                        <div id="propertyMap" data-latitude="{{$location['latitude']}}" data-longitude="{{$location['longitude']}}"></div>
-                        <a href="#" id="streetView">Street View</a>
-                    </div>
+                        <!-- Location -->
+                        <h3 class="desc-headline no-border" id="location">Location</h3>
+                        <div id="propertyMap-container">
+                            <div id="propertyMap" data-latitude="{{$location['latitude']}}"
+                                 data-longitude="{{$location['longitude']}}"></div>
+                            <a href="#" id="streetView">Street View</a>
+                        </div>
                     @endif
 
                     <!-- Similar Listings Container -->
@@ -141,9 +144,11 @@
                     <div class="widget margin-bottom-30">
                         @if(Auth::user())
                             @if(array_search($property->id, array_column(Auth::user()->bookmarks->toArray(), 'property_id')) !== false)
-                                <button data-id="{{$property->id}}" class="bookmark-liked widget-button with-tip liked" data-tip-content="Add to Bookmarks"><i class="fa fa-star-o"></i></button>
+                                <button data-id="{{$property->id}}" class="bookmark-liked widget-button with-tip liked"
+                                        data-tip-content="Add to Bookmarks"><i class="fa fa-star-o"></i></button>
                             @else
-                                <button data-id="{{$property->id}}" class="bookmark-empty widget-button with-tip" data-tip-content="Add to Bookmarks"><i class="fa fa-star-o"></i></button>
+                                <button data-id="{{$property->id}}" class="bookmark-empty widget-button with-tip"
+                                        data-tip-content="Add to Bookmarks"><i class="fa fa-star-o"></i></button>
                             @endif
                         @endif
                         <div class="clearfix"></div>
@@ -254,18 +259,22 @@
                         <!-- Agent Widget -->
                         <div class="agent-widget">
                             <div class="agent-title">
-                                <div class="agent-photo"><img src="images/agent-avatar.jpg" alt="" /></div>
+                                <div class="agent-photo"><img src="images/agent-avatar.jpg" alt=""/></div>
                                 <div class="agent-details">
-                                    <h4><a href="#">Jennie Wilson</a></h4>
-                                    <span><i class="sl sl-icon-call-in"></i>(123) 123-456</span>
+                                    <h4><a href="#">{{$property->user->username}}</a></h4>
+                                    <span><i class="sl sl-icon-call-in"></i>{{$property->user->phone}}</span>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-
-                            <input type="text" placeholder="Your Email" pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$">
-                            <input type="text" placeholder="Your Phone">
-                            <textarea>I'm interested in this property [ID 123456] and I'd like to know more details.</textarea>
-                            <button class="button fullwidth margin-top-5">Send Message</button>
+                            <form action="{{route('mail.send', $property->id)}}" method="post">
+                                @csrf
+                                <input name="email" type="text" placeholder="Your Email"
+                                       pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$">
+                                <input name="phone" type="text" placeholder="Your Phone">
+                                <input style="display: none" name="from" type="text"  value="{{$property->user->email}}">
+                                <textarea name="mailContent">I'm interested in this property {{$property->id}} and I'd like to know more details.</textarea>
+                                <button type="submit" class="button fullwidth margin-top-5">Send Message</button>
+                            </form>
                         </div>
                         <!-- Agent Widget / End -->
 
@@ -278,7 +287,8 @@
                         <h3 class="margin-bottom-30 margin-top-30">Mortgage Calculator</h3>
 
                         <!-- Mortgage Calculator -->
-                        <form action="javascript:void(0);" autocomplete="off" class="mortgageCalc" data-calc-currency="USD">
+                        <form action="javascript:void(0);" autocomplete="off" class="mortgageCalc"
+                              data-calc-currency="USD">
                             <div class="calc-input">
                                 <div class="pick-price tip" data-tip-content="Set This Property Price"></div>
                                 <input type="text" id="amount" name="amount" placeholder="Sale Price" required>
@@ -301,7 +311,10 @@
                             </div>
 
                             <button class="button calc-button" formvalidate>Calculate</button>
-                            <div class="calc-output-container"><div class="notification success">Monthly Payment: <strong class="calc-output"></strong></div></div>
+                            <div class="calc-output-container">
+                                <div class="notification success">Monthly Payment: <strong class="calc-output"></strong>
+                                </div>
+                            </div>
                         </form>
                         <!-- Mortgage Calculator / End -->
 
@@ -416,13 +429,13 @@
     <script src="scripts/daterangepicker.js"></script>
     <script>
         // Calendar Init
-        $(function() {
+        $(function () {
             $('#date-picker').daterangepicker({
                 "opens": "left",
                 singleDatePicker: true,
 
                 // Disabling Date Ranges
-                isInvalidDate: function(date) {
+                isInvalidDate: function (date) {
                     // Disabling Date Range
                     var disabled_start = moment('09/02/2018', 'MM/DD/YYYY');
                     var disabled_end = moment('09/06/2018', 'MM/DD/YYYY');
@@ -437,14 +450,14 @@
         });
 
         // Calendar animation
-        $('#date-picker').on('showCalendar.daterangepicker', function(ev, picker) {
+        $('#date-picker').on('showCalendar.daterangepicker', function (ev, picker) {
             $('.daterangepicker').addClass('calendar-animated');
         });
-        $('#date-picker').on('show.daterangepicker', function(ev, picker) {
+        $('#date-picker').on('show.daterangepicker', function (ev, picker) {
             $('.daterangepicker').addClass('calendar-visible');
             $('.daterangepicker').removeClass('calendar-hidden');
         });
-        $('#date-picker').on('hide.daterangepicker', function(ev, picker) {
+        $('#date-picker').on('hide.daterangepicker', function (ev, picker) {
             $('.daterangepicker').removeClass('calendar-visible');
             $('.daterangepicker').addClass('calendar-hidden');
         });
@@ -453,9 +466,9 @@
 
     <!-- Replacing dropdown placeholder with selected time slot -->
     <script>
-        $(".time-slot").each(function() {
+        $(".time-slot").each(function () {
             var timeSlot = $(this);
-            $(this).find('input').on('change',function() {
+            $(this).find('input').on('change', function () {
                 var timeSlotVal = timeSlot.find('strong').text();
 
                 $('.panel-dropdown.time-slots-dropdown a').html(timeSlotVal);

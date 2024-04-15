@@ -5,6 +5,7 @@ use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ListingController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -62,8 +63,10 @@ Route::group(['middleware' => 'sanitize'], function () {
         Route::delete('{id}/delete/', [BookmarkController::class, 'delete'])->name('bookmark.delete');
     });
 
+    Route::post('/file-upload', [ImageController::class, 'upload'])->name('file-upload')->middleware('auth');
+
     Route::get('/registration', [RegistrationController::class, 'showRegistrationForm'])->name('registration');
     Route::post('/signUp', [RegistrationController::class, 'signUp'])->name('sign-up');
 
-    Route::post('/file-upload', [ImageController::class, 'upload'])->name('file-upload');
+    Route::post('/mail/{id}', [MailController::class, 'send'])->name('mail.send');
 });
