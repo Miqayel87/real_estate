@@ -17,6 +17,7 @@ class MailController extends Controller
     public function send(Request $request, $id)
     {
         $property = $this->propertyService->getById($id);
+
         $data = [
             'email' => $request->email,
             'phone' => $request->phone,
@@ -25,7 +26,9 @@ class MailController extends Controller
             'from' => $request->from,
             'property' => $property
         ];
+
         $this->mailService->send($data);
+
         return back();
     }
 }

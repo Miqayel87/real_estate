@@ -13,7 +13,8 @@
 
                     <a href="{{route('listing')}}" class="back-to-listings"></a>
                     <div class="property-title">
-                        <h2>{{$property->title}} <span class="property-badge">{{$property->listing_type}}</span></h2>
+                        <h2>{{$property->title}} <span
+                                class="property-badge">{{$property->listing_type?'For rent':'For sale'}}</span></h2>
                         <span>
 						<a href="#location" class="listing-address">
 							<i class="fa fa-map-marker"></i>
@@ -144,10 +145,10 @@
                     <div class="widget margin-bottom-30">
                         @if(Auth::user())
                             @if(array_search($property->id, array_column(Auth::user()->bookmarks->toArray(), 'property_id')) !== false)
-                                <button data-id="{{$property->id}}" class="bookmark-liked widget-button with-tip liked"
+                                <button data-id="{{$property->id}}" class="bookmark widget-button with-tip liked"
                                         data-tip-content="Add to Bookmarks"><i class="fa fa-star-o"></i></button>
                             @else
-                                <button data-id="{{$property->id}}" class="bookmark-empty widget-button with-tip"
+                                <button data-id="{{$property->id}}" class="bookmark widget-button with-tip"
                                         data-tip-content="Add to Bookmarks"><i class="fa fa-star-o"></i></button>
                             @endif
                         @endif
@@ -156,113 +157,18 @@
                     <!-- Widget / End -->
 
 
-                    <!-- Booking Widget -->
-                    <div class="widget">
-                        <div id="booking-widget-anchor" class="boxed-widget booking-widget margin-top-35">
-                            <h3><i class="fa fa-calendar-check-o"></i> Schedule a Tour</h3>
-                            <div class="row with-forms  margin-top-0">
-
-                                <!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
-                                <div class="col-lg-12">
-                                    <input type="text" id="date-picker" placeholder="Date" readonly="readonly">
-                                </div>
-
-                                <!-- Panel Dropdown -->
-                                <div class="col-lg-12">
-                                    <div class="panel-dropdown time-slots-dropdown">
-                                        <a href="#">Time</a>
-                                        <div class="panel-dropdown-content padding-reset">
-                                            <div class="panel-dropdown-scrollable">
-
-                                                <!-- Time Slot -->
-                                                <div class="time-slot">
-                                                    <input type="radio" name="time-slot" id="time-slot-1">
-                                                    <label for="time-slot-1">
-                                                        <strong>8:30 am - 9:00 am</strong>
-                                                        <span>1 slot available</span>
-                                                    </label>
-                                                </div>
-
-                                                <!-- Time Slot -->
-                                                <div class="time-slot">
-                                                    <input type="radio" name="time-slot" id="time-slot-2">
-                                                    <label for="time-slot-2">
-                                                        <strong>9:00 am - 9:30 am</strong>
-                                                        <span>2 slots available</span>
-                                                    </label>
-                                                </div>
-
-                                                <!-- Time Slot -->
-                                                <div class="time-slot">
-                                                    <input type="radio" name="time-slot" id="time-slot-3">
-                                                    <label for="time-slot-3">
-                                                        <strong>9:30 am - 10:00 am</strong>
-                                                        <span>1 slots available</span>
-                                                    </label>
-                                                </div>
-
-                                                <!-- Time Slot -->
-                                                <div class="time-slot">
-                                                    <input type="radio" name="time-slot" id="time-slot-4">
-                                                    <label for="time-slot-4">
-                                                        <strong>10:00 am - 10:30 am</strong>
-                                                        <span>3 slots available</span>
-                                                    </label>
-                                                </div>
-
-                                                <!-- Time Slot -->
-                                                <div class="time-slot">
-                                                    <input type="radio" name="time-slot" id="time-slot-5">
-                                                    <label for="time-slot-5">
-                                                        <strong>13:00 pm - 13:30 pm</strong>
-                                                        <span>2 slots available</span>
-                                                    </label>
-                                                </div>
-
-                                                <!-- Time Slot -->
-                                                <div class="time-slot">
-                                                    <input type="radio" name="time-slot" id="time-slot-6">
-                                                    <label for="time-slot-6">
-                                                        <strong>13:30 pm - 14:00 pm</strong>
-                                                        <span>1 slots available</span>
-                                                    </label>
-                                                </div>
-
-                                                <!-- Time Slot -->
-                                                <div class="time-slot">
-                                                    <input type="radio" name="time-slot" id="time-slot-7">
-                                                    <label for="time-slot-7">
-                                                        <strong>14:00 pm - 14:30 pm</strong>
-                                                        <span>1 slots available</span>
-                                                    </label>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Panel Dropdown / End -->
-
-                            </div>
-
-                            <!-- Book Now -->
-                            <a href="#" class="button book-now fullwidth margin-top-5">Send Request</a>
-                        </div>
-
-                    </div>
-                    <!-- Booking Widget / End -->
-
-
                     <!-- Widget -->
                     <div class="widget">
 
                         <!-- Agent Widget -->
                         <div class="agent-widget">
                             <div class="agent-title">
-                                <div class="agent-photo"><img src="images/agent-avatar.jpg" alt=""/></div>
+                                <div class="agent-photo"><img src="{{asset($property->user->image?'storage/resized/'.$property->user->image->name:'images/default-profile-photo.jpg')}}" alt=""/></div>
                                 <div class="agent-details">
-                                    <h4><a href="#">{{$property->user->username}}</a></h4>
-                                    <span><i class="sl sl-icon-call-in"></i>{{$property->user->phone}}</span>
+                                    <h4>{{$property->user->username}}</h4>
+                                    @if($property->user->phone)
+                                        <span><i class="sl sl-icon-call-in"></i>{{$property->user->phone}}</span>
+                                    @endif
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -271,8 +177,8 @@
                                 <input name="email" type="text" placeholder="Your Email"
                                        pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$">
                                 <input name="phone" type="text" placeholder="Your Phone">
-                                <input style="display: none" name="from" type="text"  value="{{$property->user->email}}">
-                                <textarea name="mailContent">I'm interested in this property {{$property->id}} and I'd like to know more details.</textarea>
+                                <input style="display: none" name="from" type="text" value="{{$property->user->email}}">
+                                <textarea name="mailContent">I'm interested in this property [property {{$property->id}}] and I'd like to know more details.</textarea>
                                 <button type="submit" class="button fullwidth margin-top-5">Send Message</button>
                             </form>
                         </div>
@@ -282,142 +188,6 @@
                     <!-- Widget / End -->
 
 
-                    <!-- Widget -->
-                    <div class="widget">
-                        <h3 class="margin-bottom-30 margin-top-30">Mortgage Calculator</h3>
-
-                        <!-- Mortgage Calculator -->
-                        <form action="javascript:void(0);" autocomplete="off" class="mortgageCalc"
-                              data-calc-currency="USD">
-                            <div class="calc-input">
-                                <div class="pick-price tip" data-tip-content="Set This Property Price"></div>
-                                <input type="text" id="amount" name="amount" placeholder="Sale Price" required>
-                                <label for="amount" class="fa fa-usd"></label>
-                            </div>
-
-                            <div class="calc-input">
-                                <input type="text" id="downpayment" placeholder="Down Payment">
-                                <label for="downpayment" class="fa fa-usd"></label>
-                            </div>
-
-                            <div class="calc-input">
-                                <input type="text" id="years" placeholder="Loan Term (Years)" required>
-                                <label for="years" class="fa fa-calendar-o"></label>
-                            </div>
-
-                            <div class="calc-input">
-                                <input type="text" id="interest" placeholder="Interest Rate" required>
-                                <label for="interest" class="fa fa-percent"></label>
-                            </div>
-
-                            <button class="button calc-button" formvalidate>Calculate</button>
-                            <div class="calc-output-container">
-                                <div class="notification success">Monthly Payment: <strong class="calc-output"></strong>
-                                </div>
-                            </div>
-                        </form>
-                        <!-- Mortgage Calculator / End -->
-
-                    </div>
-                    <!-- Widget / End -->
-
-
-                    <!-- Widget -->
-                    <div class="widget">
-                        <h3 class="margin-bottom-35">Featured Properties</h3>
-
-                        <div class="listing-carousel outer">
-                            <!-- Item -->
-                            <div class="item">
-                                <div class="listing-item compact">
-
-                                    <a href="#" class="listing-img-container">
-
-                                        <div class="listing-badges">
-                                            <span class="featured">Featured</span>
-                                            <span>For Sale</span>
-                                        </div>
-
-                                        <div class="listing-img-content">
-                                            <span class="listing-compact-title">Eagle Apartments <i>$275,000</i></span>
-
-                                            <ul class="listing-hidden-content">
-                                                <li>Area <span>530 sq ft</span></li>
-                                                <li>Rooms <span>3</span></li>
-                                                <li>Beds <span>1</span></li>
-                                                <li>Baths <span>1</span></li>
-                                            </ul>
-                                        </div>
-
-                                        <img src="images/listing-01.jpg" alt="">
-                                    </a>
-
-                                </div>
-                            </div>
-                            <!-- Item / End -->
-
-                            <!-- Item -->
-                            <div class="item">
-                                <div class="listing-item compact">
-
-                                    <a href="#" class="listing-img-container">
-
-                                        <div class="listing-badges">
-                                            <span class="featured">Featured</span>
-                                            <span>For Sale</span>
-                                        </div>
-
-                                        <div class="listing-img-content">
-                                            <span class="listing-compact-title">Selway Apartments <i>$245,000</i></span>
-
-                                            <ul class="listing-hidden-content">
-                                                <li>Area <span>530 sq ft</span></li>
-                                                <li>Rooms <span>3</span></li>
-                                                <li>Beds <span>1</span></li>
-                                                <li>Baths <span>1</span></li>
-                                            </ul>
-                                        </div>
-
-                                        <img src="images/listing-02.jpg" alt="">
-                                    </a>
-
-                                </div>
-                            </div>
-                            <!-- Item / End -->
-
-                            <!-- Item -->
-                            <div class="item">
-                                <div class="listing-item compact">
-
-                                    <a href="#" class="listing-img-container">
-
-                                        <div class="listing-badges">
-                                            <span class="featured">Featured</span>
-                                            <span>For Sale</span>
-                                        </div>
-
-                                        <div class="listing-img-content">
-                                            <span class="listing-compact-title">Oak Tree Villas <i>$325,000</i></span>
-
-                                            <ul class="listing-hidden-content">
-                                                <li>Area <span>530 sq ft</span></li>
-                                                <li>Rooms <span>3</span></li>
-                                                <li>Beds <span>1</span></li>
-                                                <li>Baths <span>1</span></li>
-                                            </ul>
-                                        </div>
-
-                                        <img src="images/listing-03.jpg" alt="">
-                                    </a>
-
-                                </div>
-                            </div>
-                            <!-- Item / End -->
-                        </div>
-
-                    </div>
-                    <!-- Widget / End -->
-
                 </div>
             </div>
             <!-- Sidebar / End -->
@@ -425,8 +195,8 @@
         </div>
     </div>
     <!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
-    <script src="scripts/moment.min.js"></script>
-    <script src="scripts/daterangepicker.js"></script>
+    <script src="{{asset('scripts/moment.min.js')}}"></script>
+    <script src="{{asset('scripts/daterangepicker.js')}}"></script>
     <script>
         // Calendar Init
         $(function () {

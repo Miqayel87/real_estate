@@ -46,9 +46,9 @@
 <body>
 <div class="container">
     <div class="content">
-        {!! $data['mailContent'] !!}
+        {{ $data['mailContent'] }}
         <p>
-            <a href="{{ $data['referer'] }}">{{$data['property']->title.',  '.number_format($data['property']->price.'$')}}</a>
+            <a href="{{ $data['referer'] }}">{{$data['property']->title.',  '.number_format($data['property']->price).'$'}}</a>
         </p>
         <p>{{ $data['phone'] }}</p>
     </div>

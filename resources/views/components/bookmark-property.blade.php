@@ -10,6 +10,6 @@
         </div>
     </td>
     <td class="action">
-        <a data-id="{{$property->id}}" class="bookmark-liked delete"><i class="fa fa-remove"></i> Remove</a>
+        <a data-id="{{$property->id}}" class="bookmark liked delete"><i class="fa fa-remove"></i> Remove</a>
     </td>
 </tr>

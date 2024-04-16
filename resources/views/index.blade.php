@@ -29,8 +29,8 @@
                                 <div class="search-type">
                                     <label class="active"><input value="" class="first-tab" name="listing_type"
                                                                  checked="checked" type="radio">Any Status</label>
-                                    @foreach($listingTypes as $listingType)
-                                        <label><input value="{{$listingType}}" name="listing_type"
+                                    @foreach($listingTypes as $index => $listingType)
+                                        <label><input value="{{$index}}" name="listing_type"
                                                       type="radio">{{$listingType}}</label>
                                     @endforeach
                                     <div class="search-type-arrow"></div>

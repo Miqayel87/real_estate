@@ -8,6 +8,7 @@ use App\Services\FeatureService;
 use App\Services\LocationService;
 use App\Services\PropertyService;
 use Illuminate\Http\Request;
+use Intervention\Image\Exception\NotFoundException;
 
 class PropertyController extends Controller
 {

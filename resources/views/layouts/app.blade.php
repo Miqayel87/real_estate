@@ -42,7 +42,6 @@
 <script type="text/javascript" src="{{asset('scripts/tooltips.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('scripts/custom.js')}}"></script>
 <script type="text/javascript" src="{{asset('scripts/bookmarks-script.js')}}"></script>
-<script type="text/javascript" src="{{asset('scripts/bookmarks-script.js')}}"></script>
 
 <!-- DropZone | Documentation: http://dropzonejs.com -->
 <script type="text/javascript" src="{{asset('scripts/dropzone.js')}}"></script>

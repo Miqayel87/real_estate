@@ -1,4 +1,4 @@
-$(".bookmark-empty").on("click", function (event) {
+$(".bookmark").on("click", async function (event) {
     event.preventDefault();
 
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -9,48 +9,47 @@ $(".bookmark-empty").on("click", function (event) {
         property_id: propertyId
     };
 
-    $.ajax({
-        url: '/bookmark/create',
-        type: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': csrfToken,
-            'Content-Type': 'application/json'
-        },
-        data: JSON.stringify(requestData),
-        success: function (response) {
-            console.log(response);
-        },
-        error: function (xhr, status, error) {
-            console.error('Request failed. Status:', xhr.status);
-            console.log(error);
-        }
-    });
-});
+    if (!$(this).hasClass('liked')) {
+        await $.ajax({
+            url: '/bookmark/create',
+            type: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(requestData),
+            success: function (response) {
+                console.log('Bookmark Created');
 
-$(".bookmark-liked").on("click", function (event) {
-    event.preventDefault();
+            },
+            error: function (xhr, status, error) {
+                console.error('Request failed. Status:', xhr.status);
+                console.log(error);
+            }
+        });
+    } else {
+        await $.ajax({
+            url: `/bookmark/${propertyId}/delete`,
+            type: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken,
+                'Content-Type': 'application/json'
+            },
+            success: function (response) {
+                console.log('Bookmark deleted');
 
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
+            },
+            error: function (xhr, status, error) {
+                console.error('Request failed. Status:', xhr.status);
+                console.log(error);
+            }
+        });
 
-    const propertyId = $(this).data('id');
+        $('#bookmarkProperty' + propertyId).hide();
 
-    $('#bookmarkProperty' + propertyId).hide();
+    }
 
-    $.ajax({
-        url: `/bookmark/${propertyId}/delete`,
-        type: 'DELETE',
-        headers: {
-            'X-CSRF-TOKEN': csrfToken,
-            'Content-Type': 'application/json'
-        },
-        success: function (response) {
-            console.log(response);
-        },
-        error: function (xhr, status, error) {
-            console.error('Request failed. Status:', xhr.status);
-            console.log(error);
-        }
-    });
+
 });
 
 

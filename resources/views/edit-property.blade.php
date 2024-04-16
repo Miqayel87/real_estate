@@ -57,11 +57,11 @@
                                 <div class="col-md-6">
                                     <h5>Status</h5>
                                     <select name="listing_type" class="chosen-select-no-single">
-                                        @foreach($listingTypes as $listingType)
+                                        @foreach($listingTypes as $index => $listingType)
                                             @if($property->listing_type === $listingType)
-                                                <option selected value="{{$listingType}}">{{$listingType}}</option>
+                                                <option selected value="{{$index}}">{{$listingType}}</option>
                                             @else
-                                                <option value="{{$listingType}}">{{$listingType}}</option>
+                                                <option value="{{$index}}">{{$listingType}}</option>
                                             @endif
                                         @endforeach
                                     </select>

@@ -6,17 +6,17 @@
 
         <div class="listing-badges">
             <span class="featured">Featured</span>
-            <span>{{$property->listing_type}}</span>
+            <span>{{$property->listing_type?'For rent':'For sale'}}</span>
         </div>
         <div class="listing-img-content">
             <span class="listing-price">${{$property->price}} <i>${{number_format($property->price/$property->features[array_search('Area', array_column($property->features->toArray(), 'name'))]->pivot->value, 2)}} / sq ft</i></span>
             @if(Auth::user())
                 @if(array_search($property->id, array_column(Auth::user()->bookmarks->toArray(), 'property_id')) !== false)
-                    <span data-id="{{$property->id}}" class="bookmark-liked like-icon with-tip liked"
+                    <span data-id="{{$property->id}}" class="bookmark like-icon with-tip liked"
                           data-tip-content="Add to Bookmarks"></span>
                 @else
-                    <span data-id="{{$property->id}}" class="bookmark-empty like-icon with-tip"
-                          data-tip-content="Add to Bookmarks"></span>
+                    <span data-id="{{$property->id}}" class="bookmark like-icon with-tip"
+                          data-tip-content="Delete from Bookmarks"></span>
                 @endif
             @endif
             <span class="compare-button with-tip" data-tip-content="Add to Compare"></span>
@@ -31,15 +31,15 @@
 
     <div class="listing-content">
         <div class="listing-title">
-            <h4><a href="#">{{$property->title}}</a></h4>
-            <a href="https://maps.google.com/maps?q=221B+Baker+Street,+London,+United+Kingdom&hl=en&t=v&hnear=221B+Baker+St,+London+NW1+6XE,+United+Kingdom"
+            <h4><a href="{{route('property.show', $property->id)}}">{{$property->title}}</a></h4>
+            <a
                class="listing-address popup-gmaps">
                 <i class="fa fa-map-marker"></i>
                 {{$property->zip_code}} {{$property->address}} {{$property->city}}
                 , {{$property->state}}
             </a>
 
-            <a href="single-property-page-1.html" class="details button border">Details</a>
+            <a href="{{route('property.show', $property->id)}}" class="details button border">Details</a>
         </div>
 
         <ul class="listing-details">

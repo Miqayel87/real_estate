@@ -50,8 +50,8 @@
                                     <h5>Status</h5>
                                     <select name="listing_type" class="chosen-select-no-single">
                                         <option label="blank"></option>
-                                        @foreach($listingTypes as $listingType)
-                                            <option value="{{$listingType}}">{{$listingType}}</option>
+                                        @foreach($listingTypes as $index => $listingType)
+                                            <option value="{{$index}}">{{$listingType}}</option>
                                         @endforeach
                                     </select>
                                 </div>

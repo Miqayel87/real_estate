@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use function PHPUnit\Framework\isNull;
 
 class PropertyService
 {
@@ -170,7 +171,7 @@ class PropertyService
             $result->where('type_id', $request->type);
         }
 
-        if ($request->listing_type) {
+        if (isset($request->listing_type)) {
             $result->where('listing_type', $request->listing_type);
         }
 
@@ -268,7 +269,7 @@ class PropertyService
      */
     public function getById(int $id): ?Property
     {
-        return Property::where('id', $id)->with('features')->with('images')->with('type')->first();
+        return Property::with('features')->with('images')->with('type')->findOrFail($id)->first();
     }
 
     /**

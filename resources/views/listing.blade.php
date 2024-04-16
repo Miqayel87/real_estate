@@ -25,7 +25,7 @@
                             <!-- Breadcrumbs -->
                             <nav id="breadcrumbs">
                                 <ul>
-                                    <li><a href="#">Home</a></li>
+                                    <li><a href="{{route('home')}}">Home</a></li>
                                     <li>Listings</li>
                                 </ul>
                             </nav>
@@ -43,12 +43,11 @@
         <form class="row sticky-wrapper">
 
             <div class="col-md-8">
-
                 <!-- Main Search Input -->
                 <div class="main-search-input margin-bottom-35">
-                    <input name="keyword" type="text" class="ico-01"
+                    <input  name="keyword" type="text" class="ico-01"
                            placeholder="Enter address e.g. street, city and state or zip"
-                           value=""/>
+                           value="{{isset($searchOptions['keyword'])?$searchOptions['keyword']:''}}"/>
                     <button type="submit" class="search button">Search</button>
                 </div>
 
@@ -92,27 +91,6 @@
                     <!-- Listing Item / End -->
                 </div>
 
-                {{--                <!-- Pagination --> --}}
-                {{--                <div class="pagination-container margin-top-20"> --}}
-                {{--                    <nav class="pagination"> --}}
-                {{--                        <ul> --}}
-                {{--                            <li><a href="#" class="current-page">1</a></li> --}}
-                {{--                            <li><a href="#">2</a></li> --}}
-                {{--                            <li><a href="#">3</a></li> --}}
-                {{--                            <li class="blank">...</li> --}}
-                {{--                            <li><a href="#">22</a></li> --}}
-                {{--                        </ul> --}}
-                {{--                    </nav> --}}
-
-                {{--                    <nav class="pagination-next-prev"> --}}
-                {{--                        <ul> --}}
-                {{--                            <li><a href="#" class="prev">Previous</a></li> --}}
-                {{--                            <li><a href="#" class="next">Next</a></li> --}}
-                {{--                        </ul> --}}
-                {{--                    </nav> --}}
-                {{--                </div> --}}
-                <!-- Pagination -->
-
                 <div class="pagination-container margin-top-20">
                     <nav class="pagination">
                         <ul>
@@ -121,17 +99,6 @@
                         </ul>
                     </nav>
 
-                    {{--                    <!-- Optionally, you can include previous and next buttons --> --}}
-                    {{--                    <nav class="pagination-next-prev"> --}}
-                    {{--                        <ul> --}}
-                    {{--                            <li class="{{ ($properties->currentPage() == 1) ? 'disabled' : '' }}"> --}}
-                    {{--                                <a href="{{ $properties->previousPageUrl() }}" class="prev">Previous</a> --}}
-                    {{--                            </li> --}}
-                    {{--                            <li class="{{ ($properties->currentPage() == $properties->lastPage()) ? 'disabled' : '' }}"> --}}
-                    {{--                                <a href="{{ $properties->nextPageUrl() }}" class="next">Next</a> --}}
-                    {{--                            </li> --}}
-                    {{--                        </ul> --}}
-                    {{--                    </nav> --}}
                 </div>
                 <!-- Pagination / End -->
 
@@ -153,10 +120,10 @@
                                 <select name="listing_type" data-placeholder="Any Status"
                                         class="chosen-select-no-single">
                                     <option value="">Any Status</option>
-                                    @foreach ($listingTypes as $listingType)
+                                    @foreach ($listingTypes as $index => $listingType)
                                         <option
-                                            {{isset($searchOptions['listing_type']) && ($searchOptions['listing_type'] == $listingType) ? 'selected':''}}
-                                            value="{{ $listingType }}">{{ $listingType }}</option>
+                                            {{isset($searchOptions['listing_type']) && ($searchOptions['listing_type'] == $index) ? 'selected':''}}
+                                            value="{{ $index }}">{{ $listingType }}</option>
                                     @endforeach
                                 </select>
                             </div>
