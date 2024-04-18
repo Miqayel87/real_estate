@@ -45,9 +45,9 @@
             <div class="col-md-8">
                 <!-- Main Search Input -->
                 <div class="main-search-input margin-bottom-35">
-                    <input  name="keyword" type="text" class="ico-01"
+                    <input name="keyword" type="text" class="ico-01"
                            placeholder="Enter address e.g. street, city and state or zip"
-                           value="{{isset($searchOptions['keyword'])?$searchOptions['keyword']:''}}"/>
+                           value="{{$searchOptions['keyword']??''}}"/>
                     <button type="submit" class="search button">Search</button>
                 </div>
 
@@ -63,10 +63,22 @@
                                 <select name="sorting" data-placeholder="Default order"
                                         class="chosen-select-no-single">
                                     <option value="">Default Order</option>
-                                    <option {{isset($searchOptions['sorting']) && ($searchOptions['sorting'] == 'asc-price') ? 'selected':''}} value="asc-price">Price Low to High</option>
-                                    <option {{isset($searchOptions['sorting']) && ($searchOptions['sorting'] == 'desc-price') ? 'selected':''}} value="desc-price">Price High to Low</option>
-                                    <option {{isset($searchOptions['sorting']) && ($searchOptions['sorting'] == 'desc') ? 'selected':''}} value="desc">Newest Properties</option>
-                                    <option {{isset($searchOptions['sorting']) && ($searchOptions['sorting'] == 'asc') ? 'selected':''}} value="asc">Oldest Properties</option>
+                                    <option
+                                        {{isset($searchOptions['sorting']) && ($searchOptions['sorting'] == 'asc-price') ? 'selected':''}} value="asc-price">
+                                        Price Low to High
+                                    </option>
+                                    <option
+                                        {{isset($searchOptions['sorting']) && ($searchOptions['sorting'] == 'desc-price') ? 'selected':''}} value="desc-price">
+                                        Price High to Low
+                                    </option>
+                                    <option
+                                        {{isset($searchOptions['sorting']) && ($searchOptions['sorting'] == 'desc') ? 'selected':''}} value="desc">
+                                        Newest Properties
+                                    </option>
+                                    <option
+                                        {{isset($searchOptions['sorting']) && ($searchOptions['sorting'] == 'asc') ? 'selected':''}} value="asc">
+                                        Oldest Properties
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -86,7 +98,7 @@
                 <div class="listings-container grid-layout">
                     <!-- Listing Item -->
                     @foreach ($properties as $property)
-                        <x-property :property="$property"></x-property>
+                        <x-property :property="$property" :listingTypes="$listingTypes"></x-property>
                     @endforeach
                     <!-- Listing Item / End -->
                 </div>
@@ -246,7 +258,7 @@
                                 @foreach ($features as $feature)
                                     <input
                                         {{ isset($searchOptions['features']) && array_search($feature->id, $searchOptions['features']) !== false ? 'checked' : '' }}
-                                            value="{{$feature->id}}"
+                                        value="{{$feature->id}}"
                                         id="{{ $feature->id }}" type="checkbox"
                                         name="features[]">
                                     <label for="{{ $feature->id }}">{{ $feature->name }}</label>

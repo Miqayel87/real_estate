@@ -191,7 +191,7 @@
                                 @foreach($hasValueFeatures['features'] as $feature)
                                     @if(isset($hasValueFeatures['values'][$feature->name]))
                                         <div class="col-md-4">
-                                            <h5>{{$feature->name}} <span>(optional)</span></h5>
+                                            <h5>{{$feature->name}}</h5>
                                             <select name="features[{{$feature->id}}]" class="chosen-select-no-single">
                                                 <option label="blank"></option>
                                                 @foreach($hasValueFeatures['values'][$feature->name] as $value)

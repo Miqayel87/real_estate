@@ -36,7 +36,7 @@ class PropertySeeder extends Seeder
                 'zip_code' => '94105',
                 'description' => 'A modern condo in the heart of the city.',
                 'price' => 80000.00,
-                'listing_type' => 0,
+                'listing_type' => 2,
                 'status' => true,
                 'type_id' => 2,
                 'user_id' => 4,

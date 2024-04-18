@@ -51,9 +51,14 @@
                                     <select name="listing_type" class="chosen-select-no-single">
                                         <option label="blank"></option>
                                         @foreach($listingTypes as $index => $listingType)
-                                            <option value="{{$index}}">{{$listingType}}</option>
+                                            <option {{old('listing_type') == $index ?'selected':''}} value="{{$index}}">{{$listingType}}</option>
                                         @endforeach
                                     </select>
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                            {{ $errors->first('listing_type') }}
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <!-- Type -->
@@ -62,9 +67,14 @@
                                     <select name="type" class="chosen-select-no-single">
                                         <option label="blank"></option>
                                         @foreach($types as $type)
-                                            <option value="{{$type->id}}">{{$type->name}}</option>
+                                            <option {{old('type') == $type->id ?'selected':''}} value="{{$type->id}}">{{$type->name}}</option>
                                         @endforeach
                                     </select>
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                            {{ $errors->first('type') }}
+                                        </div>
+                                    @endif
                                 </div>
 
                             </div>
@@ -191,7 +201,7 @@
                                 @foreach($hasValueFeatures['features'] as $feature)
                                     @if(isset($hasValueFeatures['values'][$feature->name]))
                                         <div class="col-md-4">
-                                            <h5>{{$feature->name}} <span>(optional)</span></h5>
+                                            <h5>{{$feature->name}}</h5>
                                             <select name="features[{{$feature->id}}]" class="chosen-select-no-single">
                                                 <option label="blank"></option>
                                                 @foreach($hasValueFeatures['values'][$feature->name] as $value)

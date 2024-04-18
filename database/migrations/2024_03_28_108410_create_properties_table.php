@@ -22,7 +22,7 @@ class CreatePropertiesTable extends Migration
             $table->string('zip_code');
             $table->text('description');
             $table->decimal('price', 10, 2);
-            $table->boolean('listing_type');
+            $table->integer('listing_type');
             $table->boolean('status');
             $table->unsignedBigInteger('type_id');
             $table->unsignedBigInteger('user_id');

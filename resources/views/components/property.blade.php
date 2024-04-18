@@ -1,4 +1,4 @@
-@props(['property'])
+@props(['property', 'listingTypes'])
 
 <div class="listing-item" style="opacity: {{$property->status?1:0.5}}">
 
@@ -6,7 +6,7 @@
 
         <div class="listing-badges">
             <span class="featured">Featured</span>
-            <span>{{$property->listing_type?'For rent':'For sale'}}</span>
+            <span>{{$listingTypes[$property->listing_type]}}</span>
         </div>
         <div class="listing-img-content">
             <span class="listing-price">${{$property->price}} <i>${{number_format($property->price/$property->features[array_search('Area', array_column($property->features->toArray(), 'name'))]->pivot->value, 2)}} / sq ft</i></span>
@@ -19,7 +19,6 @@
                           data-tip-content="Delete from Bookmarks"></span>
                 @endif
             @endif
-            <span class="compare-button with-tip" data-tip-content="Add to Compare"></span>
         </div>
 
         <div class="listing-carousel">

@@ -10,13 +10,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use function PHPUnit\Framework\isNull;
 
 class PropertyService
 {
     const LISTING_TYPES = [
-        'For sale',
-        'For rent'
+        1 => 'For sale',
+        2 => 'For rent'
     ];
 
     public function __construct()
@@ -171,7 +170,7 @@ class PropertyService
             $result->where('type_id', $request->type);
         }
 
-        if (isset($request->listing_type)) {
+        if ($request->listing_type) {
             $result->where('listing_type', $request->listing_type);
         }
 
@@ -205,13 +204,13 @@ class PropertyService
 
         if ($request->bedrooms) {
             $result->whereHas('features', function ($query) use ($request) {
-                $query->where('name', 'Bedrooms')->where('value', ((int)$request->minArea));
+                $query->where('name', 'Bedrooms')->where('value', ((int)$request->bedrooms));
             });
         }
 
         if ($request->bathrooms) {
             $result->whereHas('features', function ($query) use ($request) {
-                $query->where('name', 'Bathrooms')->where('value', ((int)$request->minArea));
+                $query->where('name', 'Bathrooms')->where('value', ((int)$request->bathrooms));
             });
         }
 
@@ -248,7 +247,7 @@ class PropertyService
      */
     public function getAll(): Collection
     {
-        return Property::orderBy('created_at', 'desc')->with('features')->with('images')->where('status', 1)->get();
+        return Property::orderBy('created_at', 'desc')->with(['features', 'images', 'type'])->where('status', 1)->get();
     }
 
     /**
@@ -258,7 +257,7 @@ class PropertyService
      */
     public function getAllWithPagination(): LengthAwarePaginator
     {
-        return Property::orderBy('created_at', 'desc')->with('features')->with('images')->where('status', 1)->paginate(10);
+        return Property::orderBy('created_at', 'desc')->with(['features', 'images', 'type'])->where('status', 1)->paginate(10);
     }
 
     /**
@@ -269,7 +268,7 @@ class PropertyService
      */
     public function getById(int $id): ?Property
     {
-        return Property::with('features')->with('images')->with('type')->findOrFail($id)->first();
+        return Property::with(['features', 'images', 'type'])->findOrFail(['id' => $id])->first();
     }
 
     /**
@@ -300,10 +299,11 @@ class PropertyService
      *
      * @return Collection The collection of similar properties.
      */
-    public function getSimilarProperties(): Collection
+    public function getSimilarProperties($id): Collection
     {
-        return Property::with('images')
-            ->with('features')
+        return Property::where('status', 1)
+            ->where('id', '<>', $id)
+            ->with(['images', 'features'])
             ->inRandomOrder()
             ->limit(3)
             ->get();

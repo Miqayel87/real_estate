@@ -121,13 +121,11 @@
 
                     <!-- Similar Listings Container -->
                     <h3 class="desc-headline no-border margin-bottom-35 margin-top-60">Similar Properties</h3>
-
                     <!-- Layout Switcher -->
-
                     <div class="layout-switcher hidden"><a href="#" class="list"><i class="fa fa-th-list"></i></a></div>
                     <div class="listings-container list-layout">
                         @foreach($similarProperties as $similarProperty)
-                            <x-property :property="$similarProperty"></x-property>
+                            <x-property :property="$similarProperty" :listingTypes="$listingTypes"></x-property>
                         @endforeach
                     </div>
                     <!-- Similar Listings Container / End -->
@@ -163,7 +161,9 @@
                         <!-- Agent Widget -->
                         <div class="agent-widget">
                             <div class="agent-title">
-                                <div class="agent-photo"><img src="{{asset($property->user->image?'storage/resized/'.$property->user->image->name:'images/default-profile-photo.jpg')}}" alt=""/></div>
+                                <div class="agent-photo"><img
+                                        src="{{asset($property->user->image?'storage/resized/'.$property->user->image->name:'images/default-profile-photo.jpg')}}"
+                                        alt=""/></div>
                                 <div class="agent-details">
                                     <h4>{{$property->user->username}}</h4>
                                     @if($property->user->phone)

@@ -23,12 +23,13 @@ class PropertyController extends Controller
     {
         $property = $this->propertyService->getById($id);
         $location = $this->loacationService->getLatLong("$property->zip_code $property->address, $property->city , $property->state");
-        $similarProperties = $this->propertyService->getSimilarProperties();
+        $similarProperties = $this->propertyService->getSimilarProperties($id);
 
         return view('single-property', [
             'property' => $property,
             'location' => $location,
-            'similarProperties' => $similarProperties
+            'similarProperties' => $similarProperties,
+            'listingTypes' => $this->propertyService::LISTING_TYPES
         ]);
     }
 
@@ -99,12 +100,5 @@ class PropertyController extends Controller
         $this->authorize('activate', $this->propertyService->getById($id));
         $this->propertyService->activate($id);
         return back();
-    }
-
-    public function image(Request $request)
-    {
-
-
-        return response()->json(['data' => 'uploaded']);
     }
 }

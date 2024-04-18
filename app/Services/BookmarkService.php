@@ -46,10 +46,10 @@ class BookmarkService
      */
     public function getUserBookmarkProperties(): Collection
     {
-        $bookmarkProperties = Property::with('images')->whereHas('bookmarks', function ($query) {
-            $query->where('bookmarks.user_id', Auth::user()->id);
-        })->get();
-
-        return $bookmarkProperties;
+        return Property::with('images')
+            ->where('status', 1)
+            ->whereHas('bookmarks', function ($query) {
+                $query->where('bookmarks.user_id', Auth::user()->id);
+            })->get();
     }
 }

@@ -71,20 +71,40 @@
 
                             <label>Your Name</label>
                             <input name="username" value="{{$user->username}}" type="text">
-
+                            @if ($errors->any())
+                                <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                    {{ $errors->first('username') }}
+                                </div>
+                            @endif
                             <label>Your Title</label>
                             <input name="title" value="{{$user->title}}" type="text">
-
+                            @if ($errors->any())
+                                <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                    {{ $errors->first('title') }}
+                                </div>
+                            @endif
                             <label>Phone</label>
                             <input name="phone" value="{{$user->phone}}" type="text">
-
+                            @if ($errors->any())
+                                <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                    {{ $errors->first('phone') }}
+                                </div>
+                            @endif
                             <label>Email</label>
                             <input name="email" value="{{$user->email}}" type="text">
-
+                            @if ($errors->any())
+                                <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                    {{ $errors->first('email') }}
+                                </div>
+                            @endif
 
                             <h4 class="margin-top-50 margin-bottom-25">About Me</h4>
                             <textarea name="about" id="about" cols="30" rows="10">{{$user->about}}</textarea>
-
+                            @if ($errors->any())
+                                <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                    {{ $errors->first('about') }}
+                                </div>
+                            @endif
                             <button class="button margin-top-20 margin-bottom-20">Save Changes</button>
                         </div>
 

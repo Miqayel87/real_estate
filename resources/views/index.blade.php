@@ -209,7 +209,7 @@
                 <div class="carousel">
 
                     @foreach($properties as $property)
-                        <x-property :property="$property"></x-property>
+                        <x-property :property="$property" :listingTypes="$listingTypes"></x-property>
                     @endforeach
 
                 </div>

@@ -35,6 +35,7 @@ class UserRequest extends FormRequest
             'title' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
             'email' => [
+                'email',
                 'required',
                 'string',
                 'max:255',
