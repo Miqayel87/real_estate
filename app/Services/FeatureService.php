@@ -8,40 +8,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class FeatureService
 {
-    const BUILDING_AGES = [
-        "0 - 1 Years",
-        "0 - 5 Years",
-        "0 - 10 Years",
-        "0 - 20 Years",
-        "0 - 50 Years",
-        "50+ Years",
-    ];
-
-    const BEDROOMS = [
-        1,
-        2,
-        3,
-        4,
-        5
-    ];
-
-    const BATHROOMS = [
-        1,
-        2,
-        3,
-        4,
-        5
-    ];
-
-    const ROOMS = [
-        1,
-        2,
-        3,
-        4,
-        5,
-        'More than 5'
-    ];
-
     /**
      * Create or update a property feature.
      *
@@ -82,16 +48,16 @@ class FeatureService
         foreach ($features as $feature) {
             switch ($feature->name) {
                 case 'Building Age':
-                    $values[$feature->name] = self::BUILDING_AGES;
+                    $values[$feature->name] = Feature::BUILDING_AGES;
                     break;
                 case 'Bedrooms':
-                    $values[$feature->name] = self::BEDROOMS;
+                    $values[$feature->name] = Feature::BEDROOMS;
                     break;
                 case 'Bathrooms':
-                    $values[$feature->name] = self::BATHROOMS;
+                    $values[$feature->name] = Feature::BATHROOMS;
                     break;
                 case 'Rooms':
-                    $values[$feature->name] = self::ROOMS;
+                    $values[$feature->name] = Feature::ROOMS;
                     break;
             }
         }

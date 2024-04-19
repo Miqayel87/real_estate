@@ -54,7 +54,7 @@ class BookmarkService
         return Auth::user()
             ->bookmarks()
             ->whereHas('property', function ($query) {
-                $query->with('images')->where('status', $this->propertyService::STATUS['active']);
+                $query->with('images')->where('status', Property::STATUS_ACTIVE);
             })
             ->get();
     }

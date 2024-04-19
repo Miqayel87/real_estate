@@ -29,7 +29,7 @@ class HomeController extends Controller
             'properties' => $properties,
             'features' => $features,
             'types' => $types,
-            'listingTypes' => $this->propertyService::LISTING_TYPES,
+            'listingTypes' => Property::LISTING_TYPES,
             'popularPlaces' => $popularPlaces,
             'articles' => $articles
         ]);

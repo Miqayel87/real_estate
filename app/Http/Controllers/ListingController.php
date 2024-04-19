@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Property;
 use App\Models\Type;
 use App\Services\PropertyService;
 use App\Services\FeatureService;
@@ -111,7 +112,7 @@ class ListingController extends Controller
             'properties' => $properties,
             'features' => $features,
             'types' => $types,
-            'listingTypes' => $this->propertyService::LISTING_TYPES,
+            'listingTypes' => Property::LISTING_TYPES,
             'searchOptions' => [
                 'states' => self::STATES,
                 'cities' => self::CITIES,
@@ -132,7 +133,7 @@ class ListingController extends Controller
             'properties' => $properties,
             'features' => $features,
             'types' => $types,
-            'listingTypes' => $this->propertyService::LISTING_TYPES,
+            'listingTypes' => Property::LISTING_TYPES,
             'searchOptions' => array_merge([
                 'states' => self::STATES,
                 'cities' => self::CITIES,

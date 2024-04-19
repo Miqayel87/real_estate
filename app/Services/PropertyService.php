@@ -13,22 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class PropertyService
 {
-    const ACTIVE = 1;
-    const INACTIVE = 0;
-
-    const FOR_SALE = 1;
-    const FOR_RENT = 2;
-
-    const STATUS = [
-        'active' => self::ACTIVE,
-        'inactive' => self::INACTIVE
-    ];
-
-    const LISTING_TYPES = [
-        self::FOR_SALE => 'For sale',
-        self::FOR_RENT => 'For rent'
-    ];
-
     public function __construct()
     {
         $this->featureService = new FeatureService;
@@ -54,7 +38,7 @@ class PropertyService
             'description' => $request->description,
             'price' => $request->price,
             'listing_type' => $request->listing_type,
-            'status' => self::STATUS['active'],
+            'status' => Property::STATUS_ACTIVE,
             'type_id' => $request->type,
             'user_id' => Auth::user()->id,
         ]);
@@ -97,7 +81,7 @@ class PropertyService
             'description' => $request->description,
             'price' => $request->price,
             'listing_type' => $request->listing_type,
-            'status' => self::STATUS['active'],
+            'status' => Property::STATUS_ACTIVE,
             'type_id' => $request->type,
             'user_id' => Auth::user()->id,
         ]);
@@ -143,7 +127,7 @@ class PropertyService
     public function hide(int $id): Property
     {
         $propertyToHide = $this->getById($id);
-        $propertyToHide->status = self::STATUS['inactive'];
+        $propertyToHide->status = Property::STATUS_INACTIVE;
         $propertyToHide->save();
         return $propertyToHide;
     }
@@ -157,7 +141,7 @@ class PropertyService
     public function activate(int $id): Property
     {
         $propertyToActivate = $this->getById($id);
-        $propertyToActivate->status = self::STATUS['active'];
+        $propertyToActivate->status = Property::STATUS_ACTIVE;
         $propertyToActivate->save();
         return $propertyToActivate;
     }
@@ -170,7 +154,7 @@ class PropertyService
      */
     public function search(Request $request): LengthAwarePaginator
     {
-        $result = Property::query()->where('status', self::STATUS['active'])->with('features');
+        $result = Property::query()->where('status', Property::STATUS_ACTIVE)->with('features');
 
         if ($request->keyword) {
             $result->where('title', 'like', '%' . $request->keyword . '%');
@@ -257,7 +241,7 @@ class PropertyService
      */
     public function getAll(): Collection
     {
-        return Property::orderBy('created_at', 'desc')->with(['features', 'images', 'type'])->where('status', self::STATUS['active'])->get();
+        return Property::orderBy('created_at', 'desc')->with(['features', 'images', 'type'])->where('status', Property::STATUS_ACTIVE)->get();
     }
 
     /**
@@ -267,7 +251,7 @@ class PropertyService
      */
     public function getAllWithPagination(): LengthAwarePaginator
     {
-        return Property::orderBy('created_at', 'desc')->with(['features', 'images', 'type'])->where('status', self::STATUS['active'])->paginate(10);
+        return Property::orderBy('created_at', 'desc')->with(['features', 'images', 'type'])->where('status', Property::STATUS_ACTIVE)->paginate(10);
     }
 
     /**
@@ -289,7 +273,7 @@ class PropertyService
      */
     public function getN(int $n): Collection
     {
-        return Property::with('features')->with('images')->where('status', self::STATUS['active'])->orderBy('created_at', 'desc')->limit($n)->get();
+        return Property::with('features')->with('images')->where('status', Property::STATUS_ACTIVE)->orderBy('created_at', 'desc')->limit($n)->get();
     }
 
     /**
@@ -300,7 +284,7 @@ class PropertyService
     public function getPopularPlaces(): Collection
     {
         return Property::select('city', DB::raw('COUNT(*) as count'))
-            ->where('status', self::STATUS['active'])
+            ->where('status', Property::STATUS_ACTIVE)
             ->groupBy('city')
             ->get();
     }
@@ -312,7 +296,7 @@ class PropertyService
      */
     public function getSimilarProperties($id): Collection
     {
-        return Property::where('status', self::STATUS['active'])
+        return Property::where('status', Property::STATUS_ACTIVE)
             ->where('id', '<>', $id)
             ->with(['images', 'features'])
             ->inRandomOrder()

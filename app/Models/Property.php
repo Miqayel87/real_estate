@@ -64,6 +64,22 @@ class Property extends Model
         'user_id'
     ];
 
+    const STATUS_ACTIVE  = 1;
+    const STATUS_INACTIVE  = 0;
+
+    const STATUSES = [
+        self::STATUS_ACTIVE => 'Active',
+        self::STATUS_INACTIVE => 'Inactive'
+    ];
+
+    const FOR_SALE = 1;
+    const FOR_RENT = 2;
+
+    const LISTING_TYPES = [
+        self::FOR_SALE => 'For sale',
+        self::FOR_RENT => 'For rent'
+    ];
+
     /**
      * Get the type of this property.
      *

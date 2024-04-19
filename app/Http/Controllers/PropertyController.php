@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PropertyRequest;
+use App\Models\Property;
 use App\Models\Type;
 use App\Services\FeatureService;
 use App\Services\LocationService;
@@ -29,7 +30,7 @@ class PropertyController extends Controller
             'property' => $property,
             'location' => $location,
             'similarProperties' => $similarProperties,
-            'listingTypes' => $this->propertyService::LISTING_TYPES
+            'listingTypes' => Property::LISTING_TYPES
         ]);
     }
 
@@ -43,7 +44,7 @@ class PropertyController extends Controller
         return view('submit-property', [
             "hasValueFeatures" => $hasValueFeatures,
             'noValueFeatures' => $noValueFeatures,
-            "listingTypes" => $this->propertyService::LISTING_TYPES,
+            "listingTypes" => Property::LISTING_TYPES,
             "types" => $types
         ]);
     }
@@ -83,7 +84,7 @@ class PropertyController extends Controller
             'property' => $propertyToEdit,
             "hasValueFeatures" => $hasValueFeatures,
             'noValueFeatures' => $noValueFeatures,
-            "listingTypes" => $this->propertyService::LISTING_TYPES,
+            "listingTypes" => Property::LISTING_TYPES,
             "types" => $types
         ]);
     }
