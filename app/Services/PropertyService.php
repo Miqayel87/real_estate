@@ -13,14 +13,20 @@ use Illuminate\Support\Facades\DB;
 
 class PropertyService
 {
+    const ACTIVE = 1;
+    const INACTIVE = 0;
+
+    const FOR_SALE = 1;
+    const FOR_RENT = 2;
+
     const STATUS = [
-        'active' => 1,
-        'inactive' => 0
+        'active' => self::ACTIVE,
+        'inactive' => self::INACTIVE
     ];
 
     const LISTING_TYPES = [
-        1 => 'For sale',
-        2 => 'For rent'
+        self::FOR_SALE => 'For sale',
+        self::FOR_RENT => 'For rent'
     ];
 
     public function __construct()
