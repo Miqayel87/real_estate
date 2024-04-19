@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\DB;
 
 class PropertyService
 {
+    const STATUS = [
+        'active' => 1,
+        'inactive' => 0
+    ];
+
     const LISTING_TYPES = [
         1 => 'For sale',
         2 => 'For rent'
@@ -23,7 +28,6 @@ class PropertyService
         $this->featureService = new FeatureService;
         $this->imageUploadService = new ImageUploadService;
     }
-
 
     /**
      * Create a new property.
@@ -44,7 +48,7 @@ class PropertyService
             'description' => $request->description,
             'price' => $request->price,
             'listing_type' => $request->listing_type,
-            'status' => true,
+            'status' => self::STATUS['active'],
             'type_id' => $request->type,
             'user_id' => Auth::user()->id,
         ]);
@@ -87,7 +91,7 @@ class PropertyService
             'description' => $request->description,
             'price' => $request->price,
             'listing_type' => $request->listing_type,
-            'status' => true,
+            'status' => self::STATUS['active'],
             'type_id' => $request->type,
             'user_id' => Auth::user()->id,
         ]);
@@ -133,7 +137,7 @@ class PropertyService
     public function hide(int $id): Property
     {
         $propertyToHide = $this->getById($id);
-        $propertyToHide->status = 0;
+        $propertyToHide->status = self::STATUS['inactive'];
         $propertyToHide->save();
         return $propertyToHide;
     }
@@ -147,7 +151,7 @@ class PropertyService
     public function activate(int $id): Property
     {
         $propertyToActivate = $this->getById($id);
-        $propertyToActivate->status = 1;
+        $propertyToActivate->status = self::STATUS['active'];
         $propertyToActivate->save();
         return $propertyToActivate;
     }
@@ -160,7 +164,7 @@ class PropertyService
      */
     public function search(Request $request): LengthAwarePaginator
     {
-        $result = Property::query()->where('status', 1)->with('features');
+        $result = Property::query()->where('status', self::STATUS['active'])->with('features');
 
         if ($request->keyword) {
             $result->where('title', 'like', '%' . $request->keyword . '%');
@@ -247,7 +251,7 @@ class PropertyService
      */
     public function getAll(): Collection
     {
-        return Property::orderBy('created_at', 'desc')->with(['features', 'images', 'type'])->where('status', 1)->get();
+        return Property::orderBy('created_at', 'desc')->with(['features', 'images', 'type'])->where('status', self::STATUS['active'])->get();
     }
 
     /**
@@ -257,7 +261,7 @@ class PropertyService
      */
     public function getAllWithPagination(): LengthAwarePaginator
     {
-        return Property::orderBy('created_at', 'desc')->with(['features', 'images', 'type'])->where('status', 1)->paginate(10);
+        return Property::orderBy('created_at', 'desc')->with(['features', 'images', 'type'])->where('status', self::STATUS['active'])->paginate(10);
     }
 
     /**
@@ -279,7 +283,7 @@ class PropertyService
      */
     public function getN(int $n): Collection
     {
-        return Property::with('features')->with('images')->where('status', 1)->orderBy('created_at', 'desc')->limit($n)->get();
+        return Property::with('features')->with('images')->where('status', self::STATUS['active'])->orderBy('created_at', 'desc')->limit($n)->get();
     }
 
     /**
@@ -290,6 +294,7 @@ class PropertyService
     public function getPopularPlaces(): Collection
     {
         return Property::select('city', DB::raw('COUNT(*) as count'))
+            ->where('status', self::STATUS['active'])
             ->groupBy('city')
             ->get();
     }
@@ -301,7 +306,7 @@ class PropertyService
      */
     public function getSimilarProperties($id): Collection
     {
-        return Property::where('status', 1)
+        return Property::where('status', self::STATUS['active'])
             ->where('id', '<>', $id)
             ->with(['images', 'features'])
             ->inRandomOrder()

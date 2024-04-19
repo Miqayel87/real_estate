@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class BookmarkService
 {
+    public function __construct()
+    {
+        $this->propertyService = new PropertyService;
+    }
+
     /**
      * Create a new bookmark.
      *
@@ -46,10 +51,11 @@ class BookmarkService
      */
     public function getUserBookmarkProperties(): Collection
     {
-        return Property::with('images')
-            ->where('status', 1)
-            ->whereHas('bookmarks', function ($query) {
-                $query->where('bookmarks.user_id', Auth::user()->id);
-            })->get();
+        return Auth::user()
+            ->bookmarks()
+            ->whereHas('property', function ($query) {
+                $query->with('images')->where('status', $this->propertyService::STATUS['active']);
+            })
+            ->get();
     }
 }

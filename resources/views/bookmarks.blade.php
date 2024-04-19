@@ -70,8 +70,8 @@
                         <th></th>
                     </tr>
                     <!-- Items -->
-                    @foreach($properties as $property)
-                        <x-bookmark-property :property="$property"></x-bookmark-property>
+                    @foreach($bookmarks as $bookmark)
+                        <x-bookmark-property :property="$bookmark->property"></x-bookmark-property>
                     @endforeach
                 </table>
             </div>

@@ -14,8 +14,8 @@ class BookmarkController extends Controller
 
     public function index()
     {
-        $properties = $this->bookmarkService->getUserBookmarkProperties();
-        return view('bookmarks', ["properties" => $properties]);
+        $bookmarks = $this->bookmarkService->getUserBookmarkProperties();
+        return view('bookmarks', ["bookmarks" => $bookmarks]);
     }
 
     public function create(Request $request)

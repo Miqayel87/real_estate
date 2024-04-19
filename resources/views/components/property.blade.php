@@ -1,6 +1,6 @@
 @props(['property', 'listingTypes'])
 
-<div class="listing-item" style="opacity: {{$property->status?1:0.5}}">
+<div class="listing-item">
 
     <a href="{{route('property.show', $property->id)}}" class="listing-img-container">
 
