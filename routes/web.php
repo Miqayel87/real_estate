@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\HomeController;
@@ -69,4 +70,17 @@ Route::group(['middleware' => 'sanitize'], function () {
     Route::post('/signUp', [RegistrationController::class, 'signUp'])->name('sign-up');
 
     Route::post('/mail/{id}', [MailController::class, 'send'])->name('mail.send');
+});
+
+
+Route::get('/admin', function () {
+    return view('admin.home');
+});
+
+
+Route::group(['prefix'=>'admin'], function (){
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/tables', [AdminController::class, 'tables'])->name('admin.tables');
+    Route::get('/forms', [AdminController::class, 'forms'])->name('admin.forms');
+
 });

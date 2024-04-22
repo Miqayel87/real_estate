@@ -47,4 +47,10 @@ class UserService
     {
         return User::where('id', Auth::user()->id)->with('image')->first();
     }
+
+    public function getAll(){
+        //return User::all();
+        return User::select(['id', 'username','name','title', 'phone', 'email', 'about', 'created_at', 'updated_at'])->get();
+
+    }
 }
