@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Article;
 use App\Models\Feature;
 use App\Models\PropertyFeature;
 use Illuminate\Database\Eloquent\Collection;
@@ -101,5 +102,36 @@ class FeatureService
     public function getByName(string $name): ?Feature
     {
         return Feature::where('name', $name)->first();
+    }
+
+    public function store($request)
+    {
+        $newFeature = new Feature;
+
+        $newFeature->fill($request->all());
+
+        $newFeature->save();
+
+        return $newFeature;
+    }
+
+    public function destroy($id)
+    {
+        $featureToDelete = Feature::findOrFail($id);
+
+        $featureToDelete->delete();
+
+        return $featureToDelete;
+    }
+
+    public function update($request, $id)
+    {
+        $featureToUpdate = Feature::findOrFail($id);
+
+        $featureToUpdate->fill($request->all());
+
+        $featureToUpdate->save();
+
+        return $featureToUpdate;
     }
 }

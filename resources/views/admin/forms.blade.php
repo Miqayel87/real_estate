@@ -4,6 +4,6 @@
 
 @section('content')
     <div>
-        forms
+
     </div>
 @endsection

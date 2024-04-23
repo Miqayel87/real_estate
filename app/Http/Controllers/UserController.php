@@ -25,4 +25,9 @@ class UserController extends Controller
 
         return back();
     }
+
+    public function destroy($id){
+        $this->userService->destroy($id);
+        return back();
+    }
 }

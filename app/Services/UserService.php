@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\UserRequest;
 use App\Models\Image;
+use App\Models\Type;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -48,9 +49,17 @@ class UserService
         return User::where('id', Auth::user()->id)->with('image')->first();
     }
 
-    public function getAll(){
-        //return User::all();
-        return User::select(['id', 'username','name','title', 'phone', 'email', 'about', 'created_at', 'updated_at'])->get();
+    public function getAll()
+    {
+        return User::with('image')->select(['id', 'username', 'name', 'title', 'phone', 'email', 'about', 'created_at', 'updated_at'])->get();
+    }
 
+    public function destroy($id)
+    {
+        $userToDestroy = User::findOrFail($id);
+
+        $userToDestroy->delete();
+
+        return $userToDestroy;
     }
 }

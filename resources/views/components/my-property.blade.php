@@ -2,7 +2,9 @@
 
 <tr id="bookmarkProperty{{$property->id}}">
     <td class="title-container">
+        @if(count($property->images))
         <img src="{{asset('storage/resized/'.$property->images[0]->name)}}" alt="">
+        @endif
         <div class="title">
             <h4><a href="{{route('property.show', $property->id)}}">{{$property->title}}</a></h4>
             <span>{{$property->zip_code}} {{$property->address}} {{$property->city}}, {{$property->state}}</span>

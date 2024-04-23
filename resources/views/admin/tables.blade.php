@@ -30,10 +30,10 @@
                             $tableCount = 1
                         @endphp
 
-                        @foreach($datas as $key=>$data)
+                        @foreach($datas as $table=>$data)
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">{{$key}} Table</h3>
+                                    <h3 class="card-title">{{$table}} Table</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
@@ -43,6 +43,11 @@
                                             @foreach($data[0]->getAttributes() as $title => $value)
                                                 <th>{{$title}}</th>
                                             @endforeach
+                                            @if(isset($data[0]->images) || isset($data[0]->image))
+                                                <th>Images</th>
+                                            @endif
+                                            <th>Actions</th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -51,6 +56,32 @@
                                                 @foreach($item->getAttributes() as $key => $value)
                                                     <td>{{$value}}</td>
                                                 @endforeach
+                                                @if($item->images)
+                                                    <td>
+                                                        @foreach($item->images as $image)
+                                                            <div style="background-color: red" id="image{{$image->id}}">
+                                                                <img style="margin: 20px" width="100px" height="100px"
+                                                                     src="{{asset('storage/resized/'.$image->name)}}"
+                                                                     alt="">
+                                                                <button data-id="{{$image->id}}"
+                                                                        onclick="deleteImage(this)">Delete
+                                                                </button>
+                                                            </div>
+                                                        @endforeach
+                                                    </td>
+                                                @endif
+                                                <td>
+                                                    <form action="{{route("$table.destroy", $item->id)}}" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button>Delete</button>
+                                                    </form>
+                                                    @if($table !== 'user')
+                                                        <form action="{{route("$table.edit", $item->id)}}">
+                                                            <button>Edit</button>
+                                                        </form>
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endforeach
                                         </tbody>
@@ -74,5 +105,30 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
+    <script>
+
+        function deleteImage(e) {
+            const id = $(e).data('id');
+            const csrfToken = $('meta[name="csrf-token"]').attr('content');
+            console.log(id)
+            fetch('/images/delete/' + id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken,
+                },
+            })
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res)
+                    $('#image' + id).slideToggle();
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+
+    </script>
 @endsection

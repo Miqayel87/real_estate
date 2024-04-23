@@ -11,6 +11,37 @@ use App\Models\Article;
  */
 class ArticleService
 {
+    public function store($request)
+    {
+        $newArticle = new Article;
+
+        $newArticle->fill($request->all());
+
+        $newArticle->save();
+
+        return $newArticle;
+    }
+
+    public function destroy($id)
+    {
+        $articleToDelete = Article::findOrFail($id);
+
+        $articleToDelete->delete();
+
+        return $articleToDelete;
+    }
+
+    public function update($request, $id)
+    {
+        $articleToUpdate = Article::findOrFail($id);
+
+        $articleToUpdate->fill($request->all());
+
+        $articleToUpdate->save();
+
+        return $articleToUpdate;
+    }
+
     /**
      * Get all articles.
      *
