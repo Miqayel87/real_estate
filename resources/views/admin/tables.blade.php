@@ -13,12 +13,13 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Home</a></li>
                             <li class="breadcrumb-item active">DataTables</li>
                         </ol>
                     </div>
                 </div>
-            </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.container-fluid -->
         </section>
         <!-- Main content -->
         <section class="content">
@@ -47,7 +48,6 @@
                                                 <th>Images</th>
                                             @endif
                                             <th>Actions</th>
-
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -59,13 +59,10 @@
                                                 @if($item->images)
                                                     <td>
                                                         @foreach($item->images as $image)
-                                                            <div style="background-color: red" id="image{{$image->id}}">
+                                                            <div id="image{{$image->id}}">
                                                                 <img style="margin: 20px" width="100px" height="100px"
                                                                      src="{{asset('storage/resized/'.$image->name)}}"
                                                                      alt="">
-                                                                <button data-id="{{$image->id}}"
-                                                                        onclick="deleteImage(this)">Delete
-                                                                </button>
                                                             </div>
                                                         @endforeach
                                                     </td>
@@ -76,7 +73,7 @@
                                                         @method('DELETE')
                                                         <button>Delete</button>
                                                     </form>
-                                                    @if($table !== 'user')
+                                                    @if($table !== 'user' && $table !== 'property')
                                                         <form action="{{route("$table.edit", $item->id)}}">
                                                             <button>Edit</button>
                                                         </form>
@@ -85,9 +82,12 @@
                                             </tr>
                                         @endforeach
                                         </tbody>
-                                        <tfoot>
-                                        </tfoot>
                                     </table>
+                                    @if($table !== 'user' && $table !== 'property')
+                                        <form action="{{route("$table.create")}}">
+                                            <button type="submit">Add</button>
+                                        </form>
+                                    @endif
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -105,7 +105,8 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
     <script>
 

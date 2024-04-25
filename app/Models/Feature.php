@@ -19,6 +19,11 @@ class Feature extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'has_value'
+    ];
+
     const BUILDING_AGES = [
         "0 - 1 Years",
         "0 - 5 Years",

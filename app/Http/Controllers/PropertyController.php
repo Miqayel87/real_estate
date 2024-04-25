@@ -58,7 +58,6 @@ class PropertyController extends Controller
     public function destroy($id)
     {
         $this->authorize('delete', $this->propertyService->getById($id));
-
         $this->propertyService->delete($id);
         return back();
     }

@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Http\Requests\ArticleRequest;
 use Illuminate\Database\Eloquent\Collection;
 use App\Models\Article;
+use Illuminate\Http\Request;
 
 /**
  * Class ArticleService
@@ -11,7 +13,13 @@ use App\Models\Article;
  */
 class ArticleService
 {
-    public function store($request)
+    /**
+     * Store a new article.
+     *
+     * @param ArticleRequest $request
+     * @return Article
+     */
+    public function store(ArticleRequest $request): Article
     {
         $newArticle = new Article;
 
@@ -22,7 +30,13 @@ class ArticleService
         return $newArticle;
     }
 
-    public function destroy($id)
+    /**
+     * Delete an article.
+     *
+     * @param int $id
+     * @return Article
+     */
+    public function destroy(int $id): Article
     {
         $articleToDelete = Article::findOrFail($id);
 
@@ -31,7 +45,14 @@ class ArticleService
         return $articleToDelete;
     }
 
-    public function update($request, $id)
+    /**
+     * Update an existing article.
+     *
+     * @param ArticleRequest $request
+     * @param int $id
+     * @return Article
+     */
+    public function update(ArticleRequest $request, int $id): Article
     {
         $articleToUpdate = Article::findOrFail($id);
 

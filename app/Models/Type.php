@@ -19,6 +19,11 @@ class Type extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description'
+    ];
+
     /**
      * Get the properties of this type.
      *

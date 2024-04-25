@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
+use App\Http\Requests\TypeRequest;
 use App\Models\Type;
 use App\Services\TypeService;
-use Illuminate\Http\Request;
 
 class TypeController extends Controller
 {
@@ -19,7 +18,7 @@ class TypeController extends Controller
         return view('admin.type.create');
     }
 
-    public function store(Request $request)
+    public function store(TypeRequest $request)
     {
         $this->typeService->store($request);
         return back();
@@ -37,7 +36,7 @@ class TypeController extends Controller
         return view('admin.type.edit', ['type' => $type]);
     }
 
-    public function update(Request $request, $id)
+    public function update(TypeRequest $request, $id)
     {
         $this->typeService->update($request, $id);
         return back();

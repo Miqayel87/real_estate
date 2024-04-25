@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FeatureRequest;
 use App\Models\Feature;
 use App\Services\FeatureService;
-use Illuminate\Http\Request;
 
 class FeatureController extends Controller
 {
@@ -18,7 +18,7 @@ class FeatureController extends Controller
         return view('admin.feature.create');
     }
 
-    public function store(Request $request)
+    public function store(FeatureRequest $request)
     {
         $this->featureService->store($request);
         return back();
@@ -36,7 +36,7 @@ class FeatureController extends Controller
         return view('admin.feature.edit', ['feature' => $feature]);
     }
 
-    public function update(Request $request, $id)
+    public function update(FeatureRequest $request, $id)
     {
         $this->featureService->update($request, $id);
         return back();

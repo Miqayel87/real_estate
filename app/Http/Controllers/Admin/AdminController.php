@@ -23,7 +23,10 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.home');
+        return view('admin.home',['data' => [
+            'propertyCount' => $this->propertyService->getAll()->count(),
+            'userCount' => $this->userService->getAll()->count(),
+        ]]);
     }
 
     public function tables()

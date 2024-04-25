@@ -20,7 +20,7 @@ class PropertyPolicy
      */
     public function update(User $user, Property $property)
     {
-        return $user->id === $property->user_id;
+        return ($user->id === $property->user_id || !!Auth::guard('admin')->user());
     }
 
     /**
@@ -32,17 +32,17 @@ class PropertyPolicy
      */
     public function delete(User $user, Property $property)
     {
-        return $user->id === $property->user_id;
+        return ($user->id === $property->user_id || !!Auth::guard('admin')->user());
     }
 
     public function activate(User $user, Property $property)
     {
-        return $user->id === $property->user_id;
+        return ($user->id === $property->user_id || !!Auth::guard('admin')->user());
     }
 
     public function hide(User $user, Property $property)
     {
-        return $user->id === $property->user_id;
+        return ($user->id === $property->user_id || !!Auth::guard('admin')->user());
     }
 
 

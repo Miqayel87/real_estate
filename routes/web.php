@@ -83,6 +83,8 @@ Route::group(['middleware' => 'sanitize'], function () {
         Route::resource('article', ArticleController::class);
         Route::resource('feature', FeatureController::class);
         Route::resource('type', TypeController::class);
+        Route::resource('property', PropertyController::class)->only(['destroy', 'update']);
+
         Route::delete('user/{id}/delete', [UserController::class, 'destroy'])->name('user.destroy');
     });
 

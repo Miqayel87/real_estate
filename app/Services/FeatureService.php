@@ -2,11 +2,16 @@
 
 namespace App\Services;
 
+use App\Http\Requests\FeatureRequest;
 use App\Models\Article;
 use App\Models\Feature;
 use App\Models\PropertyFeature;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Class FeatureService
+ * @package App\Services
+ */
 class FeatureService
 {
     /**
@@ -104,18 +109,33 @@ class FeatureService
         return Feature::where('name', $name)->first();
     }
 
-    public function store($request)
+    /**
+     * Store a new feature.
+     *
+     * @param FeatureRequest $request The request containing feature data.
+     * @return Feature The created feature.
+     */
+    public function store(FeatureRequest $request): Feature
     {
         $newFeature = new Feature;
 
-        $newFeature->fill($request->all());
+        $newFeature->fill([
+            'name' => $request->name,
+            'has_value' => !!$request->has_value
+        ]);
 
         $newFeature->save();
 
         return $newFeature;
     }
 
-    public function destroy($id)
+    /**
+     * Delete a feature.
+     *
+     * @param int $id The ID of the feature to delete.
+     * @return Feature The deleted feature.
+     */
+    public function destroy(int $id): Feature
     {
         $featureToDelete = Feature::findOrFail($id);
 
@@ -124,11 +144,21 @@ class FeatureService
         return $featureToDelete;
     }
 
-    public function update($request, $id)
+    /**
+     * Update a feature.
+     *
+     * @param FeatureRequest $request The request containing updated feature data.
+     * @param int $id The ID of the feature to update.
+     * @return Feature The updated feature.
+     */
+    public function update(FeatureRequest $request, int $id): Feature
     {
         $featureToUpdate = Feature::findOrFail($id);
 
-        $featureToUpdate->fill($request->all());
+        $featureToUpdate->fill([
+            'name' => $request->name,
+            'has_value' => !!$request->has_value
+        ]);
 
         $featureToUpdate->save();
 
