@@ -10,7 +10,7 @@
                 @csrf
                 <div>
                     <div style="margin-bottom: 20px">
-                        <input type="text" name="name" placeholder="name">
+                        <input value="{{old('name')}}" type="text" name="name" placeholder="name">
                     </div>
                     @if ($errors->first('name'))
                         <div class="alert alert-danger" >
@@ -18,7 +18,7 @@
                         </div>
                     @endif
                     <div style="margin-bottom: 20px">
-                        <input type="text" name="content" placeholder="content">
+                        <input value="{{old('content')}}" type="text" name="content" placeholder="content">
                     </div>
                     @if ($errors->first('content'))
                         <div class="alert alert-danger" >
