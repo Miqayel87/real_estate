@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PropertyRequest;
 use App\Models\Property;
 use App\Models\Type;
 use App\Services\FeatureService;
 use App\Services\LocationService;
 use App\Services\PropertyService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Intervention\Image\Exception\NotFoundException;
@@ -19,19 +21,15 @@ class PropertyController extends Controller
         $this->propertyService = new PropertyService;
         $this->featureService = new FeatureService;
         $this->loacationService = new LocationService;
+        $this->userService = new UserService;
     }
 
-    public function show($id)
+    public function index()
     {
-        $property = $this->propertyService->getById($id);
-        $location = $this->loacationService->getLatLong("$property->zip_code $property->address, $property->city , $property->state");
-        $similarProperties = $this->propertyService->getSimilarProperties($id);
+        $properties = $this->propertyService->getAll();
 
-        return view('single-property', [
-            'property' => $property,
-            'location' => $location,
-            'similarProperties' => $similarProperties,
-            'listingTypes' => Property::LISTING_TYPES
+        return view('admin.property.properties', [
+            'properties' => $properties,
         ]);
     }
 
@@ -42,11 +40,12 @@ class PropertyController extends Controller
 
         $types = Type::all();
 
-        return view('submit-property', [
+        return view('admin.property.create', [
             "hasValueFeatures" => $hasValueFeatures,
             'noValueFeatures' => $noValueFeatures,
             "listingTypes" => Property::LISTING_TYPES,
-            "types" => $types
+            "types" => $types,
+            "users" => $this->userService->getAll()
         ]);
     }
 
@@ -80,7 +79,7 @@ class PropertyController extends Controller
 
         $types = Type::all();
 
-        return view('edit-property', [
+        return view('admin.property.edit', [
             'property' => $propertyToEdit,
             "hasValueFeatures" => $hasValueFeatures,
             'noValueFeatures' => $noValueFeatures,

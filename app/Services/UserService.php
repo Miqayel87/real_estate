@@ -42,11 +42,11 @@ class UserService
     /**
      * Get the currently logged-in user.
      *
-     * @return User|null The currently logged-in user with associated image, or null if user not found.
+     * @return \Illuminate\Contracts\Auth\Authenticatable The currently logged-in user with associated image, or null if user not found.
      */
-    public function getLoggedUser(): ?User
+    public function getLoggedUser(): \Illuminate\Contracts\Auth\Authenticatable
     {
-        return User::where('id', Auth::user()->id)->with('image')->first();
+        return Auth::user();
     }
 
     public function getAll()
@@ -61,5 +61,10 @@ class UserService
         $userToDestroy->delete();
 
         return $userToDestroy;
+    }
+
+    public function getById($id)
+    {
+        return User::findOrFail($id);
     }
 }

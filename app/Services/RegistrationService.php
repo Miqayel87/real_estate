@@ -8,18 +8,11 @@ use Illuminate\Http\Request;
 class RegistrationService
 {
     /**
-     * @var LoginService
-     */
-    private $loginService;
-
-    /**
      * RegistrationService constructor.
-     *
-     * @param LoginService $loginService
      */
-    public function __construct(LoginService $loginService)
+    public function __construct()
     {
-        $this->loginService = $loginService;
+        $this->loginService = new LoginService();
     }
 
     /**
@@ -39,8 +32,6 @@ class RegistrationService
         ]);
 
         $newUser->save();
-
-        $this->loginService->login($request);
 
         return $newUser;
     }

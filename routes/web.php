@@ -12,6 +12,9 @@ use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\Admin\PropertyController as AdminPropertyController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -83,9 +86,8 @@ Route::group(['middleware' => 'sanitize'], function () {
         Route::resource('article', ArticleController::class);
         Route::resource('feature', FeatureController::class);
         Route::resource('type', TypeController::class);
-        Route::resource('property', PropertyController::class)->only(['destroy', 'update']);
-
-        Route::delete('user/{id}/delete', [UserController::class, 'destroy'])->name('user.destroy');
+        Route::resource('adminProperty', AdminPropertyController::class);
+        Route::resource('adminUser', AdminUserController::class);
     });
 
     Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');

@@ -40,7 +40,7 @@ class PropertyService
             'listing_type' => $request->listing_type,
             'status' => Property::STATUS_ACTIVE,
             'type_id' => $request->type,
-            'user_id' => Auth::user()->id,
+            'user_id' => $request->user,
         ]);
 
         $newProperty->save();
