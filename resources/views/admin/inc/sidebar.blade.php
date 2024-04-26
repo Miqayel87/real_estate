@@ -56,9 +56,23 @@
                         </p>
                     </a>
                 </li>
+
+                <form id="admin_logout_form" method="post" action="{{route('admin.logout')}}">@csrf</form>
+                <li id="admin_logout" class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        <p>
+                            Logout
+                        </p>
+                    </a>
+                </li>
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
 </aside>
+
+
+

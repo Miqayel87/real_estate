@@ -59,6 +59,13 @@ This project is a real estate website built using the Laravel framework. It allo
 
    The website should now be accessible at `http://127.0.0.1:8000`.
 
+
+## Admin
+
+   login: admin <br />
+   password: admin
+
+
 ## DataBase
 
    ![Database Schema](public/images/db-schema.png)

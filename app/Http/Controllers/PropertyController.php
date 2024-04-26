@@ -9,6 +9,7 @@ use App\Services\FeatureService;
 use App\Services\LocationService;
 use App\Services\PropertyService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Intervention\Image\Exception\NotFoundException;
 
 class PropertyController extends Controller
@@ -36,6 +37,8 @@ class PropertyController extends Controller
 
     public function create()
     {
+        App::setLocale('ru');
+
         $hasValueFeatures = $this->featureService->getFeaturesWithValue();
         $noValueFeatures = $this->featureService->getFeaturesWithNoValue();
 

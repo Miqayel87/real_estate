@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
     <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -30,7 +35,7 @@
         }
 
         .input-group {
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
 
         .input-group input {
@@ -48,6 +53,8 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin: 20px 0;
+
         }
 
         button:hover {
@@ -61,13 +68,20 @@
         @csrf
         <h2>Admin Login</h2>
         <div class="input-group">
-            <input type="text" id="text" name="login" placeholder="login" required>
+            <input type="text" id="text" name="login" placeholder="Login" required>
         </div>
         <div class="input-group">
             <input type="password" id="password" name="password" placeholder="Password" required>
         </div>
         <button type="submit" id="loginBtn">Login</button>
     </form>
+    @if ($errors->any())
+        <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+            @foreach ($errors->all() as $error)
+                {{ $error }}
+            @endforeach
+        </div>
+    @endif
 </div>
 <script>
 

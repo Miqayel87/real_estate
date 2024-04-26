@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\App;
 
 class RegistrationRequest extends FormRequest
 {
@@ -44,18 +45,18 @@ class RegistrationRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.required' => 'The username field is required.',
-            'username.unique' => 'The username has already been taken.',
-            'username.max' => 'The username may not be greater than :max characters.',
-            'email.required' => 'The email field is required.',
-            'email.email' => 'The email must be a valid email address.',
-            'email.unique' => 'The email has already been taken.',
-            'email.max' => 'The email may not be greater than :max characters.',
-            'password.required' => 'The password field is required.',
-            'password.string' => 'The password must be a string.',
-            'password.min' => 'The password must be at least :min characters.',
-            'password.regex' => 'The password format is invalid. It must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long.',
-            'password.confirmed' => 'The password confirmation does not match.'
+            'username.required' => __('registration_validation.username.required'),
+            'username.unique' => __('registration_validation.username.unique'),
+            'username.max' => __('registration_validation.username.max'),
+            'email.required' => __('registration_validation.email.required'),
+            'email.email' => __('registration_validation.email.email'),
+            'email.unique' => __('registration_validation.email.unique'),
+            'email.max' => __('registration_validation.email.max'),
+            'password.required' => __('registration_validation.password.required'),
+            'password.string' => __('registration_validation.password.string'),
+            'password.min' => __('registration_validation.password.min'),
+            'password.regex' => __('registration_validation.password.regex'),
+            'password.confirmed' => __('registration_validation.password.confirmed')
         ];
     }
 

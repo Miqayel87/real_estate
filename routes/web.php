@@ -2,16 +2,16 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminLoginController;
-use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\FeatureController;
+use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Auth\RegistrationController;
 use App\Http\Controllers\BookmarkController;
-use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\PropertyController;
-use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -90,6 +90,7 @@ Route::group(['middleware' => 'sanitize'], function () {
 
     Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login');
+    Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 });
 
