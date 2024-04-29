@@ -1,6 +1,5 @@
 @extends('admin.layouts.admin')
 
-
 @section('title', 'Add Property')
 
 @section('content')

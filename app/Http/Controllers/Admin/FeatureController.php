@@ -19,16 +19,22 @@ class FeatureController extends Controller
         return view('admin.feature.create');
     }
 
+    public function index()
+    {
+        $features = $this->featureService->getAll();
+        return view('admin.feature.features', ['features' => $features]);
+    }
+
     public function store(FeatureRequest $request)
     {
         $this->featureService->store($request);
-        return back();
+        return redirect()->route('feature.index');
     }
 
     public function destroy($id)
     {
         $this->featureService->destroy($id);
-        return back();
+        return redirect()->route('feature.index');
     }
 
     public function edit($id)
@@ -40,6 +46,6 @@ class FeatureController extends Controller
     public function update(FeatureRequest $request, $id)
     {
         $this->featureService->update($request, $id);
-        return back();
+        return redirect()->route('feature.index');
     }
 }

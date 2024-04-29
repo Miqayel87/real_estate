@@ -1,7 +1,6 @@
 @extends('admin.layouts.admin')
 
-
-@section('title', 'Add Property')
+@section('title', 'Add User')
 
 @section('content')
 
@@ -14,7 +13,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>DataTables</h1>
+                        <h1>Create User</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -30,84 +29,90 @@
         <section class="content">
             <div class="container-fluid">
 
-                <!-- Container -->
+
+                <!-- Content
+                ================================================== -->
                 <div class="container">
-
                     <div class="row">
-                        <div class="col-md-4 col-md-offset-4">
 
-                            <!--Tab -->
-                            <div class="my-account style-1 margin-top-5 margin-bottom-40">
 
-                                <div class="tabs-container alt">
-                                    <!-- Register -->
-                                    <div class="tab-content" id="tab2" style="display: none;">
+                            <!-- Widget -->
+                            <div class="col-md-4">
 
-                                        <form method="POST" class="register" action="{{route('sign-up')}}">
-                                            @csrf
-                                            <p class="form-row form-row-wide">
-                                                <label for="username2">Username:
-                                                    <i class="im im-icon-Male"></i>
-                                                    <input type="text" class="input-text" name="username" id="username2"
-                                                           value="{{old('username')}}"/>
-                                                </label>
-                                            </p>
-                                            @if ($errors->any())
-                                                <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
-                                                    {{ $errors->first('username') }}
-                                                </div>
-                                            @endif
-                                            <p class="form-row form-row-wide">
-                                                <label for="email2">Email Address:
-                                                    <i class="im im-icon-Mail"></i>
-                                                    <input type="text" class="input-text" name="email" id="email2"
-                                                           value="{{old('email')}}"/>
-                                                </label>
-                                            </p>
-                                            @if ($errors->any())
-                                                <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
-                                                    {{ $errors->first('email') }}
-                                                </div>
-                                            @endif
-                                            <p class="form-row form-row-wide">
-                                                <label for="password1">Password:
-                                                    <i class="im im-icon-Lock-2"></i>
-                                                    <input class="input-text" type="password" name="password"
-                                                           id="password1"/>
-                                                </label>
-                                            </p>
-                                            @if ($errors->any())
-                                                <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
-                                                    {{ $errors->first('password') }}
-                                                </div>
-                                            @endif
-                                            <p class="form-row form-row-wide">
-                                                <label for="password2">Repeat Password:
-                                                    <i class="im im-icon-Lock-2"></i>
-                                                    <input class="input-text" type="password"
-                                                           name="password_confirmation"
-                                                           id="password2"/>
-                                                </label>
-                                            </p>
+                            </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <form action="{{route('adminUser.store')}}" method="post" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="col-md-8 my-profile">
 
-                                            <p class="form-row">
-                                                <input type="submit" class="button border fw margin-top-10"
-                                                       name="register"
-                                                       value="Register"/>
-                                            </p>
+                                        <label>Your Name</label>
+                                        <input name="username" type="text">
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                                {{ $errors->first('username') }}
+                                            </div>
+                                        @endif
+                                        <label>Your Title</label>
+                                        <input name="title" type="text">
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                                {{ $errors->first('title') }}
+                                            </div>
+                                        @endif
+                                        <label>Phone</label>
+                                        <input name="phone" type="text">
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                                {{ $errors->first('phone') }}
+                                            </div>
+                                        @endif
+                                        <label>Email</label>
+                                        <input name="email"  type="text">
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                                {{ $errors->first('email') }}
+                                            </div>
+                                        @endif
 
-                                        </form>
+                                        <h4 class="margin-top-50 margin-bottom-25">About Me</h4>
+                                        <textarea name="about" id="about" cols="30" rows="10"></textarea>
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                                {{ $errors->first('about') }}
+                                            </div>
+                                        @endif
+
+                                        <label>Password</label>
+                                        <input name="password" type="text">
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                                {{ $errors->first('password') }}
+                                            </div>
+                                        @endif
+                                        <button class="button margin-top-20 margin-bottom-20">Save Changes</button>
                                     </div>
 
-                                </div>
+                                        <div class="edit-profile-photo">
+                                            <div class="change-photo-btn">
+                                                <div class="photoUpload">
+                                                    <span><i class="fa fa-upload"></i> Upload Photo</span>
+                                                    <input name="image" type="file" class="upload"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
 
 
+
                         </div>
+
+
                     </div>
 
                 </div>
-                <!-- Container / End -->
 
             </div>
         </section>

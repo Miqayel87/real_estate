@@ -16,9 +16,6 @@ class AdminController extends Controller
     {
         $this->propertyService = new PropertyService;
         $this->userService = new UserService;
-        $this->articleService = new ArticleService;
-        $this->typeService = new TypeService;
-        $this->featureService = new FeatureService;
     }
 
     public function index()
@@ -27,23 +24,5 @@ class AdminController extends Controller
             'propertyCount' => $this->propertyService->getAll()->count(),
             'userCount' => $this->userService->getAll()->count(),
         ]]);
-    }
-
-    public function tables()
-    {
-        $datas = [
-            'property' => $this->propertyService->getAll(),
-            'feature' => $this->featureService->getAll(),
-            'article' => $this->articleService->getAll(),
-            'type' => $this->typeService->getAll(),
-            'user' => $this->userService->getAll(),
-        ];
-
-        return view('admin.tables', ['datas' => $datas]);
-    }
-
-    public function forms()
-    {
-        return view('admin.forms');
     }
 }

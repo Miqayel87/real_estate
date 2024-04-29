@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MailRequest;
 use App\Services\MailService;
 use App\Services\PropertyService;
-use Illuminate\Http\Request;
 
 class MailController extends Controller
 {
@@ -14,7 +14,7 @@ class MailController extends Controller
         $this->propertyService = new PropertyService;
     }
 
-    public function send(Request $request, $id)
+    public function send(MailRequest $request, $id)
     {
         $property = $this->propertyService->getById($id);
 
@@ -23,7 +23,7 @@ class MailController extends Controller
             'phone' => $request->phone,
             'mailContent' => $request->mailContent,
             'referer' => $request->headers->get('referer'),
-            'from' => $request->from,
+            'to' => $request->to,
             'property' => $property
         ];
 

@@ -14,7 +14,7 @@
                     <a href="{{route('listing')}}" class="back-to-listings"></a>
                     <div class="property-title">
                         <h2>{{$property->title}} <span
-                                class="property-badge">{{$property->listing_type?'For rent':'For sale'}}</span></h2>
+                                class="property-badge">{{$listingTypes[$property->listing_type]}}</span></h2>
                         <span>
 						<a href="#location" class="listing-address">
 							<i class="fa fa-map-marker"></i>
@@ -174,11 +174,30 @@
                             </div>
                             <form action="{{route('mail.send', $property->id)}}" method="post">
                                 @csrf
+                                @if ($errors->first('email'))
+                                    <div style="color: red" class="alert alert-danger">
+                                        {{ $errors->first('email') }}
+                                    </div>
+                                @endif
                                 <input name="email" type="text" placeholder="Your Email"
                                        pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$">
+
+                                @if ($errors->first('phone'))
+                                    <div style="color: red" class="alert alert-danger">
+                                        {{ $errors->first('phone') }}
+                                    </div>
+                                @endif
                                 <input name="phone" type="text" placeholder="Your Phone">
-                                <input style="display: none" name="from" type="text" value="{{$property->user->email}}">
+
+                                <input style="display: none" name="to" type="text" value="{{$property->user->email}}">
+
+                                @if ($errors->first('mailContent'))
+                                    <div style="color: red" class="alert alert-danger">
+                                        {{ $errors->first('mailContent') }}
+                                    </div>
+                                @endif
                                 <textarea name="mailContent">I'm interested in this property [property {{$property->id}}] and I'd like to know more details.</textarea>
+
                                 <button type="submit" class="button fullwidth margin-top-5">Send Message</button>
                             </form>
                         </div>

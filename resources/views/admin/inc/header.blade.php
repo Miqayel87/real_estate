@@ -8,9 +8,6 @@
         <li class="nav-item d-none d-sm-inline-block">
             <a href="{{route('admin.index')}}" class="nav-link">Home</a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block">
-            <a href="{{route('admin.tables')}}" class="nav-link">Tables</a>
-        </li>
     </ul>
 
     <!-- Right navbar links -->

@@ -67,7 +67,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{route('admin.tables')}}" class="nav-link">
+                    <a href="{{route('type.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-table"></i>
                         <p>
                             Types
@@ -76,7 +76,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{route('admin.tables')}}" class="nav-link">
+                    <a href="{{route('feature.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-table"></i>
                         <p>
                             Features
@@ -85,7 +85,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{route('admin.tables')}}" class="nav-link">
+                    <a href="{{route('article.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-table"></i>
                         <p>
                             Articles

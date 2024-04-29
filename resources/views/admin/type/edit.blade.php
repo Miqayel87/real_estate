@@ -1,5 +1,7 @@
 @extends('admin.layouts.admin')
 
+@section('title', 'Edit Type')
+
 @section('content')
     <div class="content-wrapper">
         <section class="content">

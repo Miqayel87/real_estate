@@ -28,7 +28,7 @@ class MailNotify extends Mailable
      */
     public function build()
     {
-        return $this->from($this->data['from'])
+        return $this->from($this->data['email'])
             ->view('mail.send-mail', ['data' => $this->data]);
     }
 }

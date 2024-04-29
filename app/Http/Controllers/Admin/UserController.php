@@ -28,9 +28,9 @@ class UserController extends Controller
         return view('admin.user.create');
     }
 
-    public function store(RegistrationRequest $request)
+    public function store(UserRequest $request)
     {
-        $this->registrationService->signUp($request);
+        $this->userService->store($request);
         return redirect()->route('adminUser.index');
     }
 

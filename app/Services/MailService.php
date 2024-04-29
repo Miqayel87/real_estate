@@ -17,6 +17,6 @@ class MailService
      */
     public function send(array $data): void
     {
-        Mail::to($data['email'])->send(new MailNotify($data));
+        Mail::to($data['to'])->send(new MailNotify($data));
     }
 }

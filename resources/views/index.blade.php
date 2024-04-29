@@ -312,16 +312,13 @@
                         <div class="blog-post">
 
                             <!-- Img -->
-                            <a class="post-img">
                                 <img src="{{asset('images/blog-post-01.jpg')}}" alt="">
-                            </a>
 
                             <!-- Content -->
                             <div class="post-content">
                                 <h3><a href="#">{{$article->name}}</a></h3>
                                 <p>{{$article->content}}</p>
 
-                                <a href="#" class="read-more">Read More <i class="fa fa-angle-right"></i></a>
                             </div>
 
                         </div>
@@ -336,7 +333,7 @@
     <!-- Fullwidth Section / End -->
 
     <!-- Flip banner -->
-    <a href="#" class="flip-banner parallax"
+    <a href="{{route('listing')}}" class="flip-banner parallax"
        data-background="{{asset('images/flip-banner-bg.jpg')}}" data-color="#274abb" data-color-opacity="0.9"
        data-img-width="2500" data-img-height="1600">
         <div class="flip-banner-content">

@@ -81,8 +81,6 @@ Route::group(['middleware' => 'sanitize'], function () {
     // Admin
     Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('/', [AdminController::class, 'index'])->name('admin.index');
-        Route::get('/tables', [AdminController::class, 'tables'])->name('admin.tables');
-        Route::get('/forms', [AdminController::class, 'forms'])->name('admin.forms');
         Route::resource('article', ArticleController::class);
         Route::resource('feature', FeatureController::class);
         Route::resource('type', TypeController::class);

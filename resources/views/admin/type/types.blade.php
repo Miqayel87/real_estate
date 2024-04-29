@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', 'Articles')
+@section('title', 'Types')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -27,32 +27,32 @@
             <div class="container-fluid">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Articles Table</h3>
+                        <h3 class="card-title">Types Table</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                @foreach($articles[0]->getAttributes() as $key => $value)
+                                @foreach($types[0]->getAttributes() as $key => $value)
                                     <th>{{$key}}</th>
                                 @endforeach
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($articles as $key => $article)
+                            @foreach($types as $key => $type)
                                 <tr>
-                                    @foreach($article->getAttributes() as $value)
+                                    @foreach($type->getAttributes() as $value)
                                         <td>{{$value}}</td>
                                     @endforeach
                                     <td>
-                                        <form action="{{route("article.destroy", $article->id)}}" method="post">
+                                        <form action="{{route("type.destroy", $type->id)}}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <button>Delete</button>
                                         </form>
-                                        <form action="{{route("article.edit", $article->id)}}">
+                                        <form action="{{route("type.edit", $type->id)}}">
                                             <button>Edit</button>
                                         </form>
                                     </td>
@@ -60,7 +60,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        <form action="{{route("article.create")}}">
+                        <form action="{{route("type.create")}}">
                             <button type="submit">Add</button>
                         </form>
                     </div>

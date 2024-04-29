@@ -14,6 +14,12 @@ class TypeController extends Controller
         $this->typeService = new TypeService;
     }
 
+    public function index()
+    {
+        $types = $this->typeService->getAll();
+        return view('admin.type.types', ['types' => $types]);
+    }
+
     public function create()
     {
         return view('admin.type.create');
@@ -22,13 +28,13 @@ class TypeController extends Controller
     public function store(TypeRequest $request)
     {
         $this->typeService->store($request);
-        return back();
+        return redirect()->route('type.index');
     }
 
     public function destroy($id)
     {
         $this->typeService->destroy($id);
-        return back();
+        return redirect()->route('type.index');
     }
 
     public function edit($id)
@@ -40,6 +46,6 @@ class TypeController extends Controller
     public function update(TypeRequest $request, $id)
     {
         $this->typeService->update($request, $id);
-        return back();
+        return redirect()->route('type.index');
     }
 }

@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('users', 'username')->ignore(Auth::user()->id),
+                Rule::unique('users', 'username')->ignore($this->userId ?? (Auth::user() ? Auth::user()->id : '')),
             ],
             'name' => 'nullable|string|max:255',
             'title' => 'nullable|string|max:255',
@@ -40,7 +40,7 @@ class UserRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('users', 'username')->ignore(Auth::user()->id),
+                Rule::unique('users', 'username')->ignore($this->userId ?? (Auth::user() ? Auth::user()->id : '')),
             ],
             'about' => 'nullable|string',
             'image_id' => 'nullable|exists:images,id'
