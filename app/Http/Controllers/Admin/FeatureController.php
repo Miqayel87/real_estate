@@ -22,7 +22,7 @@ class FeatureController extends Controller
     public function index()
     {
         $features = $this->featureService->getAll();
-        return view('admin.feature.features', ['features' => $features]);
+        return view('admin.feature.features', compact('features'));
     }
 
     public function store(FeatureRequest $request)
@@ -40,7 +40,7 @@ class FeatureController extends Controller
     public function edit($id)
     {
         $feature = Feature::find($id);
-        return view('admin.feature.edit', ['feature' => $feature]);
+        return view('admin.feature.edit', compact('feature'));
     }
 
     public function update(FeatureRequest $request, $id)

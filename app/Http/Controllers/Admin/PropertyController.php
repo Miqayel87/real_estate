@@ -28,9 +28,7 @@ class PropertyController extends Controller
     {
         $properties = $this->propertyService->getAll();
 
-        return view('admin.property.properties', [
-            'properties' => $properties,
-        ]);
+        return view('admin.property.properties', compact('properties'));
     }
 
     public function create()

@@ -303,4 +303,14 @@ class PropertyService
             ->limit(3)
             ->get();
     }
+
+    /**
+     * Get properties count.
+     *
+     * @return int
+     */
+    public function getCount(): int
+    {
+        return Property::query()->count();
+    }
 }

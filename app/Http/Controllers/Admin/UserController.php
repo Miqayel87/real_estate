@@ -20,7 +20,7 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->userService->getAll();
-        return view("admin.user.users", ['users' => $users]);
+        return view("admin.user.users", compact('users'));
     }
 
     public function create()
@@ -44,7 +44,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = $this->userService->getById($id);
-        return view('admin.user.edit', ['user' => $user]);
+        return view('admin.user.edit', compact('user'));
     }
 
     public function destroy($id)

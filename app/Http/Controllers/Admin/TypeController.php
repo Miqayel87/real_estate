@@ -17,7 +17,7 @@ class TypeController extends Controller
     public function index()
     {
         $types = $this->typeService->getAll();
-        return view('admin.type.types', ['types' => $types]);
+        return view('admin.type.types', compact('types'));
     }
 
     public function create()
@@ -40,7 +40,7 @@ class TypeController extends Controller
     public function edit($id)
     {
         $type = Type::find($id);
-        return view('admin.type.edit', ['type' => $type]);
+        return view('admin.type.edit', compact('type'));
     }
 
     public function update(TypeRequest $request, $id)

@@ -49,7 +49,7 @@
                                         <label>Your Name</label>
                                         <input value="{{$user->username}}" name="username" type="text">
                                         @if ($errors->any())
-                                            <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                            <div class="alert alert-danger">
                                                 {{ $errors->first('username') }}
                                             </div>
                                         @endif
@@ -63,14 +63,14 @@
                                         <label>Phone</label>
                                         <input value="{{$user->phone}}" name="phone" type="text">
                                         @if ($errors->any())
-                                            <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                            <div class="alert alert-danger">
                                                 {{ $errors->first('phone') }}
                                             </div>
                                         @endif
                                         <label>Email</label>
                                         <input value="{{$user->email}}" name="email"  type="text">
                                         @if ($errors->any())
-                                            <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                            <div class="alert alert-danger">
                                                 {{ $errors->first('email') }}
                                             </div>
                                         @endif
@@ -78,7 +78,7 @@
                                         <h4 class="margin-top-50 margin-bottom-25">About Me</h4>
                                         <textarea name="about" id="about" cols="30" rows="10">{{$user->about}}</textarea>
                                         @if ($errors->any())
-                                            <div class="alert alert-danger" style="color: red; margin-bottom: 10px">
+                                            <div class="alert alert-danger">
                                                 {{ $errors->first('about') }}
                                             </div>
                                         @endif

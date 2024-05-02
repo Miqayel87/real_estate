@@ -23,7 +23,7 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = $this->articleService->getAll();
-        return view('admin.article.articles', ['articles' => $articles]);
+        return view('admin.article.articles', compact('articles'));
     }
 
     public function store(ArticleRequest $request)
@@ -41,7 +41,7 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $article = Article::findOrFail($id);
-        return view('admin.article.edit', ['article' => $article]);
+        return view('admin.article.edit', compact('article'));
     }
 
     public function update(ArticleRequest $request, $id)

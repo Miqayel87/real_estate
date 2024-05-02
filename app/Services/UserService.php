@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Requests\UserRequest;
 use App\Models\Image;
+use App\Models\Property;
 use App\Models\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
@@ -115,5 +116,15 @@ class UserService
     public function getById(int $id): User
     {
         return User::findOrFail($id);
+    }
+
+    /**
+     * Get users count.
+     *
+     * @return int
+     */
+    public function getCount(): int
+    {
+        return User::query()->count();
     }
 }

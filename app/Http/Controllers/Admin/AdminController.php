@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Services\AdminService;
 use App\Services\ArticleService;
 use App\Services\FeatureService;
 use App\Services\PropertyService;
@@ -21,8 +20,8 @@ class AdminController extends Controller
     public function index()
     {
         return view('admin.home',['data' => [
-            'propertyCount' => $this->propertyService->getAll()->count(),
-            'userCount' => $this->userService->getAll()->count(),
+            'propertyCount' => $this->propertyService->getCount(),
+            'userCount' => $this->userService->getCount(),
         ]]);
     }
 }
